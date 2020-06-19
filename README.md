@@ -8,6 +8,9 @@ What is **scanem**? **scanem** is a convolutional neural network (CNN) for infer
 
 The network is written in pytorch, with the downstream analyses written in R (using ggplot for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. 
 
+## Analysing model output
+
+See [this RMarkdown script](#AddLink) for a walk-through for analysing the output of the network using R. 
 
 
 ## Features
@@ -202,36 +205,43 @@ R ...
 
 ## Example output
 ```
+N E X T F L O W  ~  version 20.04.1
+Launching `scanem_newest.nf` [berserk_swirles] - revision: bb8afb69fd
 =========================================================================
 =========================================================================
 
-  scanem  v0.1  
+  scanem  v0.2 (Jun 9 2020) 
 
 =========================================================================
 
-  run name             : mock_project
-  data                 : data/mock_data.tsv
+  run name             : tm_pool30_5u5d_tongue
+  data path            : data/20200618_tabula_muris_Tongue_pool30_500up_500down.tsv.gz
+  cell label data path : data/20200618_tabula_muris_Tongue_pool30_500up_500down_colData.tsv
   motif length         : 12
-  amount of motifs     : 64
-  epochs               : 200
-  optimizer            : Adam
-  number of cal        : 30
+  amount of motifs     : 300
+  epochs               : 30
+  batch size           : 128
+  K in K-fold CV       : 10
+  number of cal        : 30 
   number of candidates : 10
-  sigma_motifs range   : 1E-7-0.001
-  sigma_net range      : 0.00001-0.01 
-  epsilon range        : 0.00005-0.05
-       
+  tomtom db file       : resources/Mus_musculus.meme  
+  random seed          : 42     
+
 =========================================================================
 =========================================================================
 
          
-executor >  local (1)
-[95/e400c5] process > scanem_run                 [100%] 1 of 1 ✔
-[0a/c42fa8] process > scanem_downstream_analysis [  0%] 0 of 1
-[-        ] process > scanem_tomtom              -
-[-        ] process > scanem_tomtom_singularity  -
-
+executor >  lsf (1)
+[62/3eb656] process > scanem_6           [  0%] 0 of 1
+[-        ] process > tomtom_6           -
+[-        ] process > tomtom_allmotifs_6 -
+[-        ] process > motif_analysis_6   -
 ```
+
+## Running without Nextflow
+
+Running without Nextflow is also possible, but this requires some more manual work. 
+
 
 ## Questions and errors
 If you have any questions, or want to report an error, please use our [github issues page](https://github.com/jacobhepkema/scanem_pytorch/issues)
