@@ -2,7 +2,7 @@
 
 This GitHub repository contains the files needed and instructions to run the Nextflow pipeline of **scanem**.
 
-<img src="https://github.com/jacobhepkema/scanem_pytorch/raw/master/scanem_logo.png" width=300 align=right>
+<img src="https://github.com/jacobhepkema/scanem/raw/master/scanem_logo.png" width=300 align=right>
 
 What is **scanem**? **scanem** is a convolutional neural network (CNN) for inference of the relevant *cis*-regulatory motifs for certain gene lists by training on single-cell RNA-seq data. It finds weights for these motifs (weighing their 'impact'). For more information, see [link](#).
 
