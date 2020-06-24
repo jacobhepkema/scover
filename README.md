@@ -176,11 +176,11 @@ R ...
 ## Example output
 ```
 N E X T F L O W  ~  version 20.04.1
-Launching `scSCANEM.nf` [berserk_swirles] - revision: bb8afb69fd
+Launching `scanem.nf` [berserk_swirles] - revision: bb8afb69fd
 =========================================================================
 =========================================================================
 
-  scSCANEM  v0.1 
+  scanem  v0.1 
 
 =========================================================================
 
@@ -202,7 +202,7 @@ Launching `scSCANEM.nf` [berserk_swirles] - revision: bb8afb69fd
 
          
 executor >  lsf (1)
-[62/3eb656] process > scanem             [  0%] 0 of 1
+[62/3eb656] process > train_scanem       [  0%] 0 of 1
 [-        ] process > tomtom             -
 [-        ] process > tomtom_allmotifs   -
 [-        ] process > motif_analysis     -
