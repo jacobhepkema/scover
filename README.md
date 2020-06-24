@@ -4,7 +4,7 @@ This GitHub repository contains the files needed and instructions to run the Nex
 
 <img src="https://github.com/jacobhepkema/scanem_pytorch/raw/master/scanem_logo.png" width=300 align=right>
 
-What is **scanem**? **scanem** is a convolutional neural network (CNN) for inference of the relevant *cis*-regulatory motifs for certain gene lists by training on single-cell RNA-seq data. It finds the correct weights for these motifs across single cells (weighing their 'impact'). For more information, see [link](#).
+What is **scanem**? **scanem** is a convolutional neural network (CNN) for inference of the relevant *cis*-regulatory motifs for certain gene lists by training on single-cell RNA-seq data. It finds the correct weights for these motifs (weighing their 'impact'). For more information, see [link](#).
 
 The network is written in pytorch, with the downstream analyses written in R (using ggplot for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. 
 
