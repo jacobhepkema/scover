@@ -12,42 +12,9 @@ The network is written in pytorch, with the downstream analyses written in R (us
 
 See [this RMarkdown script](#AddLink) for a walk-through for analysing the output of the network using R. 
 
-
 ## Features
 
-
 UPDATE with examples
-
-## Model architecture
-
-
-
-**scanem** takes as inputs DNA sequences (usually promoter sequences of genes) and the associated data values. Example data can be found at `./data/mock_data.tsv`.
-
-**scanem** consists of a convolutional layer with *d* convolutional filters of length *m*. Here, we call the convolutional filters *motif detectors*, as these filters are updated throughout training to recognize specific sequence features. Initially, these motif detectors are randomised within a pre-defined range of possible values (close to 0). 
-
-**scanem** calculates the expression value of a gene using the associated DNA sequence as follows (*note: this is not real data*):
-
-![scanem](https://github.com/jacobhepkema/scanem_pytorch/raw/master/scanem_workflow.png)
-
-For one sequence, the convolutional layer outputs a matrix of "motif hits" across the sequence
-
-For each motif detector, the . This is also known as a "max pooling" operation. 
-
-
-
-Of course, initially, the prediction is bad, which is why the network updates the weights through [mini-batch stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) so that the prediction improves with every iteration. Eventually, the network (hopefully) finds the correct sequence specificities to be able to predict the heterogeneous expression of different genes across different cells. 
-
-
-Why **scanem**?
-Definition of *[scan](https://dictionary.cambridge.org/dictionary/english/scan)* *(verb)* from Cambridge Dictionary: 
-> **to look through a text quickly in order to find a piece of information that you want or to get a general idea of what the text contains**
-
-## Run stages
-
-TODO add
-
-<!-- TODO add downstream analysis with R --> 
 
 ## How to use
 
@@ -168,6 +135,7 @@ UPDATE
 R ...
 ```
 
+<!--
 ## Included files
 
 ```
@@ -203,20 +171,22 @@ R ...
 └── scanem_workflow.png
 ```
 
+-->
+
 ## Example output
 ```
 N E X T F L O W  ~  version 20.04.1
-Launching `scanem_newest.nf` [berserk_swirles] - revision: bb8afb69fd
+Launching `scSCANEM.nf` [berserk_swirles] - revision: bb8afb69fd
 =========================================================================
 =========================================================================
 
-  scanem  v0.2 (Jun 9 2020) 
+  scSCANEM  v0.1 
 
 =========================================================================
 
-  run name             : tm_pool30_5u5d_tongue
-  data path            : data/20200618_tabula_muris_Tongue_pool30_500up_500down.tsv.gz
-  cell label data path : data/20200618_tabula_muris_Tongue_pool30_500up_500down_colData.tsv
+  run name             : example_dataset
+  data path            : data/example_dataset.tsv.gz
+  cell label data path : data/example_dataset_celltypes.tsv
   motif length         : 12
   amount of motifs     : 300
   epochs               : 30
@@ -232,15 +202,16 @@ Launching `scanem_newest.nf` [berserk_swirles] - revision: bb8afb69fd
 
          
 executor >  lsf (1)
-[62/3eb656] process > scanem_6           [  0%] 0 of 1
-[-        ] process > tomtom_6           -
-[-        ] process > tomtom_allmotifs_6 -
-[-        ] process > motif_analysis_6   -
+[62/3eb656] process > scanem             [  0%] 0 of 1
+[-        ] process > tomtom             -
+[-        ] process > tomtom_allmotifs   -
+[-        ] process > motif_analysis     -
 ```
 
 ## Running without Nextflow
 
 Running without Nextflow is also possible, but this requires some more manual work. 
+TODO add
 
 
 ## Questions and errors
