@@ -129,7 +129,7 @@ The path to the `.meme` format motif database to align found motifs to.
 Default value: `resources/Mus_musculus.meme`.
 
 `--num_calibrations`
-The amount of randomly intialized calibrations. 
+The amount of randomly intialized calibrations for hyperparameter optimization. 
 Default value: `30`
 
 `--num_candidates`
@@ -144,17 +144,16 @@ Default value: `10`.
 Sets the amount of epochs (1 epoch = 1 forward and backward cycle through the entire training set) the network goes through. 
 Default value: `100`
 
-`--num_errtest`
-After `num_errtest` learning steps/batches, the network will assess validation error and saves all network parameters for that training 'time point'. These parameters can be found in the network output HDF5 file. *Note: make sure that `num_learnsteps` divided by `num_errtest` is at least 2*. Default value: `1`
-
 `--batch_size`
 The size of one training batch (amount of sequences and the corresponding outputs). After one batch, the network will update its parameters through back-propagation. Default value: `32`
 
 `--motif_length`
-The length of each individual regulatory motif. Default value: `12`
+The length of each individual regulatory motif. 
+Default value: `12`
 
 `--motif_amount`
-The amount of regulatory motifs to look for. Default value: 
+The amount of regulatory motifs to look for. 
+Default value: `300`
 
 `--sigma_motifs_min`
 sigma_motifs will be drawn from loguniform(sigma_motifs_min, sigma_motifs_max).
@@ -229,6 +228,7 @@ executor >  lsf (1)
 ```
 
 ---------------------------------------------------------------------------------------------------
+
 ## Questions and errors
 If you have any questions, or want to report an error, please use our [github issues page](https://github.com/jacobhepkema/scanem_pytorch/issues)
 
@@ -239,5 +239,6 @@ If you have any questions, or want to report an error, please use our [github is
 [2] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., ... & Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.
 
 ---------------------------------------------------------------------------------------------------
+
 ## License
 MIT
