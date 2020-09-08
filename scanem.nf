@@ -34,14 +34,15 @@ params.motif_amount = 300
 params.val_factor = 10
 params.batch_size = 128
 params.seed = 42
+params.opt = "SGD"
 
 // Ranges for hyperparameter search, see README to see what these do
-params.sigma_motifs_min = x
-params.sigma_motifs_max = x
-params.sigma_net_min = x
-params.sigma_net_max = x
-params.epsilon_min = x
-params.epsilon_max = x
+params.sigma_motifs_min = 1e-7
+params.sigma_motifs_max = 1e-3
+params.sigma_net_min = 1e-5
+params.sigma_net_max = 1e-2
+params.epsilon_min = 5e-4
+params.epsilon_max = 5e-2
 
 
 println """\
@@ -108,14 +109,22 @@ process scanem {
     -batch_size $params.batch_size \
     -m $params.motif_length \
     -d $params.motif_amount \
-    -seed $params.seed
+    -seed $params.seed \
+    -opt $params.opt \
+    -sigma_motifs_min $params.sigma_motifs_min \
+    -sigma_motifs_max $params.sigma_motifs_max \
+    -sigma_net_min $params.sigma_net_min \
+    -sigma_net_max $params.sigma_net_max \
+    -epsilon_min $params.epsilon_min \
+    -epsilon_max $params.epsilon_max
    """
 }
 
+// Feed into two different tomtom alignments 
 all_motifs_tmp_ch
     .into { all_motifs_ch; all_motifs_tom_ch }
 
-
+// Align to database
 process tomtom {
     publishDir "$save_dir", mode: "link"
 
@@ -136,9 +145,7 @@ process tomtom {
     """
 }
 
-// Align all to all: determine motif reproducibility
-// In this case, no reverse complement
-// Output text only to tsv file
+// Align motifs to itself, output text only to tsv file
 process tomtom_allmotifs {
     publishDir "$save_dir", mode: "link"
         
@@ -158,7 +165,7 @@ process tomtom_allmotifs {
     """
 }
 
-// 
+// Run downstream analysis for network outputs
 process motif_analysis {
     publishDir "$save_dir", mode: "link"
 
@@ -182,62 +189,3 @@ process motif_analysis {
     """
 }
 
-
-/*
-tomtom_tsv_ch
-    .flatMap()
-    .map { f ->
-        def filePattern = f.getParent().toString()
-        int p = filePattern.lastIndexOf('/')
-        def tsvname = filePattern.substring(p+1)
-        f.renameTo(filePattern + "/" + tsvname + ".tsv")
-        def file2 = file(filePattern + "/" + tsvname + ".tsv")
-        return file2 }
-    .into { renamed_tsv_ch; renamed_tsv_ch_2 }
-
-
-process inputs_to_file {
-    publishDir "$save_dir", mode: "link"
-
-    output:
-    file "tsv_files.txt" into concat_ch
-    file "meme_files.txt" into meme_concat_ch
-
-    input: 
-    file tom_tsv from renamed_tsv_ch.collect()
-    set val(tom_folder_name), file(meme) from meme_files_ch.collect()
-
-    script:
-    """
-    colon_cat_input.sh $tom_tsv >> tsv_files.txt && \
-    colon_cat_input.sh $meme >> meme_files.txt
-    """
-}
-*/
-
-
-
-
-/*    
-.map { file ->
-        def old_name = file.name.toString()
-        def new_name = old_name.replaceAll(/tomtom/, "")
-        file.renameTo('new_file_name.txt')
-    }
-    .merge( tomtom_name_ch.flatMap() )
-    .set { tomtom_merged }
-*/
-
-/*
-process print_in {
-    publishDir "$save_dir", mode: "link"
-
-    input:
-    file tom_tsv from renamed_tsv_ch.collect().toString()
-
-    script:
-    """
-    listinput.py -l $tom_tsv
-    """
-}
-*/
