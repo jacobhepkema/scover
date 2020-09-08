@@ -58,21 +58,25 @@ Example command:
 ```
 nextflow run -profile singularity scanem.nf \
   --name test_run /
-  --data /data/mock_data.tsv \
+  --data data/mock_data.tsv \
+  --celldata data/mock_data_colData.tsv \
+  --tomtom resources/Mus_musculus.meme \
   --num_calibrations 30 \
   --val_factor 10 \
-  --epochs 500 \
+  --epochs 50 \
   --num_errtest 10 \
-  --num_motifs 64 \
+  --num_motifs 300 \
   --motif_length 12
 ```
+
+**scanem** requires at least a name to rn
 
 Minimal command:
 ```
 nextflow run scanem.nf \
   --name test_run \
-  --data /data/input_data.tsv \
-  --celldata /data/input_celldata.tsv
+  --data /data/mock_data.tsv \
+  --celldata /data/mock_data_colData.tsv 
 ```
 
 ## Important:
