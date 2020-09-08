@@ -63,7 +63,7 @@ nextflow run -profile singularity scanem.nf \
   --val_factor 10 \
   --epochs 50 \
   --num_errtest 10 \
-  --num_motifs 300 \
+  --motif_amount 300 \
   --motif_length 12
 ```
 
