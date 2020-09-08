@@ -13,6 +13,7 @@ import pickle
 import logomaker 
 
 # Math, plot, other
+import h5py
 import numpy as np
 import skorch
 from sklearn.model_selection import KFold
@@ -505,8 +506,8 @@ if(torch.cuda.is_available()):
 print("---------------------------------------------------------------------")
 
 
-M = model.conv_1.weight.cpu().detach().numpy().squeeze()
-w = model.fc.weight.cpu().detach().numpy()
+M = bestmodel.conv_1.weight.cpu().detach().numpy().squeeze()
+w = bestmodel.fc.weight.cpu().detach().numpy()
 
 w_df = pd.DataFrame(data=w, index=network_colors.index)
 w_path = exp_model_dir + "/" + name + "_candidate_best_w_matrix.tsv.gz"
@@ -520,6 +521,10 @@ for label in network_labels.unique():
 g.ax_col_dendrogram.legend(loc='center left',bbox_to_anchor=(1.72,-2),frameon=True)
 g.cax.set_position([1.24, .35, .02, .3])
 g.savefig(clustermap_path)
+
+
+
+
 
 # Losses plot ================================================================
 
@@ -743,6 +748,36 @@ for can_nr in other_candidate_numbers:
     can_motifs_pfm_dict, can_motifs_ppm_dict = su.align_conv_filters(candidate_model, input_seqs, input_data, m, train_inds2[can_nr])
     can_motifs_ppm_dicts.append(can_motifs_ppm_dict)
     can_motifs_pfm_dicts.append(can_motifs_pfm_dict)
+    
+all_candidates = [str(x+1) for x in np.asarray(range(all_val_losses.shape[0]))]    
+all_candidates_with_best = [x for x in all_candidates]
+all_candidates_with_best[best_candidate] = "best"
+
+# Save w (final layer weights) and M (convolutional kernels) to hdf5 file for
+# each candidate. 
+all_model_HDF5_path = exp_model_dir + "All_model_HDF5_" + name + "_M_w.h5"
+fid = h5py.File(all_model_HDF5_path, 'w')
+for idx, can in enumerate(all_candidates):
+    candidate_state_dict = exp_model_dir + name + "_candidate_" + can + "_state_dict.pt"
+    candidate_model = sm.BestInitialConvNet(optimizer, 
+                    "MSE", 
+                    learning_rate, 
+                    sigma_motifs, 
+                    sigma_net, 
+                    d, 
+                    m, 
+                    n, 
+                    cells).double()
+    candidate_model.load_state_dict(torch.load(candidate_state_dict, map_location=torch.device('cpu')))
+    candidate_model = candidate_model.eval()
+    candidate_model = candidate_model.double()
+    
+    M = candidate_model.conv_1.weight.cpu().detach().numpy().squeeze()
+    w = candidate_model.fc.weight.cpu().detach().numpy()
+    
+    fid["M_" + all_candidates_with_best[idx]] = M
+    fid["w_" + all_candidates_with_best[idx]] = w
+fid.close()
 
 all_motifs_ppm_dict = {}
 all_motifs_pfm_dict = {}
