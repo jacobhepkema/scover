@@ -221,7 +221,7 @@ Launching `scanem.nf` [berserk_swirles] - revision: bb8afb69fd
 
          
 executor >  lsf (1)
-[62/3eb656] process > train_scanem       [  0%] 0 of 1
+[62/3eb656] process > scanem             [  0%] 0 of 1
 [-        ] process > tomtom             -
 [-        ] process > tomtom_allmotifs   -
 [-        ] process > motif_analysis     -
@@ -230,7 +230,7 @@ executor >  lsf (1)
 ---------------------------------------------------------------------------------------------------
 
 ## Questions and errors
-If you have any questions, or want to report an error, please use our [github issues page](https://github.com/jacobhepkema/scanem_pytorch/issues)
+If you have any questions, or want to report an error, please use our [github issues page](https://github.com/jacobhepkema/scanem/issues)
 
 ---------------------------------------------------------------------------------------------------
 
