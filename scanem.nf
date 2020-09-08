@@ -1,7 +1,10 @@
 params.name = "example"
 save_dir = file("./output/$params.name/")
 
-params.data = "data/smalldataset.tsv"
+params.data = "add"
+if(params.data == "add"){
+    exit 1, "--data is a required argument"
+}
 data = file(params.data)
 
 params.celldata = "add"
