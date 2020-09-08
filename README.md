@@ -10,8 +10,6 @@ The network is written in pytorch, with the downstream analyses written in R (us
 
 **scanem** requires that the cells are annotated for cell type (or other category). Furthermore, TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
 
-[1] Gupta, S., Stamatoyannopoulos, J. A., Bailey, T. L., & Noble, W. S. (2007). Quantifying similarity between motifs. Genome biology, 8(2), R24.
-
 ---------------------------------------------------------------------------------------------------
 ## Workflow
 
@@ -69,14 +67,18 @@ nextflow run -profile singularity scanem.nf \
   --motif_length 12
 ```
 
-**scanem** requires at least a name to rn
+**scanem** requires a run name (`--name`), a pooled dataset (`--data`), and pool cell type annotations (`--celldata`). 
+See the guides above on how to create the pooled dataset. Another important argument is `--tomtom`, for specifying
+the motif `.meme` database file to align found motifs to. I've included `Mus_musculus.meme` and `Homo_sapiens.meme`
+from CIS-BP[2] in the `resources` directory. 
 
 Minimal command:
 ```
 nextflow run scanem.nf \
   --name test_run \
-  --data /data/mock_data.tsv \
-  --celldata /data/mock_data_colData.tsv 
+  --data data/mock_data.tsv \
+  --celldata data/mock_data_colData.tsv \
+  --tomtom resources/Mus_musculus.meme
 ```
 
 ## Important:
@@ -92,9 +94,6 @@ Open up a second terminal window and `cd` into the `scanem/work` directory. From
 can `cd` into the directory starting with the code shown in front of the specific 
 task (in this case, `62/3eb656`). Then, by running `tail .command.log` you might get 
 an idea of how far along the training is. 
-
-<!-- If you want to follow this along in detail, I advice you to use the non-nextflow-
-workflow as described [here](#Running-without-Nextflow) -->
 
 ---------------------------------------------------------------------------------------------------
 **Options**:
@@ -124,6 +123,10 @@ The path to the dataset annotation (relative to `SCANEM.nf`) to annotate the cel
 Add your data in the example format (see default file) into the `/data` folder. 
 For more information, see the data generation guide in this repository. 
 Default value: `/data/input_data.tsv`.
+
+`--tomtom`
+The path to the `.meme` format motif database to align found motifs to. 
+Default value: `resources/Mus_musculus.meme`.
 
 `--num_calibrations`
 The amount of randomly intialized calibrations. 
@@ -190,42 +193,6 @@ The pytorch optimizer to use. Options include `SGD` and `Adam`.
 Default value: `SGD`
 
 ---------------------------------------------------------------------------------------------------
-## Included files
-
-```
-.
-├── bin
-│   ├── scanem_downstream_analysis.r
-│   ├── scanem_functions.r
-│   ├── scanem_model.py
-│   ├── scanem_run.py
-│   └── scanem_utils.py
-├── conf
-│   ├── singularity.config
-│   └── singularity_nopy.config
-├── data
-│   └── mock_data.tsv
-├── data_generation
-│   ├── create_dataset.r
-│   ├── genelist.txt
-│   ├── hg38_500bp_promoters.fa.gz
-│   ├── mm10_500bp_promoters.fa.gz
-│   └── README.md
-├── LICENSE
-├── nextflow.config
-├── output
-├── README.md
-├── resources
-│   ├── cluster_of_motifs.txt
-│   ├── Homo_sapiens.meme
-│   ├── JASPAR2020_CORE_vertebrates_nr_pfms_meme.txt
-│   └── Mus_musculus.meme
-├── scanem_logo.png
-├── scanem.nf
-└── scanem_workflow.png
-```
-
----------------------------------------------------------------------------------------------------
 ## Example output
 ```
 N E X T F L O W  ~  version 20.04.1
@@ -260,35 +227,16 @@ executor >  lsf (1)
 [-        ] process > tomtom_allmotifs   -
 [-        ] process > motif_analysis     -
 ```
----------------------------------------------------------------------------------------------------
-## Running without Nextflow
-
-Running without Nextflow is also possible, but this requires some more manual work. 
-TODO add
-
-
----------------------------------------------------------------------------------------------------
-## Running without Singularity
-
-
-If you do not have Singularity installed, it is possible to run the Nextflow pipeline without - 
-for the network training step, it's necessary to run a conda environment that includes `pytorch` and some other packages. 
-One way to generate a conda environment with the right packages (and the right versions) is to use the `yml` file:
-```
-conda env create -f scanem_env.yml
-```
-This will create a conda environment with name `scanem`. 
-
-Activate that environment with 
-```
-conda activate scanem
-```
-
-For the steps 
 
 ---------------------------------------------------------------------------------------------------
 ## Questions and errors
 If you have any questions, or want to report an error, please use our [github issues page](https://github.com/jacobhepkema/scanem_pytorch/issues)
+
+---------------------------------------------------------------------------------------------------
+
+## References
+[1] Gupta, S., Stamatoyannopoulos, J. A., Bailey, T. L., & Noble, W. S. (2007). Quantifying similarity between motifs. Genome biology, 8(2), R24.
+[2] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., ... & Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.
 
 ---------------------------------------------------------------------------------------------------
 ## License
