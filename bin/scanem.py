@@ -755,10 +755,10 @@ all_candidates_with_best[best_candidate] = "best"
 
 # Save w (final layer weights) and M (convolutional kernels) to hdf5 file for
 # each candidate. 
-all_model_HDF5_path = exp_model_dir + "All_model_HDF5_" + name + "_M_w.h5"
+all_model_HDF5_path = exp_model_dir + "/All_model_HDF5_" + name + "_M_w.h5"
 fid = h5py.File(all_model_HDF5_path, 'w')
 for idx, can in enumerate(all_candidates):
-    candidate_state_dict = exp_model_dir + name + "_candidate_" + can + "_state_dict.pt"
+    candidate_state_dict = exp_model_dir + "/" + name + "_candidate_" + can + "_state_dict.pt"
     candidate_model = sm.BestInitialConvNet(optimizer, 
                     "MSE", 
                     learning_rate, 
