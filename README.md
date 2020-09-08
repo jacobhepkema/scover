@@ -27,15 +27,6 @@ export PATH="path/to/nextflow:$PATH"
 ```
 Alternatively, manually add `export PATH="path/to/nextflow:$PATH"` to your `~/.bashrc` or `~/.bash_profile` file, depending on which file is used as a source for the command line environment. 
 
-When running locally (in non-singularity mode), the following dependencies are required:
-```
-python 3.6 or above
-
-UPDATE
-
-R ...
-```
-
 To get **scanem**, clone this repository into your current working directory with the following command:
 ```
 git clone https://github.com/jacobhepkema/scanem
