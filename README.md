@@ -17,17 +17,9 @@ The network is written in pytorch, with the downstream analyses written in R (us
 
 There are three main steps in using **scanem**:
 1. Preparing your dataset - see [this link for scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) or [this link for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html)
-2. Training **scanem** - see [this link](guides/how_to_train_scanem.html)
+2. Training **scanem** - see the guide further on this page: [link](#Training_scanem). 
 3. Analysing the output - see [this link](guides/how_to_analyse_scanem_output.html)
 
-For each of these steps, this repository contains files that show how to do this.
-
----------------------------------------------------------------------------------------------------
-## Analysing model output
-
-See [this RMarkdown script](#AddLink) for a walk-through for analysing the output of the network using R. 
-
----------------------------------------------------------------------------------------------------
 ## Install/Dependencies
 
 Install [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) by following the instructions on [their website](https://www.nextflow.io/docs/latest/getstarted.html#installation). 
