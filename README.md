@@ -47,7 +47,7 @@ nextflow run [options] scanem.nf [arg...]
 
 Example command:
 ```
-nextflow run -profile singularity scanem.nf \
+nextflow run -profile lsf_gpu scanem.nf \
   --name test_run /
   --data data/mock_data.tsv \
   --celldata data/mock_data_colData.tsv \
@@ -65,7 +65,8 @@ See the guides above on how to create the pooled dataset. Another important argu
 the motif `.meme` database file to align found motifs to. I've included `Mus_musculus.meme` and `Homo_sapiens.meme`
 from CIS-BP[2] in the `resources` directory. 
 
-Before running __scanem__
+Before running __scanem__ you will probably want to identify the best `-profile` to run with. This will define the executor
+used by __scanem__. [See below](#profile) for options and customisation. 
 
 Minimal command:
 ```
@@ -93,11 +94,15 @@ an idea of how far along the training is.
 ---------------------------------------------------------------------------------------------------
 **Options**:
 
+### Profile
+
 `-profile`
 Choose a specified profile configuration from the `/conf` directory. Options:
 
 * `-profile lsf_gpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using GPUs. This might require some editing of the `conf/lsf_gpu.conf` file to be compatible with GPU queues on your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 * `-profile lsf_cpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using CPUs. This might require some editing of the `conf/lsf_cpu.conf` file to be compatible with your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
+
+### Report
 
 `-with-report name.html`
 Generates a Nextflow report webpage with information on task run times, CPU usage, memory usage, and I/O. Note that this does _not_ include information on GPU usage.
