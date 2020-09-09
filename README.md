@@ -97,7 +97,8 @@ an idea of how far along the training is.
 ### Profile
 
 `-profile`
-Choose a specified profile configuration from the `/conf` directory. Options:
+Choose a specified profile configuration from the `/conf` directory. These profiles are included in the 
+`nextflow.config` file; if you are adding an option don't forget to add it to `nextflow.config`. Options currently include:
 
 * `-profile lsf_gpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using GPUs. This might require some editing of the `conf/lsf_gpu.conf` file to be compatible with GPU queues on your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 * `-profile lsf_cpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using CPUs. This might require some editing of the `conf/lsf_cpu.conf` file to be compatible with your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
