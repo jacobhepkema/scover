@@ -4,16 +4,18 @@ This GitHub repository contains the files needed and instructions to run the Nex
 
 <img src="https://github.com/jacobhepkema/scanem/raw/master/scanem_logo.png" width=300 align=right>
 
-What is **scanem**? **scanem** is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs by training on single-cell data. It finds weights for these motifs across pseudo-bulks (weighing their 'impact'). 
+__Q__: What is this? 
 
-The network is written in pytorch, with the downstream analyses written in R (using ggplot for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with Tomtom from the MEME suite[1].
+__A__: __scanem__ is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs by training on single-cell data. It finds weights for these motifs across pseudo-bulks (weighing their 'impact'). The network is written in pytorch, with the downstream analyses written in R (using ggplot for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with Tomtom from the MEME suite[1]. __scanem__ requires that the cells are annotated for cell type (or other category). Furthermore, TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
 
-**scanem** requires that the cells are annotated for cell type (or other category). Furthermore, TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
+__Q__: How to install/run __scanem__?
+
+__A__: To install __scanem__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scanem__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scanem__ can be found [further down this page](#training-scanem).
 
 ---------------------------------------------------------------------------------------------------
 ## Workflow
 
-There are three main steps in using **scanem**:
+There are three main steps in using __scanem__:
 1. Preparing your dataset - see [this link for scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) or [this link for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html)
 2. Training **scanem** - see the guide further on this page: [link](#training-scanem). 
 3. Analysing the output - see [this link](guides/how_to_analyse_scanem_output.html)
@@ -27,12 +29,12 @@ export PATH="path/to/nextflow:$PATH"
 ```
 Alternatively, manually add `export PATH="path/to/nextflow:$PATH"` to your `~/.bashrc` or `~/.bash_profile` file, depending on which file is used as a source for the command line environment. 
 
-To get **scanem**, clone this repository into your current working directory with the following command:
+To get __scanem__, clone this repository into your current working directory with the following command:
 ```
 git clone https://github.com/jacobhepkema/scanem
 ```
 Alternatively, download the repository directly and place in a folder of your choice. 
-`cd` into the top directory (`/scanem`) to run **scanem**.
+`cd` into the top directory (`/scanem`) to run __scanem__.
 
 
 ---------------------------------------------------------------------------------------------------
@@ -58,10 +60,12 @@ nextflow run -profile singularity scanem.nf \
   --motif_length 12
 ```
 
-**scanem** requires a run name (`--name`), a pooled dataset (`--data`), and pool cell type annotations (`--celldata`). 
+__scanem__ requires a run name (`--name`), a pooled dataset (`--data`), and pool cell type annotations (`--celldata`). 
 See the guides above on how to create the pooled dataset. Another important argument is `--tomtom`, for specifying
 the motif `.meme` database file to align found motifs to. I've included `Mus_musculus.meme` and `Homo_sapiens.meme`
 from CIS-BP[2] in the `resources` directory. 
+
+Before running __scanem__
 
 Minimal command:
 ```
@@ -91,7 +95,9 @@ an idea of how far along the training is.
 
 `-profile`
 Choose a specified profile configuration from the `/conf` directory. Options:
-`-profile singularity` 
+
+* `-profile lsf_gpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using GPUs. This might require some editing of the `conf/lsf_gpu.conf` file to be compatible with GPU queues on your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
+* `-profile lsf_cpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using CPUs. This might require some editing of the `conf/lsf_cpu.conf` file to be compatible with your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 
 `-with-report name.html`
 Generates a Nextflow report webpage with information on task run times, CPU usage, memory usage, and I/O. Note that this does _not_ include information on GPU usage.
