@@ -8,6 +8,10 @@ __Q__: What is this?
 
 __A__: __scanem__ is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs by training on single-cell data. It finds weights for these motifs across pseudo-bulks (weighing their 'impact'). The network is written in pytorch, with the downstream analyses written in R (using ggplot for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with Tomtom from the MEME suite[1]. __scanem__ requires that the cells are annotated for cell type (or other category). Furthermore, TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
 
+__Q__: All right, so when would I use this?
+
+__A__: If you currently have a clustered scRNA-seq or scATAC-seq dataset, and you want to extract regulatory information from your dataset, you've come to the right repository. __scanem__ will work as a 'hypothesis generator' in the sense that it will be hard to pinpoint exactly which transcription factors regulate your dataset, but 
+
 __Q__: How to install/run __scanem__?
 
 __A__: To install __scanem__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scanem__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scanem__ can be found [further down this page](#training-scanem).
