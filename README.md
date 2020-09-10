@@ -10,7 +10,7 @@ __A__: __scanem__ is a convolutional neural network (CNN) for *de novo* inferenc
 
 __Q__: All right, so when would I use this?
 
-__A__: If you currently have a clustered scRNA-seq or scATAC-seq dataset, and you want to extract regulatory information from your dataset, you've come to the right place. __scanem__ will work as a 'hypothesis generator' in the sense that it will be hard to pinpoint exactly which transcription factors regulate your dataset, but this will generate a list of transcription factors that might be useful to follow up on. Furthermore, __scanem__ gives information about the relative impact of motifs in the different cell types in your dataset.
+__A__: If you currently have a clustered scRNA-seq or scATAC-seq dataset, and you want to extract regulatory information from your dataset, you've come to the right place. __scanem__ will work as a 'hypothesis generator' in the sense that it will be hard to pinpoint exactly which transcription factors regulate your dataset (because of motif similarities), but this will generate a list of transcription factors that might be useful to follow up on. Furthermore, __scanem__ gives information about the relative impact of motifs in the different cell types in your dataset.
 
 __Q__: How to install/run __scanem__?
 
