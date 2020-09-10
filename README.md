@@ -22,7 +22,7 @@ __A__: To install __scanem__, simply clone the repository to the directory where
 There are three main steps in using __scanem__:
 1. Preparing your dataset - see [this link for scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) or [this link for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html)
 2. Training **scanem** - see the guide further on this page: [link](#training-scanem). 
-3. Analysing the output - see [this link](guides/how_to_analyse_scanem_output.html)
+3. Analysing the output - see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_analyse_scanem_output.html)
 
 ## Install/Dependencies
 
