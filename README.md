@@ -106,7 +106,7 @@ task (in this case, `62/3eb656`, so the directory will be something like `scanem
 Then, by running `tail .command.log` you can get an idea of how far along the training is. 
 
 ---------------------------------------------------------------------------------------------------
-**Options**:
+## Options
 
 ### Profile
 
@@ -138,8 +138,7 @@ Generates a Nextflow report webpage with information on task run times, CPU usag
 
 <!-- Options include `local` (default option), `lsf`, and `docker`. The `lsf` profile  uses a [Singularity](https://sylabs.io/docs/) image (built from [this git repo](https://github.com/jacobhepkema/scanem-wip) using [Singularity Hub](https://singularity-hub.org/)). For more options, see the [Nextflow documentation](https://www.nextflow.io/docs/latest/index.html) or run `nextflow run -h`. The cache directory for the Singularity image can be set in `/conf/lsf.config` by setting `cacheDir = ...` -->
 
----------------------------------------------------------------------------------------------------
-**Arguments**:
+## Arguments
 
 `--name`
 The name of the current experiment. 
@@ -254,7 +253,6 @@ Launching `scanem.nf` [berserk_swirles] - revision: bb8afb69fd
 executor >  lsf (1)
 [62/3eb656] process > scanem             [  0%] 0 of 1
 [-        ] process > tomtom             -
-[-        ] process > tomtom_allmotifs   -
 [-        ] process > motif_analysis     -
 ```
 
