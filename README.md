@@ -114,6 +114,9 @@ Then, by running `tail .command.log` you can get an idea of how far along the tr
 Choose a specified profile configuration from the `/conf` directory. These profiles are included in the 
 `nextflow.config` file; if you are adding an option don't forget to add it to `nextflow.config`. Options currently include:
 
+* `-profile local_gpu` will run locally, and will use a GPU if available. Note that for the first step, you will need to have the right packages installed (see "How can I run __scanem__ using GPUs?" at the start of this README. 
+* `-profile local_cpu` will run locally, and it will also use Singularity for the first step in the workflow. This will only support CPUs. 
+* `-profile local_nosingularity` will run locally, and will not use Singularity images for any step. 
 * `-profile lsf_gpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using GPUs. This might require some editing of the `conf/lsf_gpu.conf` file to be compatible with GPU queues on your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 * `-profile lsf_cpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using CPUs. This might require some editing of the `conf/lsf_cpu.conf` file to be compatible with your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 
