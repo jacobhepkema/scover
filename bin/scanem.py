@@ -12,7 +12,7 @@ import pickle
 # Motif analysis
 import logomaker 
 
-# Math, plot, other
+# HDF5, math, plot, other
 import h5py
 import numpy as np
 from sklearn.model_selection import KFold
@@ -28,10 +28,6 @@ from tqdm import trange
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-# Hyperopt
-from hyperopt import hp, tpe, fmin, Trials
-from collections import OrderedDict
 
 # Custom functions
 import scanem_utils as su
