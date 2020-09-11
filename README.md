@@ -117,6 +117,20 @@ Choose a specified profile configuration from the `/conf` directory. These profi
 * `-profile lsf_gpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using GPUs. This might require some editing of the `conf/lsf_gpu.conf` file to be compatible with GPU queues on your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 * `-profile lsf_cpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using CPUs. This might require some editing of the `conf/lsf_cpu.conf` file to be compatible with your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 
+#### Important: 
+
+The Singularity environments are quite large, and it might be nice to store them somewhere specific. In the `.conf` file of your choice, I advice adding a line that includes the `cacheDir` such that the images are stored in that directory:
+
+```
+singularity {
+  runOptions = '--no-home --cleanenv'
+  enabled = true
+  autoMounts = true
+
+  cacheDir = "ADD/PATH/TO/CACHE/DIR"      <---  Add this
+}
+```
+
 ### Report
 
 `-with-report name.html`
