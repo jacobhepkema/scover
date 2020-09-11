@@ -15,13 +15,13 @@ import logomaker
 # Math, plot, other
 import h5py
 import numpy as np
-import skorch
 from sklearn.model_selection import KFold
 from scipy.stats import spearmanr
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+from torch.utils.Data import TensorDataset
 from torch.utils.data.sampler import SubsetRandomSampler
 import pandas as pd
 from tqdm import trange 
@@ -36,7 +36,6 @@ from collections import OrderedDict
 # Custom functions
 import scanem_utils as su
 import scanem_model as sm
-
 
 # argparse
 parser = argparse.ArgumentParser(description='scanem pytorch version v0.2', 
@@ -195,7 +194,7 @@ input_ind = torch.from_numpy(input_ind)
 input_seqs = input_seqs.to(device)
 input_ind = input_ind.to(device)
 
-train_data = skorch.dataset.Dataset(input_seqs, input_ind)
+train_data = TensorDataset(input_seqs, input_ind)
 cross_vals = KFold(n_splits = val_factor, shuffle=True, random_state=None)
 cross_vals_2 = KFold(n_splits = num_candidates, shuffle=True, random_state=None)
 
