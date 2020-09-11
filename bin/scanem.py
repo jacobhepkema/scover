@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 # Sys
 import os
 import sys
@@ -131,25 +133,25 @@ np.random.seed(seed)
 
 
 
-print()
-print("---------------------------------------------------------------------")
-print("                     scanem pytorch version v0.2                     ")
-print("---------------------------------------------------------------------")
-print()
+print(file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
+print("                     scanem pytorch version v0.2                     ", file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
+print(file=sys.stderr)
 
-print("Name \t\t\t=", name)
-print("Data path \t\t=", data)
-print("Celltype data path \t=", celldata)
-print("Model output dir \t=", model_output_dir)
-print("Validation factor \t=", str(val_factor))
-print("Calibrations \t\t=", str(num_calibrations))
-print("Candidates \t\t=", str(num_candidates))
-print("Epochs \t\t\t=", str(epochs))
-print("Num_errtest \t\t=", str(num_errtest))
-print("Batch size \t\t=", str(batch_size))
-print("Optimizer \t\t=", optimizer)
-print("Number of motifs \t=", str(d))
-print("Motif length \t\t=", str(m))
+print("Name \t\t\t=", name, file=sys.stderr)
+print("Data path \t\t=", data, file=sys.stderr)
+print("Celltype data path \t=", celldata, file=sys.stderr)
+print("Model output dir \t=", model_output_dir, file=sys.stderr)
+print("Validation factor \t=", str(val_factor), file=sys.stderr)
+print("Calibrations \t\t=", str(num_calibrations), file=sys.stderr)
+print("Candidates \t\t=", str(num_candidates), file=sys.stderr)
+print("Epochs \t\t\t=", str(epochs), file=sys.stderr)
+print("Num_errtest \t\t=", str(num_errtest), file=sys.stderr)
+print("Batch size \t\t=", str(batch_size), file=sys.stderr)
+print("Optimizer \t\t=", optimizer, file=sys.stderr)
+print("Number of motifs \t=", str(d), file=sys.stderr)
+print("Motif length \t\t=", str(m), file=sys.stderr)
 
 # Device to run on
 if(torch.cuda.is_available()):
@@ -161,21 +163,21 @@ else:
     device=torch.device('cpu')
     torch.set_num_threads(24)
 
-print("Device\t\t\t=", device)
+print("Device\t\t\t=", device, file=sys.stderr)
 
 
-print()
-print("---------------------------------------------------------------------")
-print()
+print(file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
+print(file=sys.stderr)
 
 exp_model_dir = model_output_dir
 if not os.path.exists(exp_model_dir):
     os.makedirs(exp_model_dir)
-    print("NOTE: \tCreated model directory")
+    print("NOTE: \tCreated model directory", file=sys.stderr)
 else:
-    print("NOTE: \tDirectory exists, will overwrite previous files")
+    print("NOTE: \tDirectory exists, will overwrite previous files", file=sys.stderr)
 
-print("NOTE: \tPreprocessing data")
+print("NOTE: \tPreprocessing data", file=sys.stderr)
 
 input_data = pd.read_csv(data, sep="\t")
 input_seqs = np.asarray([su.onehot_encode_seq(x, m, True) 
@@ -206,12 +208,12 @@ network_lut = dict(zip(map(str, network_labels.unique()), network_pal))
 network_colors = pd.Series(network_labels).map(network_lut)
 
 
-print("NOTE: \tDone preprocessing data")
-print()
+print("NOTE: \tDone preprocessing data", file=sys.stderr)
+print(file=sys.stderr)
 
-print("---------------------------------------------------------------------")
-print("                             run start")
-print("---------------------------------------------------------------------")
+print("---------------------------------------------------------------------", file=sys.stderr)
+print("                             run start", file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
 
 all_val_losses = np.empty((num_calibrations,val_factor,errtest_len))
 all_train_losses = np.empty((num_calibrations,val_factor,errtest_len))
@@ -328,7 +330,7 @@ for i in range(num_calibrations):
 best_model = fold_mean_minima.index(min(fold_mean_minima))
 best_model_initial_path = exp_model_dir + "/" + name + "_cal_" + str(best_model+1) + "_initial_state_dict.pt"
 
-print("Best model:", str(best_model+1))
+print("Best model:", str(best_model+1), file=sys.stderr)
 
 all_val_losses = np.empty((num_candidates,errtest_len))
 all_train_losses = np.empty((num_candidates,errtest_len))
@@ -342,9 +344,9 @@ val_inds2 = [y for (x,y) in new_splits]
 candidate_train_val_ind_split_path = exp_model_dir + "/" + name + "_candidate_train_val_inds.p" 
 pickle.dump(new_splits, open(candidate_train_val_ind_split_path, "wb" ) )
 
-print("---------------------------------------------------------------------")
-print("                         training candidates")
-print("---------------------------------------------------------------------")
+print("---------------------------------------------------------------------", file=sys.stderr)
+print("                         training candidates", file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
 can = 0
 all_candidate_hdf5_paths = []
 
@@ -470,10 +472,10 @@ best_val_ind = val_inds2[best_candidate]
 
 device = torch.device('cpu')
 
-print("Best candidate:", str(best_candidate+1))
-print("---------------------------------------------------------------------")
-print("                         motif alignments")
-print("---------------------------------------------------------------------")
+print("Best candidate:", str(best_candidate+1), file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
+print("                         motif alignments", file=sys.stderr)
+print("---------------------------------------------------------------------", file=sys.stderr)
 best_candidate_best_model_path = exp_model_dir + "/" + name + "_candidate_" + str(best_candidate+1) + "_state_dict.pt"
 bestmodel = sm.BestInitialConvNet(optimizer, 
                     "MSE", 
@@ -548,7 +550,7 @@ plt.close()
 motif_dir = exp_model_dir + "/Motifs"
 if not os.path.exists(motif_dir):
     os.makedirs(motif_dir)
-    print("Created motif dir")
+    print("Created motif dir", file=sys.stderr)
 
 
 # Plot filter weights
@@ -788,7 +790,7 @@ for key in best_motifs_ppm_dict.keys():
 all_motif_dir = exp_model_dir + "/AllMotifs"
 if not os.path.exists(all_motif_dir):
     os.makedirs(all_motif_dir)
-    print("Created all_motif_dir")
+    print("Created all_motif_dir", file=sys.stderr)
     
 for key in all_motifs_ppm_dict.keys():
     motif_ic_mat = logomaker.transform_matrix(pd.DataFrame(all_motifs_ppm_dict[key], 
@@ -831,4 +833,4 @@ if len(files_to_delete) > 0:
         print('rm ' + file)
         os.remove(file)
         
-print("Done")
+print("Done", file=sys.stderr)
