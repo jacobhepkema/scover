@@ -24,7 +24,8 @@ __A__: Currently, the Singularity image for training the network only detects CP
 conda env create -f scanem_env.yml
 ```
 
-which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. For running on CPU, this step is not needed, as it will use a Singularity image that has the right packages. 
+which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. Then, run __scanem__ with `profile -local_gpu` if you want to run locally, or with `profile -lsf_gpu` if you want to use the Platform LSF scheduler. 
+(For running on CPU, the conda step is not needed, as it will use a Singularity image that has the right packages)
 
 ---------------------------------------------------------------------------------------------------
 ## Workflow
