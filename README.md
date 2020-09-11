@@ -92,8 +92,8 @@ neural network step, and it will switch to `[100%]` once the training is complet
 There is a way to find out how far into training the network is, but it is not entirely straightforward:
 Open up a second terminal window and `cd` into the `scanem/work` directory. From there, you 
 can `cd` into the directory starting with the code shown in front of the specific 
-task (in this case, `62/3eb656`). Then, by running `tail .command.log` you might get 
-an idea of how far along the training is. 
+task (in this case, `62/3eb656`, so the directory will be something like `scanem/work/77/54aff7aae5e84c420b7aa267dfeb57`). 
+Then, by running `tail .command.log` you can get an idea of how far along the training is. 
 
 ---------------------------------------------------------------------------------------------------
 **Options**:
