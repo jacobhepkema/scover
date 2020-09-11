@@ -27,6 +27,10 @@ conda env create -f scanem_env.yml
 which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. Then, run __scanem__ with `profile -local_gpu` if you want to run locally, or with `profile -lsf_gpu` if you want to use the Platform LSF scheduler. 
 (For running on CPU, the conda step is not needed, as it will use a Singularity image that has the right packages)
 
+__Q__: Can I run this on Windows?
+
+__A__: I haven't tried this, but because this uses Nextflow which is made for UNIX environments, it might get somewhat tricky. I wouldn't advice this; perhaps it's better to run the Nextflow processes one by one rather than using Nextflow. 
+
 ---------------------------------------------------------------------------------------------------
 ## Workflow
 
