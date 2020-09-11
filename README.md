@@ -14,7 +14,17 @@ __A__: If you currently have a clustered scRNA-seq or scATAC-seq dataset, and yo
 
 __Q__: How to install/run __scanem__?
 
-__A__: To install __scanem__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scanem__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scanem__ can be found [further down this page](#training-scanem).
+__A__: To install __scanem__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scanem__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scanem__ can be found [further down this page](#training-scanem). I advise to run __scanem__ using GPUs, as the run times can increase a lot when using CPUs.
+
+__Q__: How can I run __scanem__ using GPUs?
+
+__A__: Currently, the Singularity image for training the network only detects CPUs, so for this, you will need to create an anaconda environment with pytorch and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scanem` folder, which contains a `scanem_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
+
+```{bash}
+conda env create -f scanem_env.yml
+```
+
+which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. For running on CPU, this step is not needed, as it will use a Singularity image that has the right packages. 
 
 ---------------------------------------------------------------------------------------------------
 ## Workflow
