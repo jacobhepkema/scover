@@ -98,9 +98,9 @@ parser.add_argument('-seed', metavar='SEED', type=int,
                     help='the seed for random number generators from torch and numpy',
                     default=42)
 
-
 args = parser.parse_args()
 
+# For description of these arguments, see above
 name = args.name
 data = args.data
 celldata = args.celldata
@@ -123,22 +123,18 @@ sigma_motifs_max = args.sigma_motifs_max
 sigma_net_min = args.sigma_net_min
 sigma_net_max = args.sigma_net_max
 
-
-
 # initialize random number generators
 seed = args.seed
 torch.cuda.manual_seed_all(seed)
 torch.manual_seed(seed)
 np.random.seed(seed)
 
-
-
+# Printing setup
 print(file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
 print("                     scanem pytorch version v0.2                     ", file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
 print(file=sys.stderr)
-
 print("Name \t\t\t=", name, file=sys.stderr)
 print("Data path \t\t=", data, file=sys.stderr)
 print("Celltype data path \t=", celldata, file=sys.stderr)
@@ -147,13 +143,12 @@ print("Validation factor \t=", str(val_factor), file=sys.stderr)
 print("Calibrations \t\t=", str(num_calibrations), file=sys.stderr)
 print("Candidates \t\t=", str(num_candidates), file=sys.stderr)
 print("Epochs \t\t\t=", str(epochs), file=sys.stderr)
-print("Num_errtest \t\t=", str(num_errtest), file=sys.stderr)
 print("Batch size \t\t=", str(batch_size), file=sys.stderr)
 print("Optimizer \t\t=", optimizer, file=sys.stderr)
 print("Number of motifs \t=", str(d), file=sys.stderr)
 print("Motif length \t\t=", str(m), file=sys.stderr)
 
-# Device to run on
+# Set device to run on: CUDA if available
 if(torch.cuda.is_available()):
     if(torch.cuda.device_count() > 1):
         device=torch.device('cuda:1')
@@ -162,23 +157,21 @@ if(torch.cuda.is_available()):
 else:
     device=torch.device('cpu')
     torch.set_num_threads(24)
-
 print("Device\t\t\t=", device, file=sys.stderr)
-
 
 print(file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
 print(file=sys.stderr)
 
-exp_model_dir = model_output_dir
-if not os.path.exists(exp_model_dir):
-    os.makedirs(exp_model_dir)
+if not os.path.exists(model_output_dir):
+    os.makedirs(model_output_dir)
     print("NOTE: \tCreated model directory", file=sys.stderr)
 else:
     print("NOTE: \tDirectory exists, will overwrite previous files", file=sys.stderr)
 
 print("NOTE: \tPreprocessing data", file=sys.stderr)
 
+# Read data
 input_data = pd.read_csv(data, sep="\t")
 input_seqs = np.asarray([su.onehot_encode_seq(x, m, True) 
                     for x in input_data["sequence"]])
@@ -242,7 +235,7 @@ for i in range(num_calibrations):
     model_lr = model.learning_rate
 
     # Save initial parameters for every calibration
-    cal_intial_model_path = exp_model_dir + "/" + name + "_cal_" + str(cal+1) + "_initial_state_dict.pt"
+    cal_intial_model_path = model_output_dir + "/" + name + "_cal_" + str(cal+1) + "_initial_state_dict.pt"
     torch.save(model.state_dict(), cal_intial_model_path)
 
     # Perform K-fold cross-validation
@@ -268,7 +261,7 @@ for i in range(num_calibrations):
         val_running_loss = 0.0
 
         model_name = name + "_cal_" + str(cal+1) + "_fold_" + str(fold+1)
-        best_model_save_path = exp_model_dir + "/" + model_name + "_state_dict.pt"
+        best_model_save_path = model_output_dir + "/" + model_name + "_state_dict.pt"
         # Progress bar of length num_learningsteps
         trange_name = "Run " + str(cal+1) + "_" + str(fold+1) + " of " + str(num_calibrations) + "_" + str(val_factor)
         t = trange(epochs, desc=trange_name, ncols=100) 
@@ -328,7 +321,7 @@ for i in range(num_calibrations):
 
 # Get calibration with best mean minimum across candidates
 best_model = fold_mean_minima.index(min(fold_mean_minima))
-best_model_initial_path = exp_model_dir + "/" + name + "_cal_" + str(best_model+1) + "_initial_state_dict.pt"
+best_model_initial_path = model_output_dir + "/" + name + "_cal_" + str(best_model+1) + "_initial_state_dict.pt"
 
 print("Best model:", str(best_model+1), file=sys.stderr)
 
@@ -341,7 +334,7 @@ new_splits = [(x,y) for (x,y) in cross_vals_2.split(train_data)]
 train_inds2 = [x for (x,y) in new_splits]
 val_inds2 = [y for (x,y) in new_splits]
 
-candidate_train_val_ind_split_path = exp_model_dir + "/" + name + "_candidate_train_val_inds.p" 
+candidate_train_val_ind_split_path = model_output_dir + "/" + name + "_candidate_train_val_inds.p" 
 pickle.dump(new_splits, open(candidate_train_val_ind_split_path, "wb" ) )
 
 print("---------------------------------------------------------------------", file=sys.stderr)
@@ -406,7 +399,7 @@ for i in range(num_candidates):
     trange_name = "Run_" + str(can+1) + " of " + str(num_candidates)
 
     model_name = name + "_candidate_" + str(can+1)
-    candidate_save_path = exp_model_dir + "/" + model_name + "_state_dict.pt"
+    candidate_save_path = model_output_dir + "/" + model_name + "_state_dict.pt"
 
     # Progress bar of length num_learningsteps
     t = trange(epochs, desc=trange_name, ncols=100) 
@@ -464,7 +457,7 @@ best_candidate = candidate_minima.index(min(candidate_minima))
 best_candidate_err = [x for x in all_val_losses[best_candidate,:]]
 best_candidate_best_tp = best_candidate_err.index(min(best_candidate_err))
 
-with open(exp_model_dir + "/Best_candidate_" + str(best_candidate+1) + ".txt", 'w') as the_file:
+with open(model_output_dir + "/Best_candidate_" + str(best_candidate+1) + ".txt", 'w') as the_file:
     the_file.write(str(best_candidate+1))
 
 best_train_ind = train_inds2[best_candidate]
@@ -476,7 +469,7 @@ print("Best candidate:", str(best_candidate+1), file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
 print("                         motif alignments", file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
-best_candidate_best_model_path = exp_model_dir + "/" + name + "_candidate_" + str(best_candidate+1) + "_state_dict.pt"
+best_candidate_best_model_path = model_output_dir + "/" + name + "_candidate_" + str(best_candidate+1) + "_state_dict.pt"
 bestmodel = sm.BestInitialConvNet(optimizer, 
                     "MSE", 
                     learning_rate, 
@@ -493,7 +486,7 @@ input_seqs = input_seqs.to(device)
 # Aligning convolutional filters to train indices sequences, creating pwms
 # based on which subsequences activate the different convolutional filters
 best_motifs_pfm_dict, best_motifs_ppm_dict = su.align_conv_filters(bestmodel, input_seqs, input_data, m, best_train_ind)
-meme_output_path = exp_model_dir + "/Motifs_" + name + "_Candidate_best_MEME.txt"
+meme_output_path = model_output_dir + "/Motifs_" + name + "_Candidate_best_MEME.txt"
 
 su.save_meme(best_motifs_ppm_dict, meme_output_path)
 
@@ -507,10 +500,10 @@ M = bestmodel.conv_1.weight.cpu().detach().numpy().squeeze()
 w = bestmodel.fc.weight.cpu().detach().numpy()
 
 w_df = pd.DataFrame(data=w, index=network_colors.index)
-w_path = exp_model_dir + "/" + name + "_candidate_best_w_matrix.tsv.gz"
+w_path = model_output_dir + "/" + name + "_candidate_best_w_matrix.tsv.gz"
 w_df.to_csv(w_path, sep='\t', compression='gzip')
 
-clustermap_path = exp_model_dir + "/" + name + "_candidate_best_clustermap.png"
+clustermap_path = model_output_dir + "/" + name + "_candidate_best_clustermap.png"
 g = sns.clustermap(w_df, row_cluster=True, col_cluster=True, row_colors=network_colors)
 for label in network_labels.unique():
     g.ax_col_dendrogram.bar(0, 0, color=network_lut[label],
@@ -532,14 +525,14 @@ plt.legend(loc="upper left")
 plt.title("Validation set losses for all " + str(all_val_losses.shape[0]) + " candidates")
 plt.ylabel("Validation loss")
 plt.xlabel("Epoch")
-pltname = exp_model_dir + "/Plot_CandidateValLosses_" + name + ".png"
+pltname = model_output_dir + "/Plot_CandidateValLosses_" + name + ".png"
 plt.savefig(pltname, bbox_inches="tight")
 plt.close()
 
 
 # Neural network weights plot ================================================
 
-pltname = exp_model_dir + "/Plot_NeuralNetWeights_" + name + ".png"
+pltname = model_output_dir + "/Plot_NeuralNetWeights_" + name + ".png"
 plt.figure(figsize=(25,10))
 ax = sns.heatmap(w, center=0)
 plt.savefig(pltname, bbox_inches="tight")
@@ -547,7 +540,7 @@ plt.close()
 
 # Convolutional filter plots =================================================
 
-motif_dir = exp_model_dir + "/Motifs"
+motif_dir = model_output_dir + "/Motifs"
 if not os.path.exists(motif_dir):
     os.makedirs(motif_dir)
     print("Created motif dir", file=sys.stderr)
@@ -656,7 +649,7 @@ ax = sns.violinplot(x="type", y="pearson_correlation", inner="quart",
 ax.set(xlabel='', ylabel='Pearson correlation')
 ax.set(ylim=(-1, 1))
 plt.title("Per-gene and per-cell Pearson correlations between observed and predicted values")
-pltname = exp_model_dir + "/Plot_PerGeneCellCorrelationPearson_" + name + ".png"
+pltname = model_output_dir + "/Plot_PerGeneCellCorrelationPearson_" + name + ".png"
 plt.savefig(pltname, bbox_inches="tight")
 plt.close()
 
@@ -666,7 +659,7 @@ ax = sns.violinplot(x="type", y="spearman_correlation", inner="quart",
 ax.set(xlabel='', ylabel='Spearman correlation')
 ax.set(ylim=(-1, 1))
 plt.title("Per-gene and per-cell Spearman correlations between observed and predicted values")
-pltname = exp_model_dir + "/Plot_PerGeneCellCorrelationSpearman_" + name + ".png"
+pltname = model_output_dir + "/Plot_PerGeneCellCorrelationSpearman_" + name + ".png"
 plt.savefig(pltname, bbox_inches="tight")
 plt.close()
 
@@ -676,7 +669,7 @@ ax = sns.violinplot(x="type", y="pearson_correlation", inner="quart",
 ax.set(xlabel='', ylabel='Pearson correlation')
 ax.set(ylim=(-1, 1))
 plt.title("Per-gene and per-cell Pearson correlations between observed and predicted values using randomly permuted sequences")
-pltname = exp_model_dir + "/Plot_PerGeneCellCorrelationPearsonRANDOM_" + name + ".png"
+pltname = model_output_dir + "/Plot_PerGeneCellCorrelationPearsonRANDOM_" + name + ".png"
 plt.savefig(pltname, bbox_inches="tight")
 plt.close()
 
@@ -686,12 +679,12 @@ ax = sns.violinplot(x="type", y="spearman_correlation", inner="quart",
 ax.set(xlabel='', ylabel='Spearman correlation')
 ax.set(ylim=(-1, 1))
 plt.title("Per-gene and per-cell Spearman correlations between observed and predicted values using randomly permuted sequences'")
-pltname = exp_model_dir + "/Plot_PerGeneCellCorrelationSpearmanRANDOM_" + name + ".png"
+pltname = model_output_dir + "/Plot_PerGeneCellCorrelationSpearmanRANDOM_" + name + ".png"
 plt.savefig(pltname, bbox_inches="tight")
 plt.close()
 
 
-metrics_filename = exp_model_dir + "/" + name + "_metrics_for_best_candidate.txt"
+metrics_filename = model_output_dir + "/" + name + "_metrics_for_best_candidate.txt"
 avg_per_gene_spearmanr = np.mean(gene_corrs_spear)
 avg_per_cell_spearmanr = np.mean(cell_corrs_spear)
 dataset_sparsity = 1.0 - (np.count_nonzero(input_ind.detach().cpu().numpy())/float(input_ind.detach().cpu().numpy().size))
@@ -711,7 +704,7 @@ can_motifs_ppm_dicts = []
 can_motifs_pfm_dicts = []
 d = M.shape[0]
 for can_nr in other_candidate_numbers:
-    candidate_model_path = exp_model_dir + "/" + name + "_candidate_" + str(can_nr+1) + "_state_dict.pt"
+    candidate_model_path = model_output_dir + "/" + name + "_candidate_" + str(can_nr+1) + "_state_dict.pt"
     candidate_model = sm.BestInitialConvNet(optimizer, 
                     "MSE", 
                     learning_rate, 
@@ -726,7 +719,7 @@ for can_nr in other_candidate_numbers:
     input_seqs = input_seqs.to(device)
     
        
-    w_path = exp_model_dir + "/" + name + "_candidate_" + str(can_nr+1) + "_w_matrix.tsv.gz"
+    w_path = model_output_dir + "/" + name + "_candidate_" + str(can_nr+1) + "_w_matrix.tsv.gz"
     w_df = pd.DataFrame(data=candidate_model.fc.weight.cpu().detach().numpy(), index=network_colors.index)
     w_df.to_csv(w_path, sep='\t', compression='gzip')
 
@@ -737,7 +730,7 @@ for can_nr in other_candidate_numbers:
     g.ax_col_dendrogram.legend(loc='center left',bbox_to_anchor=(1.72,-2),frameon=True)
     g.cax.set_position([1.24, .35, .02, .3])
 
-    clustermap_path = exp_model_dir + "/" + name + "_candidate_" + str(can_nr+1) + "_clustermap.png"
+    clustermap_path = model_output_dir + "/" + name + "_candidate_" + str(can_nr+1) + "_clustermap.png"
     g.savefig(clustermap_path)
 
     # Aligning convolutional filters to train indices sequences, creating pwms
@@ -752,10 +745,10 @@ all_candidates_with_best[best_candidate] = "best"
 
 # Save w (final layer weights) and M (convolutional kernels) to hdf5 file for
 # each candidate. 
-all_model_HDF5_path = exp_model_dir + "/All_model_HDF5_" + name + "_M_w.h5"
+all_model_HDF5_path = model_output_dir + "/All_model_HDF5_" + name + "_M_w.h5"
 fid = h5py.File(all_model_HDF5_path, 'w')
 for idx, can in enumerate(all_candidates):
-    candidate_state_dict = exp_model_dir + "/" + name + "_candidate_" + can + "_state_dict.pt"
+    candidate_state_dict = model_output_dir + "/" + name + "_candidate_" + can + "_state_dict.pt"
     candidate_model = sm.BestInitialConvNet(optimizer, 
                     "MSE", 
                     learning_rate, 
@@ -787,7 +780,7 @@ for key in best_motifs_ppm_dict.keys():
     all_motifs_pfm_dict["best_"+key] = best_motifs_pfm_dict[key]
     
 # Plot all motif logos (also from other candidates)
-all_motif_dir = exp_model_dir + "/AllMotifs"
+all_motif_dir = model_output_dir + "/AllMotifs"
 if not os.path.exists(all_motif_dir):
     os.makedirs(all_motif_dir)
     print("Created all_motif_dir", file=sys.stderr)
@@ -810,20 +803,20 @@ for key in all_motifs_ppm_dict.keys():
     
 # Save big MEME file with all motifs
     
-all_meme_output_path = exp_model_dir + "/All_MEME_motifs_" + name + ".txt"
+all_meme_output_path = model_output_dir + "/All_MEME_motifs_" + name + ".txt"
 su.save_meme(all_motifs_ppm_dict, all_meme_output_path)    
 
-all_motif_ppm_object_path = exp_model_dir + "/All_motifs_ppm_dict_" + name + ".p"
+all_motif_ppm_object_path = model_output_dir + "/All_motifs_ppm_dict_" + name + ".p"
 pickle.dump(all_motifs_ppm_dict, open(all_motif_ppm_object_path, "wb" ) )
 
-all_motif_pfm_object_path = exp_model_dir + "/All_motifs_pfm_dict_" + name + ".p"
+all_motif_pfm_object_path = model_output_dir + "/All_motifs_pfm_dict_" + name + ".p"
 pickle.dump(all_motifs_pfm_dict, open(all_motif_pfm_object_path, "wb" ) )
 
 # Cleaning up calibration files ===========================================
 
 files_to_delete = []
 # r=root, d=directories, f = files
-for r, d, f in os.walk(exp_model_dir):
+for r, d, f in os.walk(model_output_dir):
     for file in f:
         if 'pt' in file and ('fold' in file) or ('initial' in file):
             files_to_delete.append(os.path.join(r, file))
