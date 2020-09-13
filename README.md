@@ -1,42 +1,42 @@
 # scanem 
 
-This GitHub repository contains the files needed and instructions to run the Nextflow pipeline of **scanem**.
+This GitHub repository contains the files needed and instructions to run the Nextflow pipeline of **scanem**. The primary developer of scanem is Jacob Hepkema who is currently a PhD student at the [Wellcome Sanger Insitute](https://www.sanger.ac.uk).
 
 <img src="https://github.com/jacobhepkema/scanem/raw/master/scanem_logo.png" width=300 align=right>
 
 __Q__: What is this? 
 
-__A__: __scanem__ is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs by training on single-cell data. It finds weights for these motifs across pseudo-bulks (weighing their 'impact'). The network is written in pytorch, with the downstream analyses written in R (using ggplot for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with Tomtom from the MEME suite[1]. __scanem__ requires that the cells are annotated for cell type (or other category). Furthermore, TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
+__A__: __scanem__ is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs from single-cell data. It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. The network is written in [pytorch](https://pytorch.org/), with the downstream analyses written in R (using [ggplot2](https://ggplot2.tidyverse.org/) for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with [Tomtom](http://meme-suite.org/tools/tomtom) from the MEME suite[1]. __scanem__ requires that cells are annotated for cell type (or other category). For scRNA-seq data TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
 
 __Q__: All right, so when would I use this?
 
-__A__: If you currently have a clustered scRNA-seq or scATAC-seq dataset, and you want to extract regulatory information from your dataset, you've come to the right place. __scanem__ will work as a 'hypothesis generator' in the sense that it will be hard to pinpoint exactly which transcription factors regulate your dataset (because of motif similarities), but this will generate a list of transcription factors that might be useful to follow up on. Furthermore, __scanem__ gives information about the relative impact of motifs in the different cell types in your dataset.
+__A__: If you have a clustered scRNA-seq or scATAC-seq dataset, and you want to extract regulatory information, you have come to the right place. __scanem__ will work as a 'hypothesis generator' to help you identify the most important regulatory elements for your dataset. In general, it is hard to pinpoint exactly which transcription factors are the importance since many will bind to the same motif family. However, __scanem__ will help you by providing a list of transcription factors that it deems to be the most interesting to follow up on. Furthermore, __scanem__ gives information about the relative impact of motifs in the different cell types in your dataset.
 
 __Q__: How to install/run __scanem__?
 
-__A__: To install __scanem__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scanem__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scanem__ can be found [further down this page](#training-scanem). I advise to run __scanem__ using GPUs, as the run times can increase a lot when using CPUs.
+__A__: To install __scanem__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scanem__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scanem__ can be found [further down this page](#training-scanem). I advise to run __scanem__ using GPUs, as the run times can increase significantly (~5x in some of our benchmarks) when using CPUs.
 
 __Q__: How can I run __scanem__ using GPUs?
 
-__A__: Currently, the Singularity image for training the network only detects CPUs, so for this, you will need to create an anaconda environment with pytorch and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scanem` folder, which contains a `scanem_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
+__A__: Currently, the Singularity image for training the network only detects CPUs, so to use GPUs, you will need to create an anaconda environment with [pytorch](https://pytorch.org/) and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scanem` folder, which contains a `scanem_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
 
 ```{bash}
 conda env create -f scanem_env.yml
 ```
 
-which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. Then, run __scanem__ with `profile -local_gpu` if you want to run locally, or with `profile -lsf_gpu` if you want to use the Platform LSF scheduler. 
+which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. Then, run __scanem__ with `profile -local_gpu` if you want to run locally, or with `profile -lsf_gpu` if you want to use the Platform LSF scheduler. We have not yet tried to run __scanem__ using other schedulers.
 (For running on CPU, the conda step is not needed, as it will use a Singularity image that has the right packages)
 
 __Q__: Can I run this on Windows?
 
-__A__: I haven't tried this, but because this uses Nextflow which is made for UNIX environments, it might get somewhat tricky. I wouldn't advice this; perhaps it's better to run the Nextflow processes one by one rather than using Nextflow. 
+__A__: I have not tried yet, but because __scanem__ uses Nextflow which is made for UNIX environments, it might get somewhat tricky. My advice is to first install a virtual machine if you are using a Windows computer. 
 
 ---------------------------------------------------------------------------------------------------
 ## Workflow
 
 There are three main steps in using __scanem__:
-1. Preparing your dataset - see [this link for scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) or [this link for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html)
-2. Training **scanem** - see the guide further on this page: [link](#training-scanem). 
+1. Preparing your dataset - see [here for scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) and [here for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html)
+2. Training __scanem__ - see the guide further on this [page](#training-scanem). 
 3. Analysing the output - see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_analyse_scanem_output.html)
 
 ## Install/Dependencies
@@ -80,8 +80,8 @@ nextflow run -profile lsf_gpu scanem.nf \
 ```
 
 __scanem__ requires a run name (`--name`), a pooled dataset (`--data`), and pool cell type annotations (`--celldata`). 
-See the guides above on how to create the pooled dataset. Another important argument is `--tomtom`, for specifying
-the motif `.meme` database file to align found motifs to. I've included `Mus_musculus.meme` and `Homo_sapiens.meme`
+See the guides for [scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) and [scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html) on how to create the pooled dataset. Another important argument is `--tomtom`, for specifying
+the motif `.meme` database file to align found motifs to. I have included `Mus_musculus.meme` and `Homo_sapiens.meme`
 from CIS-BP[2] in the `resources` directory. 
 
 Before running __scanem__ you will probably want to identify the best `-profile` to run with. This will define the executor
@@ -102,10 +102,10 @@ It might seem like it is stuck during training as the line with
 ```
 [62/3eb656] process > train_scanem       [  0%] 0 of 1
 ```
-keeps saying `[  0%]`. This is however because the training stage only contains one
+keeps saying `[  0%]`. This happens because the training stage only contains one
 neural network step, and it will switch to `[100%]` once the training is complete. 
 There is a way to find out how far into training the network is, but it is not entirely straightforward:
-Open up a second terminal window and `cd` into the `scanem/work` directory. From there, you 
+Open a second terminal window and `cd` into the `scanem/work` directory. From there, you 
 can `cd` into the directory starting with the code shown in front of the specific 
 task (in this case, `62/3eb656`, so the directory will be something like `scanem/work/77/54aff7aae5e84c420b7aa267dfeb57`). 
 Then, by running `tail .command.log` you can get an idea of how far along the training is. 
@@ -117,17 +117,17 @@ Then, by running `tail .command.log` you can get an idea of how far along the tr
 
 `-profile`
 Choose a specified profile configuration from the `/conf` directory. These profiles are included in the 
-`nextflow.config` file; if you are adding an option don't forget to add it to `nextflow.config`. Options currently include:
+`nextflow.config` file; if you are adding an option do not forget to add it to `nextflow.config`. Options currently include:
 
-* `-profile local_gpu` will run locally, and will use a GPU if available. Note that for the first step, you will need to have the right packages installed (see "How can I run __scanem__ using GPUs?" at the start of this README). 
+* `-profile local_gpu` will run locally, and will use a GPU if available. Note that you need to have the right packages installed (see "How can I run __scanem__ using GPUs?" at the start of this README). 
 * `-profile local_cpu` will run locally, and it will also use Singularity for the first step in the workflow. This will only support CPUs. 
-* `-profile local_nosingularity` will run locally, and will not use Singularity images for any step. 
+* `-profile local_nosingularity` will run locally and will not use Singularity images. 
 * `-profile lsf_gpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using GPUs. This might require some editing of the `conf/lsf_gpu.conf` file to be compatible with GPU queues on your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 * `-profile lsf_cpu` will run using the [Platform LSF](https://en.wikipedia.org/wiki/Platform_LSF) scheduler using CPUs. This might require some editing of the `conf/lsf_cpu.conf` file to be compatible with your LSF setup. See [this page](https://www.nextflow.io/docs/latest/executor.html) for more information on how to specify executors.
 
 #### Important: 
 
-The Singularity environments are quite large, and it might be nice to store them somewhere specific. In the `.conf` file of your choice, I advice adding a line that includes the `cacheDir` such that the images are stored in that directory:
+Since the Singularity environments can be quite large, it might be helpful to store them in a specific location. In the `.conf` file of your choice, I advice adding a line that includes the `cacheDir` such that the images are stored in that directory:
 
 ```
 singularity {
@@ -167,19 +167,19 @@ The path to the `.meme` format motif database to align found motifs to.
 Default value: `resources/Mus_musculus.meme`.
 
 `--num_calibrations`
-The amount of randomly intialized calibrations for hyperparameter optimization. 
+The number of randomly intialized calibrations for hyperparameter optimization. 
 Default value: `30`
 
 `--num_candidates`
-The amount of candidate models with optimal initial parameters that should be run. 
+The number of candidate models with optimal initial parameters that should be run. 
 Default value: `10`
 
 `--val_factor`
-Sets the K in K-fold cross-validation. 
+Sets K for the K-fold cross-validation. 
 Default value: `10`.
 
 `--epochs`
-Sets the amount of epochs (1 epoch = 1 forward and backward cycle through the entire training set) the network goes through. 
+Sets the number of epochs (1 epoch = 1 forward and backward cycle through the entire training set) the network goes through. 
 Default value: `100`
 
 `--batch_size`
