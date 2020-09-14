@@ -35,9 +35,9 @@ __A__: I have not tried yet, but because __scanem__ uses Nextflow which is made 
 ## Workflow
 
 There are three main steps in using __scanem__:
-1. Preparing your dataset - see [here for scRNA-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scRNA_seq.html) and [here for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html)
+1. Preparing your dataset - see [here for scRNA-seq](https://scanem.readthedocs.io/en/latest/how_to_prepare_scanem_input_using_scRNA_seq.html) and [here for scATAC-seq](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_input_using_scATAC_seq.html). For a very quick scRNA-seq data generation script, see [this link](https://scanem.readthedocs.io/en/latest/how_to_prepare_scanem_input_using_create_dataset.html)
 2. Training __scanem__ - see the guide further on this [page](#training-scanem). 
-3. Analysing the output - see [this link](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_analyse_scanem_output.html)
+3. Analysing the output - see [this link](https://scanem.readthedocs.io/en/latest/how_to_analyse_scanem_output.html)
 
 ## Install/Dependencies
 
