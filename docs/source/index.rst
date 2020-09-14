@@ -1,7 +1,7 @@
 scanem
 ======
 
-Welcome to the scanem documentation. 
+Welcome to the **scanem** documentation. This page contains guides on data generation for **scanem** and analysis of **scanem** output. For information on how to run **scanem**, `click here to go to the main repository <https://github.com/jacobhepkema/scanem>` 
 
 **scanem** is a convolutional neural network (CNN) for *de novo* inference of cis-regulatory motifs from single-cell data. 
 It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. 
@@ -17,6 +17,8 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
    :maxdepth: 2
    :caption: Contents:
    
+   How to run scanem <how_to_run_scanem.rst>  
+   Profiles <profiles.rst>
    How to generate scanem input using scRNA-seq data <how_to_prepare_scanem_input_using_scRNA_seq.rst>
    How to generate scanem input using scATAC-seq data <how_to_prepare_scanem_input_using_scATAC_seq.rst>
    How to generate scanem input using scRNA-seq data and create_dataset.R <how_to_prepare_scanem_input_using_create_dataset.rst>
