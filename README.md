@@ -29,6 +29,16 @@ conda env create -f scanem_env.yml
 which will create the `scanem` environment with all the required packages. Before running __scanem__, simply activate the environment with `conda activate scanem` so that when you [start training scanem](#training-scanem) with Nextflow, it will have the right packages. Then, run __scanem__ with `profile -local_gpu` if you want to run locally, or with `profile -lsf_gpu` if you want to use the Platform LSF scheduler. We have not yet tried to run __scanem__ using other schedulers.
 (For running on CPU, the conda step is not needed, as it will use a Singularity image that has the right packages)
 
+__Q__: Can I try running __scanem__ with an example dataset?
+
+__A__: Yes - for this I've added a small mock dataset in the `data` directory. If you have __scanem__ set up, you can run 
+
+```{bash}
+nextflow run -profile local scanem.nf --data data/small_dataset.tsv --celldata data/small_dataset_colData.tsv --name example_run --tomtom resources/Mus_musculus.meme
+```
+
+This will generate output in the `output/example_run` directory. Note that this dataset does not make a lot of sense, it's a sample of 100 genes only. 
+
 __Q__: Can I run this on Windows?
 
 __A__: I have not tried yet, but because __scanem__ uses Nextflow which is made for UNIX environments, it might get somewhat tricky. My advice is to first install a virtual machine if you are using a Windows computer. 
