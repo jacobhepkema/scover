@@ -1,7 +1,7 @@
 scanem
 ======
 
-Welcome to the **scanem** documentation. This page contains guides on data generation for **scanem** and analysis of **scanem** output. For information on how to run **scanem**, `click here to go to the main repository <https://github.com/jacobhepkema/scanem>` 
+Welcome to the **scanem** documentation. This page contains guides on data generation for **scanem** and analysis of **scanem** output. For information on how to run **scanem**, `click here to go to the main repository <https://github.com/jacobhepkema/scanem>`_. 
 
 **scanem** is a convolutional neural network (CNN) for *de novo* inference of cis-regulatory motifs from single-cell data. 
 It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. 
