@@ -34,7 +34,11 @@ __Q__: Can I try running __scanem__ with an example dataset?
 __A__: Yes - for this I've added a small mock dataset in the `data` directory. If you have __scanem__ set up, you can run 
 
 ```{bash}
-nextflow run -profile local scanem.nf --data data/small_dataset.tsv --celldata data/small_dataset_colData.tsv --name example_run --tomtom resources/Mus_musculus.meme
+nextflow run -profile local scanem.nf \
+    --data data/small_dataset.tsv \
+    --celldata data/small_dataset_colData.tsv \
+    --name example_run \
+    --tomtom resources/Mus_musculus.meme
 ```
 
 This will generate output in the `output/example_run` directory. Note that this dataset does not make a lot of sense, it's a sample of 100 genes only. 
