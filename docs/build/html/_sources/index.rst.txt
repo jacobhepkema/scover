@@ -15,13 +15,23 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-   
-   How to run scanem <how_to_run_scanem.rst>  
-   Profiles <profiles.rst>
+   :caption: Dataset creation:
+
    How to generate scanem input using scRNA-seq data <how_to_prepare_scanem_input_using_scRNA_seq.rst>
    How to generate scanem input using scATAC-seq data <how_to_prepare_scanem_input_using_scATAC_seq.rst>
    How to generate scanem input using scRNA-seq data and create_dataset.R <how_to_prepare_scanem_input_using_create_dataset.rst>
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Running scanem:
+   
+   How to run scanem <how_to_run_scanem.rst>  
+   Profiles <profiles.rst>
+ 
+.. toctree::
+   :maxdepth: 2
+   :caption: Analysing scanem output:
+
    How to analyse scanem output <how_to_analyse_scanem_output.rst>  
 
 
