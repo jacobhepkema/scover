@@ -18,6 +18,7 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
    :caption: Contents:
    
    How to generate scanem input using scRNA-seq data <how_to_prepare_scanem_input_using_scRNA_seq.rst>
+   How to generate scanem input using scATAC-seq data <how_to_prepare_scanem_input_using_scATAC_seq.rst>
    How to generate scanem input using scRNA-seq data and create_dataset.R <how_to_prepare_scanem_input_using_create_dataset.rst>
    How to analyse scanem output <how_to_analyse_scanem_output.rst>  
 

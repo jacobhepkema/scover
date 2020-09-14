@@ -1,0 +1,297 @@
+---
+title: "How to prepare scanem input using a scATAC-seq dataset"
+author: "Jacob Hepkema"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+All **scanem** needs as input are sequences and values. These sequences can be
+
+* Promoter sequences
+* Peak sequences
+
+The values then represent transcriptional activity or accessibility across 
+cell pools respectively. 
+
+The way that **scanem** pools cells together is to, for a given pool size, 
+sum the expression or accessibility values of random (mutually exclusive) 
+groups of cells of that size, making sure to only pool cells together of 
+the same cell type. 
+
+That's why you need cell type annotation in addition to a counts matrix to 
+be able to do the pooling. 
+
+In this workflow, I'm starting from a `SingleCellExperiment` object containing scATAC-seq data (see 
+[this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts 
+matrix, follow the instructions on [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are
+starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
+useful information on how to convert this to a `SingleCellExperiment` object. 
+
+For creating a dataset using scRNA-seq data, see the other workflow in this repo. 
+
+## Loading the required packages and helper functions
+
+I'm using the following packages during this part of the workflow:
+
+```{r load_r_packages, eval=TRUE, echo=TRUE, warning=FALSE}
+suppressMessages(library(AnnotationHub))
+suppressMessages(library(assertr))
+suppressMessages(library(Biostrings))
+suppressMessages(library(GenomicRanges))
+suppressMessages(library(Matrix))
+suppressMessages(library(SingleCellExperiment))
+suppressMessages(library(scater))
+suppressMessages(library(stringr))
+
+options(stringsAsFactors = F)
+```
+
+See the end of this page for the full `sessionInfo()`. 
+
+In addition, I get my helper functions (e.g. `pool_cells()`) from this file:
+
+```{r sourcefile}
+source("scanem_helper_functions.R")
+```
+
+**Important**: 
+All of the required R scripts and fasta files are included in the `resources` folder of this repository. 
+
+
+## Creating a dataset from a scRNA-seq dataset
+
+Load your `SingleCellExperiment` object. In this case I'm using a SNARE-seq dataset:
+
+```{r load_sce, eval=T, echo=T}
+sce <- readRDS("/lustre/scratch117/cellgen/team218/JL/sce_objects/raw_sce/SNAREseq/GSE126074_AdBrainCortex_SNAREseq_sce.rds")
+```
+
+I know that the cell type annotations are currently not in `colData(sce)$cell_type1`, 
+but rather in `colData(sce)$Ident`, so I will update this:
+
+```{r update_ann}
+sce$cell_type1 <- sce$Ident
+```
+
+Also make sure that the cell type information does not contain any `NA`s.
+
+```{r remove_na}
+sce <- sce[,!is.na(sce$cell_type1)]
+```
+
+In addition, you could choose not to include cells that have an "unknown" cell type. 
+
+In this case, I know that the dataset contains both genes and peak regions. This is something I do not want in this case, 
+so I will identify where the genes end to select the peaks only. 
+
+```{r peaks_only}
+# Identify index of first row name starting with "chr"
+print(which(str_detect(rownames(sce), "^chr"))[1])
+# See if thats the right one
+print(rownames(sce)[33161]) # first peak
+print(rownames(sce)[33160]) # last gene
+# Select peaks only
+sce <- sce[-c(1:33160),]
+# Check what this looks like
+print(head(rownames(sce)))
+```
+
+## Determining optimal pool size
+
+Pooling cells together for **scanem** is a tradeoff between getting rid of unpredictable zeroes in your count
+matrix and keeping variability between cells and cell types. Generally, a pool size of 100 cells per pool is good, making the sparsity go below 70%. However, 
+it is always good to try a couple of different settings because how sparse the dataset gets after pooling is dependent on your dataset.
+
+Also, it's sometimes not possible to reduce the sparsity up to that level - in that case, 
+it's good to try a couple of different pool sizes to see what works best. 
+
+One way to check how sparsity goes down for different pool sizes is to try it:
+(the `pool_cells()` and `get_sce_sparsity()` functions are from `scanem_helper_functions.R`)
+
+```{r determine_sparsity}
+sparsities <- c()
+for(pool_size in c(12,30,50,100,200)){
+  sparsities <- c(sparsities, get_sce_sparsity(pool_cells(sce, pool_size=pool_size)))
+}
+plot(x=c(12,30,50,100,200), y=sparsities, 
+     main="Sparsity for different pool sizes", 
+     xlab="Pool size", ylab="Sparsity")
+```
+
+Note that for pool sizes beyond a particular size, you lose cell types as they have less than pool_size cells. 
+In this case, I'll use `pool_size = 100`. I use the `pool_cells_follow_cells()` function to keep track of 
+which cells end up in which pools. 
+
+```{r gen_pooled_dataset}
+pool_output <- pool_cells_follow_cells(sce, pool_size=100, keep_smaller_pools = F)
+pooled_sce <- pool_output[[1]]
+pooled_sce_cells_in_pools <- pool_output[[2]]
+```
+
+## Adjust region sizes
+
+In most peak regions, the TF occupies sequences around the middle of the peak. 
+This is why to decrease runtimes and increase signal/noise, it is useful to take the 
+middle 250 bp for each peak region. 
+
+I do this like this:
+
+```{r take_middle}
+peaknames <- rownames(pooled_sce)
+
+peak_start <- as.numeric(str_remove(str_remove(peaknames, "^chr[a-zA-Z0-9]+_"), "_[0-9]+$"))
+peak_end <- as.numeric(str_remove(peaknames, "^chr[a-zA-Z0-9]+_[0-9]+_"))
+peak_chrom <- str_remove(peaknames, "_[0-9]+_[0-9]+$")
+
+peak_middles <- round((peak_end+peak_start)/2)
+peak_start <- peak_middles-125
+peak_end <- peak_middles+124
+
+# Create peak ranges
+peak_ranges_df <- data.frame(seqnames=peak_chrom,
+                              start=peak_start,
+                              end=peak_end)
+peak_ranges <- makeGRangesFromDataFrame(peak_ranges_df)
+```
+
+## Removing peaks that overlap promoter regions
+
+For this particular dataset, I'm interested in finding the signals that lie in 
+distal regulatory regions. I'm going to filter out the peaks that overlap regions between
+-8 kb and +0.5 kb around the transcription start sites.
+
+For this particular dataset, I know that the `mm10` genome was used. 
+I use AnnotationHub to find the annotation for the `mm10` genome, and I 
+With this, I generate promoter (-8 kb to +0.5 kb around TSS) regions:
+
+```{r get_prom_regions}
+ah <- AnnotationHub()
+
+# Let's find mm10 annotation
+query(ah, c("GRCm38", "gtf"))
+mm10_gtf <- ah[["AH69533"]]
+
+# Get unique genes in annotation
+genes <- mm10_gtf[mm10_gtf$type == "gene" & 
+                    seqnames(mm10_gtf) %in% c(1:19, "X", "Y")]
+genes <- genes[!duplicated(genes$gene_name),]
+
+# This defines how many bp upstream and downstream of TSSs you want to extract
+upstream = 8000
+downstream = 500
+
+# This returns a GRanges object:
+promoter_ranges <- GenomicRanges::promoters(genes, 
+                                            upstream = upstream, 
+                                            downstream = downstream)
+seqlevelsStyle(promoter_ranges) <- "UCSC"
+```
+
+Now, I'm going to identify peak regions that overlap these promoter ranges:
+
+```{r find_overlaps_ranges}
+ranges_promoter_overlap <- findOverlaps(peak_ranges, promoter_ranges, ignore.strand=F, minoverlap = 1)
+ranges_overlapping_with_promoter <- unique(ranges_promoter_overlap@from)
+ranges_that_overlap <- (1:length(peak_ranges) %in% ranges_overlapping_with_promoter)
+```
+
+Remove the ranges overlapping promoter ranges:
+
+```{r remove_overlaps}
+# Exclude peak ranges overlapping with promoter_ranges
+peak_ranges <- peak_ranges[!ranges_that_overlap]
+pooled_sce <- pooled_sce[!ranges_that_overlap,]
+```
+
+Now I'll extract the sequences from the `mm10` genome using the peak ranges. 
+The `mm10` genome can be found on `AnnotationHub`. 
+
+```{r get_seqs}
+# Find annotation
+mm10 <- ah[["AH14005"]]
+
+# Get sequences from genome
+sequences <- Biostrings::getSeq(mm10, peak_ranges)
+```
+
+See if any sequences contain "N":
+
+```{r check_n}
+has_n <- str_detect(sequences, "n|N")
+print(sum(has_n))
+```
+
+Remove those:
+
+```{r remove_n}
+sequences <- sequences[!has_n]
+pooled_sce <- pooled_sce[!has_n,]
+```
+
+Let's filter out cells/peaks with too high dropout:
+
+```{r filter_cells_genes}
+data <- logcounts(pooled_sce)
+
+cell_dropouts <- colSums(data == 0) / dim(data)[1]
+too_high_cell_dropouts <- cell_dropouts > 0.98
+cat(sum(too_high_cell_dropouts))
+
+data <- data[,!too_high_cell_dropouts]
+pooled_sce <- pooled_sce[,!too_high_cell_dropouts]
+
+peak_dropouts <- rowSums(data == 0) / dim(data)[2]
+too_high_peak_dropouts <- peak_dropouts > 0.98
+cat(sum(too_high_peak_dropouts))
+
+sequences <- sequences[!too_high_peak_dropouts]
+data <- data[!too_high_peak_dropouts,]
+
+cat("Peak list of", length(sequences), "peaks\n")
+cat("Number of pools:", ncol(data),"\n")
+```
+
+Now let's extract the sequences and to-be-predicted values:
+
+```{r extract_all}
+seqs <- base::tolower(as.character(sequences))
+ind <- assertr::col_concat(data, sep=",")
+```
+
+Now all that's left is to write three tables:
+ 
+1. The table containing the sequences and the to-be-predicted values
+2. The table containing annotations for the different cell pools
+3. The table containing information about which cell ended up in which pool
+
+```{r write_dataset}
+dataset <- data.frame(region=rownames(data),
+                      sequence=seqs,
+                      ind=ind)
+
+write.table(dataset, gzfile("SNARE_seq_Adult_pool100.tsv.gz"), 
+            sep="\t", row.names = F, col.names = T, quote = F)
+write.table(colData(pooled_sce), "SNARE_seq_Adult_pool100_colData.tsv", 
+            sep="\t", row.names = T, col.names = T, quote = F)
+write.table(pooled_sce_cells_in_pools, "SNARE_seq_Adult_pool100_cells_in_pools.tsv", 
+            sep="\t", row.names = T, col.names = T, quote = F)
+```
+
+The first file becomes the input file for the `scanem` argument `--data`, and the 
+second file becomes the input file for the `scanem` argument `--celldata`. 
+
+The third file is so that information is not lost - this makes it possible to 
+reproduce the pooling. 
+
+## Used packages
+
+```{r sessioninfo}
+utils::sessionInfo()
+```
+
+
