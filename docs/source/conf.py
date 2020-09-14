@@ -49,7 +49,8 @@ exclude_patterns = []
 html_theme = 'alabaster'
 
 html_theme_options = {
-	'logo': 'scanem_logo.png'
+	'logo': 'scanem_logo.png',
+	'font_family': 'Helvetica'
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
