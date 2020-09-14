@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>scanem documentation &#8212; scanem  documentation</title>
+    <title>scanem &#8212; scanem  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -32,23 +32,28 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="scanem-documentation">
-<h1>scanem documentation<a class="headerlink" href="#scanem-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the</p>
+  <div class="section" id="scanem">
+<h1>scanem<a class="headerlink" href="#scanem" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the scanem documentation.</p>
+<p><strong>scanem</strong> is a convolutional neural network (CNN) for <em>de novo</em> inference of cis-regulatory motifs from single-cell data.
+It finds weights for these motifs across pseudo-bulks and also reports the ‘impact’ of each motif.
+The network is written in pytorch, with the downstream analyses written in R.
+Running the network and running the downstream analysis is implemented in a Nextflow pipeline.
+Furthermore, motifs are aligned with Tomtom from the MEME suite[1].
+scanem requires that cells are annotated for cell type (or other category).
+For scRNA-seq data TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">how to generate scanem input using scRNA-seq</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">how to generate scanem input using create_dataset.R</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">how to analyse scanem output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">How to generate scanem input using scRNA-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">How to generate scanem input using scRNA-seq data and create_dataset.R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">How to analyse scanem output</a></li>
 </ul>
 </div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>[1]  Gupta, S., Stamatoyannopoulos, J. A., Bailey, T. L., &amp; Noble, W. S. (2007). Quantifying similarity between motifs. Genome biology, 8(2), R24.</p>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
 </div>
 
 
@@ -58,7 +63,12 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">scanem</a></h1>
+<p class="logo">
+  <a href="#">
+    <img class="logo" src="_static/scanem_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
 
 
 
@@ -70,9 +80,9 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">how to generate scanem input using scRNA-seq</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">how to generate scanem input using create_dataset.R</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">how to analyse scanem output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">How to generate scanem input using scRNA-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">How to generate scanem input using scRNA-seq data and create_dataset.R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">How to analyse scanem output</a></li>
 </ul>
 
 <div class="relations">
