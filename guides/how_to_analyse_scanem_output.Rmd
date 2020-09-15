@@ -10,19 +10,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This vignette focusses on further analysing output from **scanem**. After running
-**scanem**, it outputs a couple of different types of information:
+This vignette focusses on downstream analysis of the output from **scanem**. After running
+**scanem**, it outputs two or three different types of information:
 
-1. The weights of the convolutional kernels, or 'motif detectors', which are comparable to PWMs
-2. The alignments of convolutional kernels to a database of motifs, with significance (q-)scores for each alignment
-3. The weights of the neural network, weighing the motif impacts in each pool
+1. The weights of the convolutional kernels, or 'motif detectors'. Conceptually, they are similar to PWMs
+2. The alignments of convolutional kernels to a database of motifs (if such a database is available), with significance (q-)scores for each alignment
+3. The weights of the neural network, representing the importance of the motif impacts in each pool
 
-The final part of **scanem** trains 10 different neural networks, each using a 
-different 90% of the dataset as the training data (and 10% of the dataset as the 
-test data). Each model contains 300 motif detectors, so there are a total of 
-3000 motifs. One of the goals of scanem is to identify motifs and motif clusters 
-that show up repeatedly across the 10 models - we set a threshold of motif 
-clusters that show up in at least half of the models.
+The central part of **scanem** trains 10 different neural network models, each using a 
+different 90% of the dataset for training and the remaining 10% for testing. Each model contains 300 motif detectors, so there are a total of 
+3,000 motifs. To ensure that the results are robust, **scanem** seeks to identify motif clusters 
+that show up repeatedly, therefor we require that a motif 
+cluster should show up in at least half of the models.
 
 The motifs are named as `MODELNUMBER_MOTIFNUMBER`, e.g. motif `2_3` is motif `3` 
 from model `2`. The best performing out of 10 models is named "best" rather than 
@@ -31,18 +30,17 @@ its model number, e.g. motif `best_129`.
 All of the motifs are aligned with Tomtom, the motif comparison tool from the 
 MEME Suite, against a database of known motifs. This generates a tab-separated 
 file containing what motifs aligned to what reference motifs, 
-and the q-values for the alignments.  One of the 
-things to do here is to generate a bipartite graph of the model motifs and the 
-database motifs. Then it becomes possible to select reproducible motifs. For 
+and the q-values for the alignments. This result can be represented as a bipartite graph where the model motifs and the 
+database motifs represent the two categories of nodes. Then it becomes possible to select reproducible motifs. For 
 a visual overview, see the figure below. 
 
 One of the outputs from the model is a HDF5 file containing motif detector and
 neural network weights for each model. The neural network weights are weights
-for each motif detector in each pool - the network uses these to "weigh" the 
+for each motif detector in each pool - the network uses the weights to determine the 
 importance of motifs in the different pools. 
 
-Below you can see a visual overview of the workflow for motif analysis 
-using **scanem**. This workflow will start at the third step, where we have the
+Below is a visual overview of the workflow for motif analysis 
+using **scanem**. The downstream analysis described in this section starts at the third step, where we have obtained
 weights from the models and the motif alignments from Tomtom. 
 
 <center>
@@ -51,7 +49,7 @@ weights from the models and the motif alignments from Tomtom.
 
 ## Loading the required packages and helper functions
 
-During this workflow, I'll use the following packages: (see end of the page for session info):
+During this workflow, I will use the following packages: (see end of the page for session info):
 
 ```{r load_r_packages, eval=TRUE, echo=TRUE, warning=FALSE}
 suppressMessages(library(dplyr))
@@ -70,7 +68,7 @@ suppressMessages(library(reshape2))
 options(stringsAsFactors = F)
 ```
 
-I've added some custom functions to the following file:
+I have added some custom functions to the following file:
 
 ```{r load_helper_functions, eval=TRUE, echo=TRUE, warning=FALSE}
 source("scanem_helper_functions.R")
@@ -101,15 +99,14 @@ dir.create(outdir)
 
 ## Reading the dataset, alignments, and network output
 
-Using the paths defined above, I can now use the functions from 
-`scanem_helper_functions.R` to read the different parts for downstream analysis. 
+Using the paths defined above, I can use the functions from 
+`scanem_helper_functions.R` to read the different parts of the outputs from the neural network for downstream analysis. 
 Firstly, I will construct a `SingleCellExperiment` object using the pooled 
-dataset, read the tomtom output and filter it to include only the genes that are
-expressed in the dataset, and I will read the weights matrix and scale it. 
+dataset. Secondly, I will read the Tomtom output and filter it to include only the genes that are
+expressed in the dataset. Thirdly, I will read the weights matrix and scale it. 
 
-For the latter step, I will scale the weights in the neural network layer by the
-maximum possible motif activation. This way, it will more accurately reflect the
-impact of a motif hit in a particular pool. This is all done using the
+For the third step, I will scale the weights in the neural network layer by the
+maximum absolute motif activation. This is all done using the
 `read_network_hdf5()` function. 
 
 ```{r read_dataset_alignment_network_output, echo=TRUE, results='hide', fig.keep='all', message = FALSE}
@@ -126,11 +123,10 @@ weights_matrix <- read_network_hdf5(exp_folder, sce)
 
 ## Motif alignment graph
 
-I will now use the tomtom alignments to construct a bipartite graph using the 
-Tomtom alignments. After this, I use `igraph::cluster_walktrap()` to cluster
+I will now use the Tomtom alignments to construct a bipartite graph. I then use `igraph::cluster_walktrap()` to cluster
 these alignments, and I use `plot_alignment_graph()` to generate two files in 
-the `outdir`; a motif alignment plot with/without cluster annotation. These 
-plots are quite messy but give a good overview of how many different motif 
+the `outdir`: a motif alignment plot with cluster annotation and another without annotated clusters. Although these 
+plots can often be rather messy, they nevertheless provide a good overview of how many different motif 
 clusters are found. 
 
 ```{r plot_graph, echo=TRUE, results='hide', fig.keep='all', message = FALSE}
@@ -159,7 +155,7 @@ type:
 average_weights_matrix <- construct_average_weights_matrix(weights_matrix)
 ```
 
-I use this function to get information about the motifs in this matrix. This 
+I use the `get_motif_stats` function to get information about the motifs in this matrix. This 
 will also plot the motif annotation as "good" or "bad":
 
 ```{r get_motif_stats, warning = FALSE}
@@ -168,23 +164,22 @@ motif_stats <- get_motif_stats(cluster_df = cluster_df,
                                pseudocount = 1e-11)
 ```
 
-The motif "impact" is how much a motif will affect the expression of cells 
-In many runs you will encounter something like this, where a subgroup of motifs
-has a way lower impact than the others. (I suspect this is because of "dead 
+The motif "impact" is the weight, i.e. how much a motif will affect the expression of cells 
+In many runs you will encounter a situation where a subgroup of motifs
+has much lower impact than the others. (I suspect this is because of "dead 
 ReLUs" in the network). The previous function has annotated the
-lower impact motifs as "bad". 
-(If this function does split good/bad motifs well for you, it might be worth 
+lower impact motifs as "bad". (If this function does not split good/bad motifs well for you, it might be worth 
 changing the `pseudocounts` option of this function to a lower value).
 
 The `get_motif_stats()` function will also create a preliminary motif cluster 
-annotation to show what kind of motifs are included in the cluster. However, 
+annotation which gives an indication of what kind of motifs are included in the cluster. However, 
 this will need to be refined (which we will get to later).
 
 For further analysis, I will only consider motifs from motif clusters that 
-show up in >= 50% of the models, that aligned to known motifs, and that are 
+show up in >=50% of the models, that aligned to known motifs, and that are 
 annotated as "good". 
 
-Let's filter the values so that it only keeps the good motifs:
+Filter the values so that it only keeps the good motifs:
 
 ```{r keep_good_motifs}
 # Get names of good motifs: the ones that have high impact, are from 
