@@ -63,6 +63,17 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
 <li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">How to analyse scanem output</a></li>
 </ul>
 </div>
+<div class="section" id="method-overview">
+<h2>Method overview<a class="headerlink" href="#method-overview" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/method_summary.png"><img alt="Method summary" src="_images/method_summary.png" style="width: 800px;" /></a>
+<p><strong>scanem</strong> tries to predict expression or accessibility values across multiple samples from either promoter sequences or accessible region sequences.
+It does so by simultaneously inferring the features of the sequences that are predictive of the data, and weighing these features across the different samples.</p>
+<p>One downside of scRNA-seq and scATAC-seq datasets is that they are very sparse. This makes it very hard to predict the data. To counter this, we ‘pool cells’ of the same cell type annotation together, and sum their expression / accessibility scores. This way, the sparsity goes down depending on how many cells you ‘pool’ together. One caveat of this is that if you pool 100 cells together in each pool, cell types with fewer than 100 cells will be omitted.</p>
+<p>An example of how sparsity goes down with pool size can be seen here:</p>
+<a class="reference internal image-reference" href="_images/sparsity.png"><img alt="Sparsity example" src="_images/sparsity.png" style="width: 400px;" /></a>
+<p>After this data preprocessing, the network <a class="reference external" href="https://scanem.readthedocs.io/en/latest/how_to_run_scanem.html">can be run</a>. The network is a shallow convolutional neural network, with one convolutional layer, one global maximum pooling layer, and one fully connected layer (with the amount of pools as the amount of output channels). The network will start with initially random convolutional kernels (think of these as “motif detectors”) and fully connected layer weights (think of these as the “impact scores of motifs in the pools”). The training step is the most computationally expensive and can take quite some hours depending on your dataset size. This is why I advice to run <strong>scanem</strong> on GPUs.</p>
+<p>After the training step has been completed, <strong>scanem</strong> will align the motifs back to a motif database using Tomtom [1], build a motif alignment graph, and identify reproducible motif clusters. Though <strong>scanem</strong> will generate some output plots, for further downstream analysis I recommend the guide for analysing <strong>scanem</strong> output <a class="reference external" href="https://scanem.readthedocs.io/en/latest/how_to_analyse_scanem_output.html">here</a></p>
+</div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p>[1]  Gupta, S., Stamatoyannopoulos, J. A., Bailey, T. L., &amp; Noble, W. S. (2007). Quantifying similarity between motifs. Genome biology, 8(2), R24.</p>
