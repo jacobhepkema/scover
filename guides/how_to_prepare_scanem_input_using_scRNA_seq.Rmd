@@ -10,34 +10,24 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-All **scanem** needs as input are sequences and values. These sequences can be
+All **scanem** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
 
 * Promoter sequences
 * Peak sequences
+* UTRs
 
-The values then represent transcriptional activity or accessibility across 
-cell pools respectively. 
+The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scanem** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
 
-The way that **scanem** pools cells together is to, for a given pool size, 
-sum the expression or accessibility values of random (mutually exclusive) 
-groups of cells of that size, making sure to only pool cells together of 
-the same cell type. 
-
-That's why you need cell type annotation in addition to a counts matrix to 
-be able to do the pooling. 
-
-In this workflow, I'm starting from a `SingleCellExperiment` object containing scRNA-seq data (see 
-[this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts 
-matrix, follow the instructions on [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are
-starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
-useful information on how to convert this to a `SingleCellExperiment` object. 
+In this workflow, I am starting from a `SingleCellExperiment` object containing scRNA-seq data (see 
+[this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
+useful information on how to convert this to a `SingleCellExperiment` object.
 
 This workflow is the more detailed data generation file - if you are just 
-interested in creating a dataset quickly, there's a script for this too. 
+interested in creating a dataset quickly, there is a script for this too. 
 You can then start from a `SingleCellExperiment`
 object with the cell type annotation stored in `colData(sce)$cell_type1` (where
 `sce` is the `SingleCellExperiment` object) . See [this page](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html) for more information 
-on the 'quick version'. However, it's always good to pay attention if the steps
+on the 'quick version'. However, it is always a good idea to use your judgement to decide if the steps
 make sense - having a 'human in the loop' for dataset generation and model output 
 analysis will often help. 
 
@@ -45,7 +35,7 @@ For creating a dataset using scATAC-seq data, see the other workflow in this rep
 
 ## Loading the required packages and helper functions
 
-I'm using the following packages during this part of the workflow:
+I am using the following packages during this part of the workflow:
 
 ```{r load_r_packages, eval=TRUE, echo=TRUE, warning=FALSE}
 suppressMessages(library(AnnotationHub))
@@ -74,7 +64,7 @@ All of the required R scripts and fasta files are included in the `data_generati
 
 ## Creating a dataset from a scRNA-seq dataset
 
-Load your `SingleCellExperiment` object. In this case I'm using the bone marrow dataset from Tabula Muris:
+Load your `SingleCellExperiment` object. In this case I am using the bone marrow dataset from Tabula Muris:
 
 ```{r load_sce, eval=T, echo=T}
 sce <- readRDS("TMFACS_Marrow.rds")
@@ -97,15 +87,14 @@ In addition, you could choose not to include cells that have an "unknown" cell t
 
 ## Determining optimal pool size
 
-Pooling cells together for **scanem** is a tradeoff between getting rid of unpredictable zeroes in your count
-matrix and keeping variability between cells and cell types. Generally, the method works reasonably well for 
-datasets between 20% and 50% sparsity - aiming for a sparsity below 50% is usually a good idea. However, 
-it is always good to try a couple of different settings because this is quite dependent on your dataset.
+Pooling cells together for **scanem** is a trade off between getting rid of undesirable zeroes in your count
+matrix and retaining variability between cells and cell types. Generally, the method works reasonably well when the sparsity is between 20% and 50% - aiming for a sparsity below 50% is usually a good idea. However, 
+I recommend that you try a couple of different settings since the performance can depend on your dataset.
 
-Also, it's sometimes not possible to reduce the sparsity up to that level - in that case, 
-it's good to try a couple of different pool sizes to see what works best. 
+Also, it is sometimes impossible to reduce the sparsity to the desired level - in that case, 
+I recommend that you try a couple of different pool sizes to see what works best. 
 
-One way to check how sparsity goes down for different pool sizes is to try it:
+One way to check how sparsity goes down for different pool sizes is through:
 (the `pool_cells()` and `get_sce_sparsity()` functions are from `scanem_helper_functions.R`)
 
 ```{r determine_sparsity}
@@ -118,11 +107,10 @@ plot(x=c(12,30,50,100,200), y=sparsities,
      xlab="Pool size", ylab="Sparsity")
 ```
 
-As you can see, for this particular dataset, there is not a lot of benefit of pooling beyond pool size 50.
-Because genes with very low dropout will be filtered out, the dropout ratio will likely go down beyond this. 
-Note that for pool sizes beyond a particular size, you lose cell types as they have less than pool_size cells.
+As you can see, for this particular dataset, the sparsity is barely reduced once the pool size is greater than 50.
+Note that for large pool sizes, you will lose cell types as they have fewer than `pool_size` cells.
 
-In this case, I'll use `pool_size = 50`. I use the `pool_cells_follow_cells()` function to keep track of 
+In this case, I will use `pool_size = 50`. I use the `pool_cells_follow_cells()` function to keep track of 
 which cells end up in which pools. 
 
 ```{r gen_pooled_dataset}
@@ -133,9 +121,8 @@ pooled_sce_cells_in_pools <- pool_output[[2]]
 
 ## Extracting sequences
 
-For this particular dataset, I know that `mm10` was used, so I'll open the relevant sequences from the mm10 
-genome with 500 bp upstream and 500 bp downstream of the TSS for each gene.
-This file is included in the `data_generation` folder of this repository. 
+For this particular dataset, I know that `mm10` was used, so I will obtain the relevant sequences from the mm10 
+genome with 500 bp upstream and 500 bp downstream of the TSS for each gene. This file is included in the `data_generation` folder of this repository.
 
 ```{r get_seqs}
 seqs <- Biostrings::readDNAStringSet("./mm10_500up500down_promoters.fa.gz")
@@ -150,12 +137,11 @@ not_in_fasta <- genelist[!(genelist %in% names(seqs))]
 length(not_in_fasta)
 ```
 
-If this last number (`length(not_in_fasta)`) is very high, it's likely that you are using the wrong version 
-of the genome. 
-I've included other fasta files for these sequences in this repository; e.g. `hg38_500up500down_promoters.fa.gz`. 
+If this last number (`length(not_in_fasta)`) is very high, it is likely that you are using the wrong version 
+of the genome. I have included other fasta files for these sequences in this repository; e.g. `hg38_500up500down_promoters.fa.gz`. 
 It is also possible to extract your own sequences using `AnnotationHub` - I've created a guide at `how_to_extract_promoter_sequences.Rmd`.
 
-Let's filter out cells/genes with too high dropout:
+Filter out cells/genes with too high dropout:
 
 ```{r filter_cells_genes}
 genelist <- genelist[genelist %in% names(seqs)]
@@ -177,16 +163,16 @@ cat("Genelist of", length(genelist), "genes\n")
 cat("Cell/pool number:", ncol(data),"\n")
 ```
 
-Now let's extract the sequences and to-be-predicted values:
+Extract the sequences and the values to be used for the prediction task:
 
 ```{r extract_all}
 seqs <- base::tolower(as.character(seqs[genelist]))
 ind <- assertr::col_concat(data[genelist,], sep=",")
 ```
 
-Now all that's left is to write three tables:
+Now all that is left is to write three tables:
  
-1. The table containing the sequences and the to-be-predicted values
+1. The table containing the sequences and the associated values
 2. The table containing annotations for the different cell pools
 3. The table containing information about which cell ended up in which pool
 
@@ -204,7 +190,7 @@ write.table(pooled_sce_cells_in_pools, "TMFACS_Marrow_pool50_cells_in_pools.tsv"
 ```
 
 You want to pass file 1) to the `--data` argument of scanem, and argument 2) to
-`--celldata` of scanem. For more information on how to run **scanem**, see the main readme file 
+`--celldata` of scanem. The third file ensures that it is possible to reproduce the pooling. For more information on how to run **scanem**, see the main readme file 
 in the root of this repository. 
 
 
