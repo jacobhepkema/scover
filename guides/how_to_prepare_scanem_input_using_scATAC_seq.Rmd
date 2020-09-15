@@ -10,33 +10,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-All **scanem** needs as input are sequences and values. These sequences can be
+All **scanem** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
 
 * Promoter sequences
 * Peak sequences
+* UTRs
 
-The values then represent transcriptional activity or accessibility across 
-cell pools respectively. 
+The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scanem** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
 
-The way that **scanem** pools cells together is to, for a given pool size, 
-sum the expression or accessibility values of random (mutually exclusive) 
-groups of cells of that size, making sure to only pool cells together of 
-the same cell type. 
-
-That's why you need cell type annotation in addition to a counts matrix to 
-be able to do the pooling. 
-
-In this workflow, I'm starting from a `SingleCellExperiment` object containing scATAC-seq data (see 
-[this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts 
-matrix, follow the instructions on [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are
-starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
+In this workflow, I am starting from a `SingleCellExperiment` object containing scATAC-seq data (see 
+[this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
 useful information on how to convert this to a `SingleCellExperiment` object. 
 
 For creating a dataset using scRNA-seq data, see the other workflow in this repo. 
 
 ## Loading the required packages and helper functions
 
-I'm using the following packages during this part of the workflow:
+I am using the following packages during this part of the workflow:
 
 ```{r load_r_packages, eval=TRUE, echo=TRUE, warning=FALSE}
 suppressMessages(library(AnnotationHub))
@@ -65,14 +55,14 @@ All of the required R scripts and fasta files are included in the `resources` fo
 
 ## Creating a dataset from a scRNA-seq dataset
 
-Load your `SingleCellExperiment` object. In this case I'm using a SNARE-seq dataset:
+Load your `SingleCellExperiment` object. In this case I am using a SNARE-seq dataset with cells from the adult mouse visual cortex:
 
 ```{r load_sce, eval=T, echo=T}
 sce <- readRDS("/lustre/scratch117/cellgen/team218/JL/sce_objects/raw_sce/SNAREseq/GSE126074_AdBrainCortex_SNAREseq_sce.rds")
 ```
 
 I know that the cell type annotations are currently not in `colData(sce)$cell_type1`, 
-but rather in `colData(sce)$Ident`, so I will update this:
+but rather in `colData(sce)$Ident`, so I update the object:
 
 ```{r update_ann}
 sce$cell_type1 <- sce$Ident
@@ -103,12 +93,8 @@ print(head(rownames(sce)))
 
 ## Determining optimal pool size
 
-Pooling cells together for **scanem** is a tradeoff between getting rid of unpredictable zeroes in your count
-matrix and keeping variability between cells and cell types. Generally, a pool size of 100 cells per pool is good, making the sparsity go below 70%. However, 
-it is always good to try a couple of different settings because how sparse the dataset gets after pooling is dependent on your dataset.
-
-Also, it's sometimes not possible to reduce the sparsity up to that level - in that case, 
-it's good to try a couple of different pool sizes to see what works best. 
+Pooling cells together for **scanem** is a trade off between getting rid of undesired zeroes in your count
+matrix and retaining variability between cells and cell types. For the datasets that I have worked with so far, a pool size of 100 cells per pool is good, as it reduces the sparsity below 70%. However, I recommend that you try a couple of different settings since the number of remaining pools and the sparsity is dependent on your dataset. Sometimes it is impossible to reduce the sparsity below 70% - in that case, I recommend that you try a couple of different pool sizes to see what works best. 
 
 One way to check how sparsity goes down for different pool sizes is to try it:
 (the `pool_cells()` and `get_sce_sparsity()` functions are from `scanem_helper_functions.R`)
@@ -123,8 +109,8 @@ plot(x=c(12,30,50,100,200), y=sparsities,
      xlab="Pool size", ylab="Sparsity")
 ```
 
-Note that for pool sizes beyond a particular size, you lose cell types as they have less than pool_size cells. 
-In this case, I'll use `pool_size = 100`. I use the `pool_cells_follow_cells()` function to keep track of 
+Note that for pool sizes beyond a particular size, you lose cell types as they have fewer than `pool_size` cells. 
+In this case, I will use `pool_size = 100`. I use the `pool_cells_follow_cells()` function to keep track of 
 which cells end up in which pools. 
 
 ```{r gen_pooled_dataset}
@@ -135,11 +121,9 @@ pooled_sce_cells_in_pools <- pool_output[[2]]
 
 ## Adjust region sizes
 
-In most peak regions, the TF occupies sequences around the middle of the peak. 
-This is why to decrease runtimes and increase signal/noise, it is useful to take the 
-middle 250 bp for each peak region. 
+In most peak regions, TFs occupy sequences around the middle of the peak. To decrease runtimes and increase signal/noise, it is useful to take the 
+middle 250 bp for each peak region:
 
-I do this like this:
 
 ```{r take_middle}
 peaknames <- rownames(pooled_sce)
@@ -161,13 +145,7 @@ peak_ranges <- makeGRangesFromDataFrame(peak_ranges_df)
 
 ## Removing peaks that overlap promoter regions
 
-For this particular dataset, I'm interested in finding the signals that lie in 
-distal regulatory regions. I'm going to filter out the peaks that overlap regions between
--8 kb and +0.5 kb around the transcription start sites.
-
-For this particular dataset, I know that the `mm10` genome was used. 
-I use AnnotationHub to find the annotation for the `mm10` genome, and I 
-With this, I generate promoter (-8 kb to +0.5 kb around TSS) regions:
+For this particular dataset, I am interested in finding the regulatory elements in peaks from distal regulatory regions. I am going to filter out the peaks that overlap regions between -8 kb and +0.5 kb around the transcription start sites. Since I know that the `mm10` genome was used I use AnnotationHub to find the corresponding annotation, and I use it to generate promoter regions:
 
 ```{r get_prom_regions}
 ah <- AnnotationHub()
@@ -192,7 +170,7 @@ promoter_ranges <- GenomicRanges::promoters(genes,
 seqlevelsStyle(promoter_ranges) <- "UCSC"
 ```
 
-Now, I'm going to identify peak regions that overlap these promoter ranges:
+I can identify peak regions that overlap these promoter ranges:
 
 ```{r find_overlaps_ranges}
 ranges_promoter_overlap <- findOverlaps(peak_ranges, promoter_ranges, ignore.strand=F, minoverlap = 1)
@@ -208,8 +186,7 @@ peak_ranges <- peak_ranges[!ranges_that_overlap]
 pooled_sce <- pooled_sce[!ranges_that_overlap,]
 ```
 
-Now I'll extract the sequences from the `mm10` genome using the peak ranges. 
-The `mm10` genome can be found on `AnnotationHub`. 
+Now I will extract the sequences from the `mm10` genome using the peak ranges. 
 
 ```{r get_seqs}
 # Find annotation
@@ -233,7 +210,7 @@ sequences <- sequences[!has_n]
 pooled_sce <- pooled_sce[!has_n,]
 ```
 
-Let's filter out cells/peaks with too high dropout:
+Filter out cells/peaks with too high dropout:
 
 ```{r filter_cells_genes}
 data <- logcounts(pooled_sce)
@@ -256,16 +233,16 @@ cat("Peak list of", length(sequences), "peaks\n")
 cat("Number of pools:", ncol(data),"\n")
 ```
 
-Now let's extract the sequences and to-be-predicted values:
+Extract the sequences and the values to be used for the prediction task:
 
 ```{r extract_all}
 seqs <- base::tolower(as.character(sequences))
 ind <- assertr::col_concat(data, sep=",")
 ```
 
-Now all that's left is to write three tables:
+Now all that is left is to write three tables:
  
-1. The table containing the sequences and the to-be-predicted values
+1. The table containing the sequences and the associated values
 2. The table containing annotations for the different cell pools
 3. The table containing information about which cell ended up in which pool
 
@@ -285,8 +262,7 @@ write.table(pooled_sce_cells_in_pools, "SNARE_seq_Adult_pool100_cells_in_pools.t
 The first file becomes the input file for the `scanem` argument `--data`, and the 
 second file becomes the input file for the `scanem` argument `--celldata`. 
 
-The third file is so that information is not lost - this makes it possible to 
-reproduce the pooling. 
+The third file ensures that it is possible to reproduce the pooling. 
 
 ## Used packages
 
