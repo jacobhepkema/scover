@@ -93,7 +93,7 @@ colData_path <- "~/jh47/maydev_2/data/20200901_tm_7organs_pool80_5u5d_colData.ts
 motif_db_path <- "~/jh47/maydev_2/resources/Mus_musculus.meme"
 
 # Output directory
-outdir <- "20200909_test_out"
+outdir <- "20200916_test_out"
 dir.create(outdir)
 ```
 
@@ -358,7 +358,7 @@ Using the following function, you can plot the correlations and expression
 values for the different motif families, while annotating the top x hits per 
 motif family:
 
-```{r plot_motif_families}
+```{r plot_motif_families,  fig.height = 10, fig.width = 10}
 plot_motif_family_correlation_overview(cluster_correlations_df, top_n = 5)
 ```
 
