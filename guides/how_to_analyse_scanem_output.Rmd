@@ -93,7 +93,7 @@ colData_path <- "~/jh47/maydev_2/data/20200901_tm_7organs_pool80_5u5d_colData.ts
 motif_db_path <- "~/jh47/maydev_2/resources/Mus_musculus.meme"
 
 # Output directory
-outdir <- "20200916_test_out"
+outdir <- "20200909_test_out"
 dir.create(outdir)
 ```
 
@@ -196,8 +196,7 @@ average_weights_matrix <- average_weights_matrix[good_motifs,]
 
 ## Plotting the motif weights across cell types
 
-If we were to plot the average weights of the motifs across the cell types, it 
-would look something like this:
+We can plot the average weights of the motifs across the cell types as a heatmap:
 
 ```{r plot_avg_w_mat, fig.height = 8, fig.width = 12}
 # Only use this function if you have 10 or fewer motif clusters at this point.
@@ -212,13 +211,11 @@ pheatmap(average_weights_matrix,
          cellheight = .5)
 ```
 
-Here, every row corresponds to a motif detector and every column corresponds to 
+Here, each row corresponds to a motif detector and each column corresponds to 
 a cell type. 
 
-As you can see, a small subset of the motifs has the largest impact. In this 
-case, this seems to be the `Gabpa/Erg/Etv5/...` cluster (ETS family motifs). One
-other thing to note is that many of the motif clusters do not cluster together 
-all too well.
+As you can see, a small subset of the motifs near the top has the largest impact. If you have good eyes, you may be able to tell that it is the `Gabpa/Erg/Etv5/...` cluster (ETS family motifs). One
+other thing to note is that many of the motif clusters do not cluster together very well.
 
 If we instead plot Z-transformed motif weights, it looks like this:
 
@@ -233,18 +230,13 @@ pheatmap(average_weights_matrix_z_scores,
          cellwidth = 8, 
          cellheight = .5)
 ```
-
-Already you can see that the motif clusters cluster together much better. Do 
-note that the relative impacts of motifs in a single cell type cannot be deduced
-from this heatmap, as the values have been transformed *per row*. What this does
-show is the general 'trend' of the weights of a motif across the cell types. 
+You can see from the leftmost column that motifs from the same family cluster much better. Please keep in mind that the relative impacts of motifs in a single cell type can no longer be deduced from this heatmap, as the values have been transformed *per row*. The advantage of this representation is that it emphasizes the relative weights of a motif across cell types. 
 
 Z-scores can, however, inflate the differences between cell types. This is why 
-it is beneficial to have another score that tells you something about how 
-"cell-type-specific" a motif weight really is. For this, the 
-"motif cell type entropy" score has been calculated for each motif, which is the 
-normalised Shannon entropy of a motif weight across cell types. The lower this 
-score is, the further from a uniform distribution the weight distribution is. 
+it is beneficial to have another score that tells you how 
+"cell-type-specific" a motif is based on the weights. Thus, we calculate a 
+"motif cell type entropy" score for each motif. This is defined as the 
+normalised Shannon entropy of a motif weight across cell types. A value of 1 indicates that the weights are the same across all cell types and lower scores indicate a more cell type specific distribution. 
 
 Let's plot the motifs along with the entropy scores. I will also order the 
 motifs for their motif cluster annotation:
@@ -262,32 +254,20 @@ pheatmap(average_weights_matrix_z_scores[order(motif_stats$cluster_annot),],
 ```
 
 Now, the added `motif_celltype_entropy` annotation in white/green will tell you
-how cell-type-specific the weights are (whiter = more specific). As you can see,
-the `E2f1` cluster is particularly specific, the `Klf6/Sp2/Sp3...` cluster has
-quite mixed scores, and some other clusters, such as `Zfp143/Smarcc2...`, are
-less specific. 
+how cell type specific the weights are (whiter = more specific). As you can see,
+the `E2f1` cluster is the most specific with high weights for neurons, while other clusters, such as `Zfp143/...`, are less specific. 
 
 
 ## Refining motif cluster annotations
 
-The current motif cluster annotation is very unspecific. It would be nice to 
-identify which of the transcription factors (TFs) from this list is the one 
-that's the most likely candidate. However, this is one of the more manual steps 
-in this analysis. 
+The current motif cluster annotation is not very specific, but this is a consequence of the fact that most motifs can be bound by multiple TFs making it impossible to tell which one is binding. Nevertheless, if expression information is available we can take advantage of it to identify the most likely candidate. The underlying assumption here is that TFs with a higher (absolute) correlation are more likely to be involved in the regulation. Please note that this is one of the more bespoke steps in this analysis and it is difficult to fully automate. 
 
-To get more information on the TF candidates in the motif cluster, we can 
-exploit the fact that we have expression information for the different 
-TFs. One thing we can then do is look at the correlations of the expression of 
-the TFs in the motif cluster and the pattern of the motif weights across cell
-types. 
 
 The following code will produce plots in the `outdir` that show the expression
 pattern for the different cluster candidates, including a Spearman correlation 
-score for the different cluster candidate TFs. 
-
-In addition to this, it will generate directories per motif cluster that contain
-the different plots that led to these correlation scores. It will also return a
-DataFrame that contains the 
+score for the different cluster candidate TFs. In addition, it will generate directories per motif cluster that contain
+the different plots that show how the expression and weight values are related. It will also return a
+DataFrame that contains the relevant information
 
 ```{r plot_cluster_candidates, warning=FALSE, eval=TRUE}
 cluster_correlations_df <- plot_candidate_tf_information(cluster_df = cluster_df, 
@@ -296,29 +276,28 @@ cluster_correlations_df <- plot_candidate_tf_information(cluster_df = cluster_df
                               sce = sce, 
                               tomtom_table = tomtom_table)
 ```
-
-Let's look at an example, where the cluster with Yy1 and Mbtps2 is analysed:
+As an example we consider the cluster with Yy1 and Mbtps2. One of the figures generated by the above function shows the expression levels of the different genes in the family across cell types:
 
 <center>
 ![scanem_output_workflow](20200909_test_out/Candidate_TF_expression_heatmap_Mbtps2_Yy1.png)
 </center>
 
-Here, we can see that Yy1 has a higher correlation to the motif weights (green)
+On the left we can see that Yy1 has a higher correlation to the motif weights (green)
 and more Tomtom alignments (purple) than Mbtps2, making it the more likely 
 candidate. 
 
-Let's take a look at the correlation plots for these two:
+Let's take a closer look at the correlation plots for these two:
 
 <center>
 ![Yy1](20200909_test_out/Cluster_Mbtps2_Yy1/Correlation_no_annot_TF_Yy1.png){width=50%} ![Mbtps2](20200909_test_out/Cluster_Mbtps2_Yy1/Correlation_no_annot_TF_Mbtps2.png){width=50%}
 </center>
 
-Here, the cell types are annotated by color. There is an alternative plot generated 
-by the earlier function that adds cell type labels, but those plots can get quite
-busy. 
+Here, the cell types are annotated by color. There is also a plot generated 
+by `plot_candidate_tf_information` that adds cell type labels, but those plots can get quite
+busy when there are many cell types present. 
 
-Using this information, we can update motif cluster annotations. Sometimes it's
-hard to narrow it down to the exact transcription factor, in which case I 
+We can now update motif cluster annotations using the correlation information. Sometimes it is
+hard to identify a single transcription factor, in which case I 
 annotate the cluster with the motif family names. Sometimes it can be good to 
 look at individual motifs in the motif cluster and look directly at the 
 alignments in Tomtom; for this, see the `all_tomtom/tomtom.html` webpage 
@@ -354,11 +333,11 @@ pheatmap(average_weights_matrix_z_scores[order(motif_stats$cluster_annot),],
 
 ## Plotting all motif family correlations
 
-Using the following function, you can plot the correlations and expression 
+It is helpful to be able to view the correlations for all TFs related to the motif families reported by the network. Using the following function, you can plot the correlations and expression 
 values for the different motif families, while annotating the top x hits per 
 motif family:
 
-```{r plot_motif_families,  fig.height = 10, fig.width = 10}
+```{r plot_motif_families}
 plot_motif_family_correlation_overview(cluster_correlations_df, top_n = 5)
 ```
 
@@ -375,8 +354,8 @@ plot_motif_family_weights_across_celltypes(weights_matrix = weights_matrix,
 ```
 
 (If this plot returns a blank plot for you, the `motif_family` you specified is
-probably not spelled right. You can check `unique(motif_stats$cluster_annot)` to
-see which motif families to choose from)
+probably not spelled correctly. You can check `unique(motif_stats$cluster_annot)` to
+find out which motif families are available)
 
 As you can see here, the ETS family motifs are higher in immune cells (on the
 right) and lowest in neurons (on the left).
