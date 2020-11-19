@@ -1,7 +1,7 @@
 scover
 ======
 
-Welcome to the **scover** documentation. This page contains guides on data generation for **scover** and analysis of **scanem** output. For information on how to run **scanem**, `click here to go to the main repository <https://github.com/jacobhepkema/scanem>`_. 
+Welcome to the **scover** documentation. This page contains guides on data generation for **scover** and analysis of **scover** output. For information on how to run **scanem**, `click here to go to the main repository <https://github.com/jacobhepkema/scanem>`_. 
 
 **scover** is a convolutional neural network (CNN) for *de novo* inference of cis-regulatory motifs from single-cell data. 
 It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. 
@@ -55,9 +55,9 @@ An example of how sparsity goes down with pool size can be seen here:
    :width: 400
    :alt: Sparsity example
 
-After this data preprocessing, the network `can be run <https://scover.readthedocs.io/en/latest/how_to_run_scover.html>`_. The network is a shallow convolutional neural network, with one convolutional layer, one global maximum pooling layer, and one fully connected layer (with the amount of pools as the amount of output channels). The network will start with initially random convolutional kernels (think of these as "motif detectors") and fully connected layer weights (think of these as the "impact scores of motifs in the pools"). The training step is the most computationally expensive and can take quite some hours depending on your dataset size. This is why I advice to run **scanem** on GPUs. 
+After this data preprocessing, the network `can be run <https://scover.readthedocs.io/en/latest/how_to_run_scover.html>`_. The network is a shallow convolutional neural network, with one convolutional layer, one global maximum pooling layer, and one fully connected layer (with the amount of pools as the amount of output channels). The network will start with initially random convolutional kernels (think of these as "motif detectors") and fully connected layer weights (think of these as the "impact scores of motifs in the pools"). The training step is the most computationally expensive and can take quite some hours depending on your dataset size. This is why I advice to run **scover** on GPUs. 
 
-After the training step has been completed, **scover** will align the motifs back to a motif database using Tomtom [1], build a motif alignment graph, and identify reproducible motif clusters. Though **scover** will generate some output plots, for further downstream analysis I recommend the guide for analysing **scanem** output `here <https://scanem.readthedocs.io/en/latest/how_to_analyse_scanem_output.html>`_
+After the training step has been completed, **scover** will align the motifs back to a motif database using Tomtom [1], build a motif alignment graph, and identify reproducible motif clusters. Though **scover** will generate some output plots, for further downstream analysis I recommend the guide for analysing **scover** output `here <https://scanem.readthedocs.io/en/latest/how_to_analyse_scanem_output.html>`_
 
 
 References
