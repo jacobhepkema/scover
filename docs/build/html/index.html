@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>scanem &#8212; scanem  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <title>scover &#8212; scover  documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -15,7 +15,7 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to prepare scanem input using scRNA-seq data" href="how_to_prepare_scanem_input_using_scRNA_seq.html" />
+    <link rel="next" title="How to prepare scover input using scRNA-seq data" href="how_to_prepare_scover_input_using_scRNA_seq.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,47 +32,47 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="scanem">
-<h1>scanem<a class="headerlink" href="#scanem" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the <strong>scanem</strong> documentation. This page contains guides on data generation for <strong>scanem</strong> and analysis of <strong>scanem</strong> output. For information on how to run <strong>scanem</strong>, <a class="reference external" href="https://github.com/jacobhepkema/scanem">click here to go to the main repository</a>.</p>
-<p><strong>scanem</strong> is a convolutional neural network (CNN) for <em>de novo</em> inference of cis-regulatory motifs from single-cell data.
+  <div class="section" id="scover">
+<h1>scover<a class="headerlink" href="#scover" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the <strong>scover</strong> documentation. This page contains guides on data generation for <strong>scover</strong> and analysis of <strong>scanem</strong> output. For information on how to run <strong>scanem</strong>, <a class="reference external" href="https://github.com/jacobhepkema/scanem">click here to go to the main repository</a>.</p>
+<p><strong>scover</strong> is a convolutional neural network (CNN) for <em>de novo</em> inference of cis-regulatory motifs from single-cell data.
 It finds weights for these motifs across pseudo-bulks and also reports the ‘impact’ of each motif.
 The network is written in pytorch, with the downstream analyses written in R.
 Running the network and running the downstream analysis is implemented in a Nextflow pipeline.
 Furthermore, motifs are aligned with Tomtom from the MEME suite[1].
-scanem requires that cells are annotated for cell type (or other category).
+scover requires that cells are annotated for cell type (or other category).
 For scRNA-seq data TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Dataset creation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">How to generate scanem input using scRNA-seq data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scATAC_seq.html">How to generate scanem input using scATAC-seq data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">How to generate scanem input using scRNA-seq data and create_dataset.R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scRNA_seq.html">How to generate scover input using scRNA-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scATAC_seq.html">How to generate scover input using scATAC-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_create_dataset.html">How to generate scover input using scRNA-seq data and create_dataset.R</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Running scanem:</span></p>
+<p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_run_scanem.html">How to run scanem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_run_scover.html">How to run scover</a></li>
 <li class="toctree-l1"><a class="reference internal" href="profiles.html">Profiles</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Analysing scanem output:</span></p>
+<p class="caption"><span class="caption-text">Analysing scover output:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">How to analyse scanem output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scover_output.html">How to analyse scover output</a></li>
 </ul>
 </div>
 <div class="section" id="method-overview">
 <h2>Method overview<a class="headerlink" href="#method-overview" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/method_summary.png"><img alt="Method summary" src="_images/method_summary.png" style="width: 800px;" /></a>
-<p><strong>scanem</strong> tries to predict expression or accessibility values across multiple samples from either promoter sequences or accessible region sequences.
+<p><strong>scover</strong> tries to predict expression or accessibility values across multiple samples from either promoter sequences or accessible region sequences.
 It does so by simultaneously inferring the features of the sequences that are predictive of the data, and weighing these features across the different samples.</p>
 <p>One downside of scRNA-seq and scATAC-seq datasets is that they are very sparse. This makes it very hard to predict the data. To counter this, we ‘pool cells’ of the same cell type annotation together, and sum their expression / accessibility scores. This way, the sparsity goes down depending on how many cells you ‘pool’ together. One caveat of this is that if you pool 100 cells together in each pool, cell types with fewer than 100 cells will be omitted.</p>
 <p>An example of how sparsity goes down with pool size can be seen here:</p>
 <a class="reference internal image-reference" href="_images/sparsity.png"><img alt="Sparsity example" src="_images/sparsity.png" style="width: 400px;" /></a>
-<p>After this data preprocessing, the network <a class="reference external" href="https://scanem.readthedocs.io/en/latest/how_to_run_scanem.html">can be run</a>. The network is a shallow convolutional neural network, with one convolutional layer, one global maximum pooling layer, and one fully connected layer (with the amount of pools as the amount of output channels). The network will start with initially random convolutional kernels (think of these as “motif detectors”) and fully connected layer weights (think of these as the “impact scores of motifs in the pools”). The training step is the most computationally expensive and can take quite some hours depending on your dataset size. This is why I advice to run <strong>scanem</strong> on GPUs.</p>
-<p>After the training step has been completed, <strong>scanem</strong> will align the motifs back to a motif database using Tomtom [1], build a motif alignment graph, and identify reproducible motif clusters. Though <strong>scanem</strong> will generate some output plots, for further downstream analysis I recommend the guide for analysing <strong>scanem</strong> output <a class="reference external" href="https://scanem.readthedocs.io/en/latest/how_to_analyse_scanem_output.html">here</a></p>
+<p>After this data preprocessing, the network <a class="reference external" href="https://scover.readthedocs.io/en/latest/how_to_run_scover.html">can be run</a>. The network is a shallow convolutional neural network, with one convolutional layer, one global maximum pooling layer, and one fully connected layer (with the amount of pools as the amount of output channels). The network will start with initially random convolutional kernels (think of these as “motif detectors”) and fully connected layer weights (think of these as the “impact scores of motifs in the pools”). The training step is the most computationally expensive and can take quite some hours depending on your dataset size. This is why I advice to run <strong>scanem</strong> on GPUs.</p>
+<p>After the training step has been completed, <strong>scover</strong> will align the motifs back to a motif database using Tomtom [1], build a motif alignment graph, and identify reproducible motif clusters. Though <strong>scover</strong> will generate some output plots, for further downstream analysis I recommend the guide for analysing <strong>scanem</strong> output <a class="reference external" href="https://scanem.readthedocs.io/en/latest/how_to_analyse_scanem_output.html">here</a></p>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
@@ -89,7 +89,7 @@ It does so by simultaneously inferring the features of the sequences that are pr
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="#">
-    <img class="logo" src="_static/scanem_logo.png" alt="Logo"/>
+    <img class="logo" src="_static/scover_logo.png" alt="Logo"/>
     
   </a>
 </p>
@@ -104,25 +104,25 @@ It does so by simultaneously inferring the features of the sequences that are pr
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Dataset creation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">How to generate scanem input using scRNA-seq data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scATAC_seq.html">How to generate scanem input using scATAC-seq data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">How to generate scanem input using scRNA-seq data and create_dataset.R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scRNA_seq.html">How to generate scover input using scRNA-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scATAC_seq.html">How to generate scover input using scATAC-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_create_dataset.html">How to generate scover input using scRNA-seq data and create_dataset.R</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Running scanem:</span></p>
+<p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_run_scanem.html">How to run scanem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_run_scover.html">How to run scover</a></li>
 <li class="toctree-l1"><a class="reference internal" href="profiles.html">Profiles</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Analysing scanem output:</span></p>
+<p class="caption"><span class="caption-text">Analysing scover output:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">How to analyse scanem output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scover_output.html">How to analyse scover output</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="how_to_prepare_scanem_input_using_scRNA_seq.html" title="next chapter">How to prepare scanem input using scRNA-seq data</a></li>
+      <li>Next: <a href="how_to_prepare_scover_input_using_scRNA_seq.html" title="next chapter">How to prepare scover input using scRNA-seq data</a></li>
   </ul></li>
 </ul>
 </div>
@@ -152,7 +152,7 @@ It does so by simultaneously inferring the features of the sequences that are pr
       &copy;2020, Jacob Hepkema.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

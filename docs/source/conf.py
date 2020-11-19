@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'scanem'
+project = 'scover'
 copyright = '2020, Jacob Hepkema'
 author = 'Jacob Hepkema'
 
@@ -49,7 +49,7 @@ exclude_patterns = []
 html_theme = 'alabaster'
 
 html_theme_options = {
-	'logo': 'scanem_logo.png',
+	'logo': 'scover_logo.png',
 	'font_family': 'Helvetica'
 }
 

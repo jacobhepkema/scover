@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profiles &#8212; scanem  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <title>Profiles &#8212; scover  documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -15,8 +15,7 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="How to prepare scanem input using scRNA-seq data" href="how_to_prepare_scanem_input_using_scRNA_seq.html" />
-    <link rel="prev" title="How to run scanem" href="how_to_run_scanem.html" />
+    <link rel="prev" title="scover" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -35,12 +34,12 @@
             
   <div class="section" id="profiles">
 <h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run -profile PROFILE_NAME scanem.nf <span class="o">[</span>args<span class="o">]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run -profile PROFILE_NAME scover.nf <span class="o">[</span>args<span class="o">]</span>
 </pre></div>
 </div>
 <p>Using <code class="code docutils literal notranslate"><span class="pre">-profile</span></code>, you can choose a specified profile configuration from the <code class="code docutils literal notranslate"><span class="pre">/conf</span></code> directory. These profiles are included in the <code class="code docutils literal notranslate"><span class="pre">nextflow.config</span></code> file; if you are adding an option do not forget to add it to <code class="code docutils literal notranslate"><span class="pre">nextflow.config</span></code>. Options currently include:</p>
 <ul class="simple">
-<li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code> will run locally, and will use a GPU if available. Note that you need to have the right packages installed (see “How can I run scanem using GPUs?” at the start of this README).</p></li>
+<li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code> will run locally, and will use a GPU if available. Note that you need to have the right packages installed (see “How can I run scover using GPUs?” at the start of this README).</p></li>
 <li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_cpu</span></code> will run locally, and it will also use Singularity for the first step in the workflow. This will only support CPUs.</p></li>
 <li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_nosingularity</span></code> will run locally and will not use Singularity images.</p></li>
 <li><p>profile <code class="code docutils literal notranslate"><span class="pre">lsf_gpu</span></code> will run using the Platform LSF scheduler using GPUs. This might require some editing of the <code class="code docutils literal notranslate"><span class="pre">conf/lsf_gpu.conf</span></code> file to be compatible with GPU queues on your LSF setup. See <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html">this page</a> for more information on how to specify executors.</p></li>
@@ -57,7 +56,7 @@
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="index.html">
-    <img class="logo" src="_static/scanem_logo.png" alt="Logo"/>
+    <img class="logo" src="_static/scover_logo.png" alt="Logo"/>
     
   </a>
 </p>
@@ -70,22 +69,16 @@
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="how_to_run_scanem.html">How to run scanem</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Profiles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scRNA_seq.html">How to generate scanem input using scRNA-seq data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_scATAC_seq.html">How to generate scanem input using scATAC-seq data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scanem_input_using_create_dataset.html">How to generate scanem input using scRNA-seq data and create_dataset.R</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scanem_output.html">How to analyse scanem output</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="how_to_run_scanem.html" title="previous chapter">How to run scanem</a></li>
-      <li>Next: <a href="how_to_prepare_scanem_input_using_scRNA_seq.html" title="next chapter">How to prepare scanem input using scRNA-seq data</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">scover</a></li>
   </ul></li>
 </ul>
 </div>
@@ -115,7 +108,7 @@
       &copy;2020, Jacob Hepkema.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
