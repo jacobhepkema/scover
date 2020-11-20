@@ -117,15 +117,6 @@ from CIS-BP[2] in the `resources` directory.
 Before running __scover__ you will probably want to identify the best `-profile` to run with. This will define the executor
 used by __scover__. [See below](#profile) for options and customisation. 
 
-Minimal command:
-```
-nextflow run scover.nf \
-  --name test_run \
-  --data data/mock_data.tsv \
-  --celldata data/mock_data_colData.tsv \
-  --tomtom resources/Mus_musculus.meme
-```
-
 ## Important:
 
 It might seem like it is stuck during training as the line with 
