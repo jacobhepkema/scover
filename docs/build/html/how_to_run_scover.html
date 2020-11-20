@@ -15,6 +15,8 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles" href="profiles.html" />
+    <link rel="prev" title="How to prepare scover input using create_dataset.R" href="how_to_prepare_scover_input_using_create_dataset.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -57,7 +59,7 @@ Another important argument is <code class="code docutils literal notranslate"><s
 the motif <code class="code docutils literal notranslate"><span class="pre">.meme</span></code> database file to align found motifs to. I have included <code class="code docutils literal notranslate"><span class="pre">Mus_musculus.meme</span></code> and <code class="code docutils literal notranslate"><span class="pre">Homo_sapiens.meme</span></code>
 from CIS-BP[1] in the <code class="code docutils literal notranslate"><span class="pre">resources</span></code> directory.</p>
 <p>Before running <strong>scover</strong> you will probably want to identify the best <code class="code docutils literal notranslate"><span class="pre">-profile</span></code> to run with. This will define the executor
-used by <strong>scover</strong>. <a class="reference external" href="https://scanem.readthedocs.io/en/latest/profiles.html">See this page</a> for options and customisation.</p>
+used by <strong>scover</strong>. <a class="reference external" href="https://scover.readthedocs.io/en/latest/profiles.html">See this page</a> for options and customisation.</p>
 <p>Minimal command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run scover.nf <span class="se">\</span>
  --name test_run <span class="se">\</span>
@@ -92,15 +94,28 @@ used by <strong>scover</strong>. <a class="reference external" href="https://sca
 
 
 <h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Running scover:</span></p>
+<p class="caption"><span class="caption-text">Dataset creation:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scRNA_seq.html">How to generate scover input using scRNA-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scATAC_seq.html">How to generate scover input using scATAC-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_create_dataset.html">How to generate scover input using scRNA-seq data and create_dataset.R</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Running scover:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to run scover</a></li>
 <li class="toctree-l1"><a class="reference internal" href="profiles.html">Profiles</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Analysing scover output:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scover_output.html">How to analyse scover output</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="how_to_prepare_scover_input_using_create_dataset.html" title="previous chapter">How to prepare scover input using create_dataset.R</a></li>
+      <li>Next: <a href="profiles.html" title="next chapter">Profiles</a></li>
   </ul></li>
 </ul>
 </div>

@@ -32,7 +32,7 @@ the motif :code:`.meme` database file to align found motifs to. I have included 
 from CIS-BP[1] in the :code:`resources` directory. 
 
 Before running **scover** you will probably want to identify the best :code:`-profile` to run with. This will define the executor
-used by **scover**. `See this page <https://scanem.readthedocs.io/en/latest/profiles.html>`_ for options and customisation. 
+used by **scover**. `See this page <https://scover.readthedocs.io/en/latest/profiles.html>`_ for options and customisation. 
 
 Minimal command:
 

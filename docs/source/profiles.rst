@@ -5,6 +5,8 @@ Profiles
 
  nextflow run -profile PROFILE_NAME scover.nf [args]
 
+Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. Currently, this repo includes configurations for running locally with GPU (`local_gpu`), on LSF with GPU (`lsf_gpu`), and some other options, including ones that run on CPU. However, given that scover already takes some time to run on GPU, I would advice against running it on CPU.  
+
 Using :code:`-profile`, you can choose a specified profile configuration from the :code:`/conf` directory. These profiles are included in the :code:`nextflow.config` file; if you are adding an option do not forget to add it to :code:`nextflow.config`. Options currently include:
 
 * profile :code:`local_gpu` will run locally, and will use a GPU if available. Note that you need to have the right packages installed (see "How can I run scover using GPUs?" at the start of this README).

@@ -15,7 +15,8 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="scover" href="index.html" />
+    <link rel="next" title="How to analyse scover output" href="how_to_analyse_scover_output.html" />
+    <link rel="prev" title="How to run scover" href="how_to_run_scover.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,6 +38,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run -profile PROFILE_NAME scover.nf <span class="o">[</span>args<span class="o">]</span>
 </pre></div>
 </div>
+<p>Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. Currently, this repo includes configurations for running locally with GPU (<cite>local_gpu</cite>), on LSF with GPU (<cite>lsf_gpu</cite>), and some other options, including ones that run on CPU. However, given that scover already takes some time to run on GPU, I would advice against running it on CPU.</p>
 <p>Using <code class="code docutils literal notranslate"><span class="pre">-profile</span></code>, you can choose a specified profile configuration from the <code class="code docutils literal notranslate"><span class="pre">/conf</span></code> directory. These profiles are included in the <code class="code docutils literal notranslate"><span class="pre">nextflow.config</span></code> file; if you are adding an option do not forget to add it to <code class="code docutils literal notranslate"><span class="pre">nextflow.config</span></code>. Options currently include:</p>
 <ul class="simple">
 <li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code> will run locally, and will use a GPU if available. Note that you need to have the right packages installed (see “How can I run scover using GPUs?” at the start of this README).</p></li>
@@ -69,16 +71,28 @@
 
 
 <h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Dataset creation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scRNA_seq.html">How to generate scover input using scRNA-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_scATAC_seq.html">How to generate scover input using scATAC-seq data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_prepare_scover_input_using_create_dataset.html">How to generate scover input using scRNA-seq data and create_dataset.R</a></li>
+</ul>
 <p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_run_scover.html">How to run scover</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Profiles</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Analysing scover output:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="how_to_analyse_scover_output.html">How to analyse scover output</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">scover</a></li>
+      <li>Previous: <a href="how_to_run_scover.html" title="previous chapter">How to run scover</a></li>
+      <li>Next: <a href="how_to_analyse_scover_output.html" title="next chapter">How to analyse scover output</a></li>
   </ul></li>
 </ul>
 </div>
