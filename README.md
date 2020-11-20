@@ -96,7 +96,7 @@ nextflow run [options] scover.nf [arg...]
 
 Example command:
 ```
-nextflow run -profile lsf_gpu scover.nf \
+nextflow run -profile local_gpu scover.nf \
   --name test_run /
   --data data/mock_data.tsv \
   --celldata data/mock_data_colData.tsv \
