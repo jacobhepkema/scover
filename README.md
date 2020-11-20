@@ -20,7 +20,7 @@ __A__: To install __scover__, simply clone the repository to the directory where
 
 __Q__: How can I run __scover__ using GPUs?
 
-__A__: Currently, the Singularity image for training the network only detects CPUs, so to use GPUs, you will need to create an anaconda environment with [pytorch](https://pytorch.org/) and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scover` folder, which contains a `scover_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
+__A__: I would highly recommend running __scover__ on GPUs, as even then it might take a while to run. Currently, the Singularity image for training the network only detects CPUs, so to use GPUs, you will need to create an anaconda environment with [pytorch](https://pytorch.org/) and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scover` folder, which contains a `scover_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
 
 ```{bash}
 conda env create -f scover_env.yml
@@ -34,7 +34,7 @@ __Q__: Can I try running __scover__ with an example dataset?
 __A__: Yes - for this I've added a small mock dataset in the `data` directory. If you have __scover__ set up, you can run 
 
 ```{bash}
-nextflow run -profile local scover.nf \
+nextflow run -profile local_cpu scover.nf \
     --data data/small_dataset.tsv \
     --celldata data/small_dataset_colData.tsv \
     --name example_run \
@@ -42,6 +42,10 @@ nextflow run -profile local scover.nf \
 ```
 
 This will generate output in the `output/example_run` directory. Note that this dataset does not make a lot of sense, it's a sample of 100 genes only. 
+
+__Q__: How can I set up __scover__ to run on my system?
+
+__A__: You will first need to set up the [dependencies (see below)](#installdependencies). If you want to run __scover__ on GPUs (which I would highly recommend), then see above for creating a conda environment with the required packages installed. Next, you can specify a particular Nextflow profile that you want to use. Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. There are some example profiles provided in the `conf` folder in this directory, for example `-profile lsf_gpu` to run on a GPU queue on LSF. There is a `local_gpu` profile to run locally on GPUs. However, this might require some additional customization (e.g. the queue to use if you are using a scheduler). For more information on how to specify a Nextflow executor, see [this page](https://www.nextflow.io/docs/latest/executor.html). Now, if you've followed all these steps, and you are in an environment with enough memory to run Nextflow and with the conda environment active, you can run the above option to try it out.
 
 __Q__: Can I run this on Windows?
 
