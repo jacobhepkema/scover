@@ -3,7 +3,6 @@
 [![Documentation Status](https://readthedocs.org/projects/scover/badge/?version=latest)](https://scover.readthedocs.io/en/latest/?badge=latest)
 
 This GitHub repository contains the files needed and instructions to run the Nextflow pipeline of **scover**. The primary developer of scover is Jacob Hepkema who is currently a PhD student at the [Wellcome Sanger Insitute](https://www.sanger.ac.uk).
-
 <img src="https://github.com/jacobhepkema/scover/raw/master/scover_logo.png" width=300 align=right>
 
 __Q__: What is this? 
