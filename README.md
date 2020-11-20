@@ -20,7 +20,7 @@ __A__: To install __scover__, simply clone the repository to the directory where
 
 __Q__: How can I run __scover__ using GPUs?
 
-__A__: I would highly recommend running __scover__ on GPUs, as even then it might take a while to run. Currently, the Singularity image for training the network only detects CPUs, so to use GPUs, you will need to create an anaconda environment with [pytorch](https://pytorch.org/) and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scover` folder, which contains a `scover_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
+__A__: Currently, the Singularity image for training the network only detects CPUs, so to use GPUs, you will need to create an anaconda environment with [pytorch](https://pytorch.org/) and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scover` folder, which contains a `scover_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
 
 ```{bash}
 conda env create -f scover_env.yml
