@@ -40,10 +40,6 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
 Method overview
 ###############
 
-.. image:: _static/method_summary.png
-   :width: 800
-   :alt: Method summary
-
 **scover** tries to predict expression or accessibility values across multiple samples from either promoter sequences or accessible region sequences. 
 It does so by simultaneously inferring the features of the sequences that are predictive of the data, and weighing these features across the different samples.
 

@@ -65,7 +65,6 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
 </div>
 <div class="section" id="method-overview">
 <h2>Method overview<a class="headerlink" href="#method-overview" title="Permalink to this headline">¶</a></h2>
-<a class="reference internal image-reference" href="_images/method_summary.png"><img alt="Method summary" src="_images/method_summary.png" style="width: 800px;" /></a>
 <p><strong>scover</strong> tries to predict expression or accessibility values across multiple samples from either promoter sequences or accessible region sequences.
 It does so by simultaneously inferring the features of the sequences that are predictive of the data, and weighing these features across the different samples.</p>
 <p>One downside of scRNA-seq and scATAC-seq datasets is that they are very sparse. This makes it very hard to predict the data. To counter this, we ‘pool cells’ of the same cell type annotation together, and sum their expression / accessibility scores. This way, the sparsity goes down depending on how many cells you ‘pool’ together. One caveat of this is that if you pool 100 cells together in each pool, cell types with fewer than 100 cells will be omitted.</p>
