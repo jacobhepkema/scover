@@ -5,6 +5,8 @@
 This GitHub repository contains the files needed and instructions to run the Nextflow pipeline of **scover**. The primary developer of scover is Jacob Hepkema who is currently a PhD student at the [Wellcome Sanger Insitute](https://www.sanger.ac.uk).
 <img src="https://github.com/jacobhepkema/scover/raw/master/scover_logo.png" width=300 align=right>
 
+
+
 __Q__: What is this? 
 
 __A__: __scover__ is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs from single-cell data. It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. The network is written in [pytorch](https://pytorch.org/), with the downstream analyses written in R (using [ggplot2](https://ggplot2.tidyverse.org/) for plotting). Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with [Tomtom](http://meme-suite.org/tools/tomtom) from the MEME suite[1]. __scover__ requires that cells are annotated for cell type (or other category). For scRNA-seq data TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS. 
