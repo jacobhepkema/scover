@@ -177,7 +177,6 @@ average_influence_matrix <- average_influence_matrix[good_motifs,]
 
 ## Plotting the motif influence scores across cell types
 
-This part is the same as in the 
 If we were to plot the average influence scores of the motifs across the cell types, it 
 would look something like this:
   
