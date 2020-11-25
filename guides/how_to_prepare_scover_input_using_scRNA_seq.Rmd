@@ -1,0 +1,202 @@
+---
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+**Scover** takes as input a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
+
+* Promoter sequences
+* Peak sequences
+* UTRs
+
+The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scover** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
+
+In this workflow, I am starting from a `SingleCellExperiment` object containing scRNA-seq data (see 
+                                                                                                [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for additional information) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
+useful information on how to convert this to a `SingleCellExperiment` object.
+
+This workflow is the more detailed data generation file - if you are just 
+interested in getting started quickly, there is a [script](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scover/blob/master/guides/how_to_prepare_scover_dataset_using_create_dataset.html) for this. 
+You can then start from a `SingleCellExperiment`
+object with the cell type annotation stored in `colData(sce)$cell_type1` (where
+                                                                          `sce` is the `SingleCellExperiment` object) . However, it is always a good idea to use your judgement to decide if the steps
+make sense - having a 'human in the loop' for both the preprocessing and the analysis of the model output will often help. 
+
+Note that there is a different guide for [preparing scATAC-seq data](https://scover.readthedocs.io/en/latest/how_to_prepare_scover_input_using_scATAC_seq.html). 
+
+## Loading the required packages and helper functions
+
+I am using the following packages during this part of the workflow:
+  
+```{r load_r_packages, eval=TRUE, echo=TRUE, warning=FALSE}
+suppressMessages(library(AnnotationHub))
+suppressMessages(library(assertr))
+suppressMessages(library(Biostrings))
+suppressMessages(library(GenomicRanges))
+suppressMessages(library(Matrix))
+suppressMessages(library(SingleCellExperiment))
+suppressMessages(library(scater))
+suppressMessages(library(stringr))
+
+options(stringsAsFactors = F)
+```
+
+See the end of this page for the full `sessionInfo()`. 
+
+In addition, I get my helper functions (e.g. `pool_cells()`) from this file:
+  
+```{r sourcefile}
+source("scover_helper_functions.R")
+```
+
+**Important**: 
+  All of the required R scripts and fasta files are included in the `data_generation` folder of this repository. 
+
+
+## Creating a dataset from a scRNA-seq dataset
+
+Load your `SingleCellExperiment` object. In this case I am using the bone marrow dataset from [Tabula Muris](https://tabula-muris.ds.czbiohub.org/):
+  
+```{r load_sce, eval=T, echo=T}
+sce <- readRDS(paste0(tm_dir, "TMFACS_Marrow.rds"))
+```
+
+Make sure that the cell type information is stored in the `$cell_type1` column of `colData(sce)`. 
+You can check this using:
+  
+```{r cell_type_info}
+table(sce$cell_type1)
+```
+
+Also make sure that the cell type information does not contain any `NA`s.
+
+```{r remove_na}
+sce <- sce[,!is.na(sce$cell_type1)]
+```
+
+In addition, it is often a good idea to exclude cells that have an "unknown" cell type. 
+
+## Determining optimal pool size
+
+Pooling cells together for **scover** is a trade off between getting rid of undesirable zeroes in your count
+matrix and retaining variability between cells and cell types. For the datasets that I have analyzed, the method works reasonably well when the sparsity is between 20% and 50% - aiming for a sparsity below 50% is usually a good idea. However, 
+I recommend that you try a couple of different settings since the performance can depend on your dataset.
+
+Also, it is sometimes impossible to reduce the sparsity to the desired level - in that case, 
+I recommend that you try a couple of different pool sizes to see what works best. 
+
+One way to check how sparsity goes down for different pool sizes is through:
+  (the `pool_cells()` and `get_sce_sparsity()` functions are from `scover_helper_functions.R`)
+
+```{r determine_sparsity}
+sparsities <- c()
+for(pool_size in c(12,30,50,100,200)){
+  sparsities <- c(sparsities, get_sce_sparsity(pool_cells(sce, pool_size=pool_size)))
+}
+plot(x=c(12,30,50,100,200), y=sparsities, 
+     main="Sparsity for different pool sizes", 
+     xlab="Pool size", ylab="Sparsity")
+```
+
+As you can see, for this particular dataset, the sparsity is barely reduced once the pool size is greater than 50.
+Note that for large pool sizes, you will lose cell types as they have fewer than `pool_size` cells.
+
+In this case, I will use `pool_size = 50`. I use the `pool_cells_follow_cells()` function to keep track of 
+which cells end up in which pools. 
+
+```{r gen_pooled_dataset}
+pool_output <- pool_cells_follow_cells(sce, pool_size=50, keep_smaller_pools = F)
+pooled_sce <- pool_output[[1]]
+pooled_sce_cells_in_pools <- pool_output[[2]]
+```
+
+## Extracting sequences
+
+For this particular dataset, I know that `mm10` was used, so I will obtain the relevant sequences from the mm10 
+genome with 500 bp upstream and 500 bp downstream of the TSS for each gene. This file is included in the `data_generation` folder of this repository.
+
+```{r get_seqs}
+seqs <- Biostrings::readDNAStringSet("mm10_500up500down_promoters.fa.gz")
+
+# Get genes and to-be-predicted data (log-normalized counts of sce)
+genelist <- rownames(pooled_sce)
+data <- logcounts(pooled_sce) 
+
+# Figure out which genes are not included in the sequences list:
+not_in_fasta <- genelist[!(genelist %in% names(seqs))]
+
+length(not_in_fasta)
+```
+
+If this last number (`length(not_in_fasta)`) is very high, it is likely that you are using the wrong version 
+of the genome. I have included other fasta files for these sequences in this repository; e.g. `hg38_500up500down_promoters.fa.gz`. 
+It is also possible to extract your own sequences using `AnnotationHub` - I've created a guide at [this page](how_to_extract_promoter_sequences.html).
+
+Filter out cells/genes with too high dropout:
+
+```{r filter_cells_genes}
+genelist <- genelist[genelist %in% names(seqs)]
+
+cell_dropouts <- colSums(data == 0) / dim(data)[1]
+too_high_cell_dropouts <- cell_dropouts > 0.98
+cat(sum(too_high_cell_dropouts))
+
+data <- data[,!too_high_cell_dropouts]
+pooled_sce <- pooled_sce[,!too_high_cell_dropouts]
+
+gene_dropouts <- rowSums(data == 0) / dim(data)[2]
+too_high_gene_dropouts <- genelist[gene_dropouts[genelist] > 0.98]
+cat(length(too_high_gene_dropouts))
+
+genelist <- genelist[!(gene_dropouts[genelist] > 0.98)]
+
+cat("Genelist of", length(genelist), "genes\n")
+cat("Cell/pool number:", ncol(data),"\n")
+```
+
+Extract the sequences and the values to be used for the prediction task:
+
+```{r extract_all}
+seqs <- base::tolower(as.character(seqs[genelist]))
+ind <- assertr::col_concat(data[genelist,], sep=",")
+```
+
+Now all that is left is to write three tables:
+ 
+1. The table containing the sequences and the associated values
+2. The table containing annotations for the different cell pools
+3. The table containing information about which cell ended up in which pool
+
+```{r write_dataset}
+dataset <- data.frame(gene=genelist,
+                      sequence=seqs,
+                      ind=ind)
+
+# File 1
+write.table(dataset, gzfile("TMFACS_Marrow_pool50.tsv.gz"), 
+            sep="\t", row.names = F, col.names = T, quote = F)
+
+# File 2
+write.table(colData(pooled_sce), "TMFACS_Marrow_pool50_colData.tsv", 
+            sep="\t", row.names = T, col.names = T, quote = F)
+
+# File 3
+write.table(pooled_sce_cells_in_pools, "TMFACS_Marrow_pool50_cells_in_pools.tsv", 
+            sep="\t", row.names = T, col.names = T, quote = F)
+```
+
+You want to pass file 1) to the `--data` argument of scover, and argument 2) to
+`--celldata` of scover. The third file ensures that it is possible to reproduce the pooling. For more information on how to run **scover**, see the main readme file 
+in the root of this repository. 
+
+
+## Used packages
+
+```{r sessioninfo}
+utils::sessionInfo()
+```

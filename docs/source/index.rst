@@ -18,6 +18,7 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
    How to generate scover input using scRNA-seq data <how_to_prepare_scover_input_using_scRNA_seq.rst>
    How to generate scover input using scATAC-seq data <how_to_prepare_scover_input_using_scATAC_seq.rst>
    How to generate scover input using scRNA-seq data and create_dataset.R <how_to_prepare_scover_input_using_create_dataset.rst>
+   How to extract promoter sequences <how_to_extract_promoter_sequences.rst>
 
 .. toctree::
    :maxdepth: 2
