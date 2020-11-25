@@ -1,6 +1,4 @@
 ---
-title: "How to prepare scanem input using `create_dataset.R`"
-author: "Jacob Hepkema"
 output: html_document
 ---
 
@@ -40,6 +38,6 @@ This will create three files in `output_directory`:
 2. `TEST_DATASET_pool100_colData.tsv`
 3. `TEST_DATASET_pool100_cells_in_pools.tsv`
 
-You want to pass file 1) to the `--data` argument of scanem, and file 2) to the 
-`--celldata` of scanem. For more information on how to run scanem, see the main
+You want to pass file 1) to the `--data` argument of scover, and file 2) to the 
+`--celldata` of scover. For more information on how to run scover, see the main
 readme file in the root of this repository. 
