@@ -135,7 +135,7 @@ length(not_in_fasta)
 
 If this last number (`length(not_in_fasta)`) is very high, it is likely that you are using the wrong version 
 of the genome. I have included other fasta files for these sequences in this repository; e.g. `hg38_500up500down_promoters.fa.gz`. 
-It is also possible to extract your own sequences using `AnnotationHub` - I have created a guide at `how_to_extract_promoter_sequences.Rmd`.
+It is also possible to extract your own sequences using `AnnotationHub` - I've created a guide at [this page](how_to_extract_promoter_sequences.html).
 
 Filter out cells/genes with too high dropout:
 
