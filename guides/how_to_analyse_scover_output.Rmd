@@ -10,34 +10,30 @@ setwd("~/scanem_pytorch/data_gen/FigureGithub/DownstreamAnalysis/")
 ## Introduction
 
 This vignette focusses on downstream analysis of the output from **scover**. After running
-**scover**, it outputs different types of information. The most important are:
+**scover**, it produces several outputs. The most important are:
 
-1. The alignments of the found convolutional kernels to a database of motifs, with significance (q-)scores for each alignment
-2. The influence scores of the convolutional kernels in neural network, representing the change in prediction when a particular motif is left out
+1. The alignments of the convolutional kernels to a database of motifs, with significance (q-)scores for each alignment
+2. The influence scores of the convolutional kernels in the neural network, representing the change in prediction when a particular motif is left out
 
-The central part of **scover** trains 10 different neural network models, each using a 
-different 90% of the dataset for training and the remaining 10% for testing. Each model contains (by default) 
-300 convolutional filters, so there are a total of 3,000 motifs. To ensure that the results are robust, 
-**scover** seeks to identify motif clusters that show up repeatedly, therefor we require that a motif 
-cluster should show up in at least half of the models.
+The central part of **scover** trains *k* (default: 10) different neural network models, each using a 
+different 90% of the dataset for training and the remaining 10% for testing. Each model contains *d* (default: 300) convolutional filters, so there are a total of *kd* (default: 3,000) motifs. To ensure that the results are robust, 
+**scover** groups similar motif and then identifies motif clusters that show up at least *k/2* models.
 
 The motifs are named as `MODELNUMBER_MOTIFNUMBER`, e.g. motif `2_3` is motif `3` 
 from model `2`. The best performing out of 10 models is named "best" rather than 
 its model number, e.g. motif `best_129`. 
 
-All of the motifs are aligned with Tomtom, the motif comparison tool from the 
-MEME Suite, against a database of known motifs. This generates a tab-separated 
-file containing what motifs aligned to what reference motifs, 
+All of the motifs are aligned with [Tomtom](http://meme-suite.org/meme_5.1.0/doc/tomtom.html), the motif comparison tool from the 
+[MEME Suite](http://meme-suite.org/), against a database of known motifs. This generates a tab-separated 
+file that shows how the detected motifs aligned to the reference motifs 
 and the q-values for the alignments. This result can be represented as a bipartite 
 graph where the model motifs and the database motifs represent the two categories of nodes. 
-Then it becomes possible to select reproducible motifs. For a visual overview, see the figure below. 
+Using this graph we can select reproducible motifs. For a visual overview, see the figure below. 
 
 One of the outputs from the model is a HDF5 file containing motif influence scores 
-for each model. These are calculated for each convolutional filter in each pool - these
-scores represent the mean change in prediction for a particular pool when a convolutional filter is left out.
+for each model. The scores represent the mean change in prediction for a particular pool when a convolutional filter is left out and they are calculated for each convolutional filter in each pool.
 
-Below is a visual overview of the workflow for motif analysis 
-using **scover**. The downstream analysis described in this section starts at the third step, 
+Below is a schematic overview of **scover**'s workflow for motif analysis. The downstream analysis described in this section starts at the third step, 
 where we have obtained influence scores from the models and the motif alignments from Tomtom. 
 
 <center>
@@ -69,7 +65,7 @@ suppressMessages(library(tidytext))
 options(stringsAsFactors = F)
 ```
 
-I've added some custom functions to the following file (find it in the 
+I have added some custom functions to the following file (find it in the 
 `resources` folder of this repository):
 
 ```{r set_paths}
@@ -81,7 +77,7 @@ source("scover_helper_functions.R")
 For the rest of the analysis, I am using paths to the network output (`exp_folder`),
 the input dataset (`data_path`), and the cell type annotation (`colData_path`). 
 I also need to input the motif database that was used for motif alignment (`motif_db_path`).
-I will also create an output directory for the analysis. 
+I will also create an output directory for the analysis. In this vignette we will consider the human fetal and adult kidney dataset from Stewart et al that was analyzed in our manuscript.
 
 ```{r setup_paths}
 # Network output dir
@@ -101,8 +97,8 @@ dir.create(outdir)
 
 ## Read data
 
-First, I'll use the custom functions to read the data, tomtom output, and the 
-network influence scores. Then I'll filter the tomtom output to only include TFs that 
+First, I will use the custom functions to read the input data, the Tomtom output, and the 
+network influence scores. Then I will filter the Tomtom output to only include TFs that 
 were expressed 
 
 ```{r read_stuff, echo=TRUE, results='hide', fig.keep='all', message = FALSE}
@@ -120,8 +116,7 @@ tomtom_table <- filter_tomtom_table(tomtom_table = tomtom_table, sce = sce)
 
 ## Graph analysis
 
-Now I'll generate a motif alignment graph (as in the other guide) and plot the
-graph:
+Now I will generate a motif alignment graph and plot the graph:
   
 ```{r plot_graph, echo=TRUE, results='hide', fig.keep='all', message = FALSE}
 alignment_graph <- create_alignment_graph(tomtom_table)
@@ -159,8 +154,7 @@ motif_stats <- get_motif_stats(cluster_df = cluster_df,
 ```
 
 The next step will select 'good motifs' based on impact, motif cluster 
-reproducibility, and motif cluster annotation (only the clusters that aligned
-                                               to known motifs will be included in this analysis):
+reproducibility, and motif cluster annotation (only the clusters that aligned to known motifs will be included in this analysis):
   
 ```{r keep_good_motifs}
 # Get names of good motifs: the ones that have high impact, are from 
@@ -197,10 +191,10 @@ pheatmap(average_influence_matrix,
          color = heatmap_colors)
 ```
 
-Here, every row corresponds to a convolutional filter and every column corresponds to 
+Here, each row corresponds to a convolutional filter and each column corresponds to 
 a cell type. 
 
-As you can see, a small subset of the motifs has the largest impact. If we 
+As you can see, a small subset of the motifs (near the bottom) has the largest impact. If we 
 instead plot Z-transformed motif influence scores, it looks like this:
   
 ```{r plot_z_avg_w_mat, fig.height = 12, fig.width = 12}
@@ -216,20 +210,19 @@ pheatmap(average_influence_matrix_z_scores,
          color = heatmap_colors)
 ```
 
-Already you can see that the motif clusters cluster together much better. Do 
-note that the relative impacts of motifs in a single cell type cannot be deduced
+Already you can see that the motif clusters form more coherent groups. It is important to keep in mind that the relative impacts of motifs in a single cell type cannot be deduced
 from this heatmap, as the values have been transformed *per row*. What this does
 show is the general 'trend' of the influence scores of a motif across the cell types. 
 
 Z-scores can, however, inflate the differences between cell types. This is why 
 it is beneficial to have another score that tells you something about how 
-"cell-type-specific" a motif influence score really is. For this, the 
-"motif cell type entropy" score has been calculated for each motif, which is the 
-normalised Shannon entropy of a motif influence score across cell types. The lower this 
-score is, the further from a uniform distribution the influence score distribution is. 
+"cell-type-specific" a motif influence score really is. Towards this end, the 
+"motif cell type entropy" score has been calculated for each motif. It is defined as the 
+normalised Shannon entropy of a motif influence score across cell types. A low motif cell entropy 
+score suggests that the influence score distribution is non-uniform. 
 
 Let's plot the motifs along with the entropy scores. I will also order the 
-motifs for their motif cluster annotation:
+motifs for their motif cluster annotation. This will give us a better overview of how motif clusters vary across cell types.
 
 ```{r plot_motif_scores, fig.height = 12, fig.width = 12}
 
@@ -247,9 +240,7 @@ pheatmap(average_influence_matrix_z_scores[order(motif_stats$cluster_annot),],
 
 ## Better cell type annotation
 
-To get an overview at the "cell type category" level, rather than the individual
-cell type level, you can do some other types of analysis. For this, I've created 
-(for this specific example) a named vector with the different cell types as 
+Many datasets will have a large number of cell types, and it is often beneficial to group the cell types into a smaller number of "cell categories". For this, I have created (for this specific example) a named vector with the different cell types as 
 names that contains the corresponding cell type category:
   
 ```{r annotate_celltypes}
@@ -273,13 +264,13 @@ can take advantage of it to identify the most likely candidate. The underlying
 assumption here is that TFs with a higher (absolute) correlation are more likely 
 to be involved in the regulation. Please note that this is one of the more bespoke 
 steps in this analysis and it is difficult to fully automate. For better control
-over the steps in this analysis, I would recommend looking at the corresponding
+of the steps in this analysis, I recommend looking at the corresponding
 functions in `scover_helper_functions.R`.
 
 The following code will produce plots in the `outdir` that show the expression
 pattern for the different cluster candidates, including a Spearman correlation 
-score for the different cluster candidate TFs. In addition, it will generate directories per motif cluster that contain
-the different plots that show how the expression and influence values are related. 
+score for the different cluster candidate TFs. In addition, it will generate one directory per motif cluster that contain
+plots showing how the expression and influence values are related. 
 It will also return a DataFrame that contains the relevant information.
 
 
@@ -300,9 +291,9 @@ As an example we consider the cluster with YY1, YY2, and THAP1. One of the figur
 YY1 has a higher expression than YY2, making it a more likely regulator than YY2. 
 In addition, on the left we can see that YY1 and YY2 have a higher correlation to 
 the motif weights (green) and more Tomtom alignments (purple) than THAP1, making 
-one of them the more likely candidate. 
+them the more likely candidates. 
 
-Let's take a closer look at the correlation plots for these two:
+Let's take a closer look at the correlation plots for YY1 and YY2:
 
 <center>
 ![YY1](analysis/Cluster_YY1_YY2_THAP1/Correlation_with_annot_TF_YY1.png){width=50%} ![YY2](analysis/Cluster_YY1_YY2_THAP1/Correlation_with_annot_TF_YY2.png){width=50%}
@@ -348,9 +339,7 @@ pheatmap(average_influence_matrix_z_scores[order(motif_stats$cluster_annot),],
 
 ## Plotting all motif family correlations
 
-It is helpful to be able to view the correlations for all TFs related to the motif families reported by the network. Using the following function, you can plot the correlations and expression 
-values for the different motif families, while annotating the top x hits per 
-motif family:
+It is helpful to be able to view the correlations for all TFs related to the motif families reported by the network. Using the following function, you can plot the correlations and expression values for the different motif families, while annotating the top top_n hits for each motif family:
 
 ```{r plot_motif_families, fig.height = 10, fig.width = 10}
 # First I update the motif family names:
@@ -415,12 +404,12 @@ ggplot(aggregate_motif_influences_melt, aes(x=category, y=aggregate_influence,
 
 ## PCA plots based on motif influence scores or expression values
 
-Now, I will do a PCA based on either:
-  
+To visualize the expression landscape or the regulatory landscape, it is useful to use dimensionality reduction. Here, I will use PCA to plot
+
 1. Motif influence scores across pools
 2. Expression values across pools
 
-First, I'll do the one based on motif influence scores:
+First, I will do the PCA based on motif influence scores:
 
 ```{r w_prcomp}
 pca_result <- prcomp(t(influence_scores))
@@ -438,7 +427,7 @@ print(pca_result[1:2,1:3])
 print(variances_explained[1:5])
 ```
 
-I'll add cell type and cell type category annotation to this.
+I can add cell type and cell type category annotation.
 
 ```{r prcomp}
 pca_result$Celltype <- colData(sce)[rownames(pca_result),]$cell_type1
@@ -446,7 +435,7 @@ pca_result$Category <- Category_table[pca_result$Celltype]
 ```
 
 In this case, the dataset was made using two different datasets: fetal and 
-mature kidney. I'll add annotation for the origin of the pools this way (but 
+mature kidney. I will add annotation for the origin of the pools this way (but 
 this is specific to this analysis):
   
 ```{r annot_origin}
@@ -455,7 +444,7 @@ pca_result$Origin <- sapply(pca_result$Celltype, FUN=function(x){
 })
 ```
 
-Now, I'll plot the PCA plot, showing the cell type categories as colours, and 
+Now, I will plot the PCA plot, showing the cell type categories as colours, and 
 the origin of the pools as the shapes:
 
 ```{r plot_pca, fig.height = 10, fig.width = 10}
@@ -469,7 +458,7 @@ ggplot(pca_result, aes(x=PC1, y=PC2, color=Category, shape=Origin)) + geom_point
   coord_fixed() 
 ```
 
-Now, I'll do exactly the same, but based on expression values:
+Now, I will do exactly the same, but based on expression values:
   
 ```{r exp_prcomp, fig.height = 10, fig.width = 10}
 pca_result_expression <- prcomp(t(logcounts(sce)))
