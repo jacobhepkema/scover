@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-All **scover** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
+**Scover** takes as input a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
 
 * Promoter sequences
 * Peak sequences
@@ -17,19 +17,17 @@ All **scover** needs as input are a set of sequences and a set of numeric values
 The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scover** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
 
 In this workflow, I am starting from a `SingleCellExperiment` object containing scRNA-seq data (see 
-                                                                                                [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
+                                                                                                [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for additional information) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
 useful information on how to convert this to a `SingleCellExperiment` object.
 
 This workflow is the more detailed data generation file - if you are just 
-interested in creating a dataset quickly, there is a script for this too. 
+interested in getting started quickly, there is a [script](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scover/blob/master/guides/how_to_prepare_scover_dataset_using_create_dataset.html) for this. 
 You can then start from a `SingleCellExperiment`
 object with the cell type annotation stored in `colData(sce)$cell_type1` (where
-                                                                          `sce` is the `SingleCellExperiment` object) . See [this page](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scover/blob/master/guides/how_to_prepare_scover_dataset_using_create_dataset.html) for more information 
-on the 'quick version'. However, it is always a good idea to use your judgement to decide if the steps
-make sense - having a 'human in the loop' for dataset generation and model output 
-analysis will often help. 
+                                                                          `sce` is the `SingleCellExperiment` object) . However, it is always a good idea to use your judgement to decide if the steps
+make sense - having a 'human in the loop' for both the preprocessing and the analysis of the model output will often help. 
 
-For creating a dataset using scATAC-seq data, see the other workflow in this repo. 
+Note that there is a different guide for [preparing scATAC-seq data](https://scover.readthedocs.io/en/latest/how_to_prepare_scover_input_using_scATAC_seq.html). 
 
 ## Loading the required packages and helper functions
 
@@ -62,7 +60,7 @@ source("scover_helper_functions.R")
 
 ## Creating a dataset from a scRNA-seq dataset
 
-Load your `SingleCellExperiment` object. In this case I am using the bone marrow dataset from Tabula Muris:
+Load your `SingleCellExperiment` object. In this case I am using the bone marrow dataset from [Tabula Muris](https://tabula-muris.ds.czbiohub.org/):
   
 ```{r load_sce, eval=T, echo=T}
 sce <- readRDS(paste0(tm_dir, "TMFACS_Marrow.rds"))
@@ -81,12 +79,12 @@ Also make sure that the cell type information does not contain any `NA`s.
 sce <- sce[,!is.na(sce$cell_type1)]
 ```
 
-In addition, you could choose not to include cells that have an "unknown" cell type. 
+In addition, it is often a good idea to exclude cells that have an "unknown" cell type. 
 
 ## Determining optimal pool size
 
 Pooling cells together for **scover** is a trade off between getting rid of undesirable zeroes in your count
-matrix and retaining variability between cells and cell types. Generally, the method works reasonably well when the sparsity is between 20% and 50% - aiming for a sparsity below 50% is usually a good idea. However, 
+matrix and retaining variability between cells and cell types. For the datasets that I have analyzed, the method works reasonably well when the sparsity is between 20% and 50% - aiming for a sparsity below 50% is usually a good idea. However, 
 I recommend that you try a couple of different settings since the performance can depend on your dataset.
 
 Also, it is sometimes impossible to reduce the sparsity to the desired level - in that case, 
@@ -137,7 +135,7 @@ length(not_in_fasta)
 
 If this last number (`length(not_in_fasta)`) is very high, it is likely that you are using the wrong version 
 of the genome. I have included other fasta files for these sequences in this repository; e.g. `hg38_500up500down_promoters.fa.gz`. 
-It is also possible to extract your own sequences using `AnnotationHub` - I've created a guide at `how_to_extract_promoter_sequences.Rmd`.
+It is also possible to extract your own sequences using `AnnotationHub` - I have created a guide at `how_to_extract_promoter_sequences.Rmd`.
 
 Filter out cells/genes with too high dropout:
 
