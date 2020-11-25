@@ -1,6 +1,4 @@
 ---
-title: "How to prepare scanem input using a scATAC-seq dataset"
-author: "Jacob Hepkema"
 output: html_document
 ---
   
@@ -10,13 +8,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-All **scanem** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
+All **scover** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
 
 * Promoter sequences
 * Peak sequences
 * UTRs
 
-The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scanem** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
+The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scover** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
 
 In this workflow, I am starting from a `SingleCellExperiment` object containing scATAC-seq data (see 
                                                                                                  [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
@@ -45,19 +43,19 @@ See the end of this page for the full `sessionInfo()`.
 In addition, I get my helper functions (e.g. `pool_cells()`) from this file:
   
 ```{r sourcefile}
-source("scanem_helper_functions.R")
+source("scover_helper_functions.R")
 ```
 
 **Important**: 
 All of the required R scripts and fasta files are included in the `resources` folder of this repository. 
 
 
-## Creating a dataset from a scRNA-seq dataset
+## Creating a dataset from a scATAC-seq dataset
 
 Load your `SingleCellExperiment` object. In this case I am using a SNARE-seq dataset with cells from the adult mouse visual cortex:
   
 ```{r load_sce, eval=T, echo=T}
-sce <- readRDS("GSE126074_AdBrainCortex_SNAREseq_sce.rds")
+sce <- readRDS(paste0(snare_dir, "GSE126074_AdBrainCortex_SNAREseq_sce.rds"))
 ```
 
 I know that the cell type annotations are currently not in `colData(sce)$cell_type1`, 
@@ -73,7 +71,7 @@ Also make sure that the cell type information does not contain any `NA`s.
 sce <- sce[,!is.na(sce$cell_type1)]
 ```
 
-In addition, you could choose not to include cells that have an "unknown" cell type. 
+In addition, it's good practice to exclude cells that have an "unknown" cell type. 
 
 In this case, I know that the dataset contains both genes and peak regions. This is something I do not want in this case, 
 so I will identify where the genes end to select the peaks only. 
@@ -92,11 +90,11 @@ print(head(rownames(sce)))
 
 ## Determining optimal pool size
 
-Pooling cells together for **scanem** is a trade off between getting rid of undesired zeroes in your count
+Pooling cells together for **scover** is a trade off between getting rid of undesired zeroes in your count
 matrix and retaining variability between cells and cell types. For the datasets that I have worked with so far, a pool size of 100 cells per pool is good, as it reduces the sparsity below 70%. However, I recommend that you try a couple of different settings since the number of remaining pools and the sparsity is dependent on your dataset. Sometimes it is impossible to reduce the sparsity below 70% - in that case, I recommend that you try a couple of different pool sizes to see what works best. 
 
 One way to check how sparsity goes down for different pool sizes is to try it:
-  (the `pool_cells()` and `get_sce_sparsity()` functions are from `scanem_helper_functions.R`)
+  (the `pool_cells()` and `get_sce_sparsity()` functions are from `scover_helper_functions.R`)
 
 ```{r determine_sparsity}
 sparsities <- c()
@@ -120,9 +118,18 @@ pooled_sce_cells_in_pools <- pool_output[[2]]
 
 ## Adjust region sizes
 
-In most peak regions, TFs occupy sequences around the middle of the peak. To decrease runtimes and increase signal/noise, it is useful to take the 
+This part of the workflow will only work if your rownames of the `SingleCellExperiment` object
+contain the peak regions in this format: `chromosome_peakstart_peakend`, so, for example,
+`chr1_283990_284520`. If the peak regions are instead using different symbols to
+separate the different parts (for instance, `chromosome:peakstart-peakend`) then
+it becomes necessary to update the regular expressions found in the code block. 
+(For the example `chromosome:peakstart-peakend`, the updated first line then becomes
+`peak_start <- as.numeric(str_remove(str_remove(peaknames, "^chr[a-zA-Z0-9]+:"), "-[0-9]+$"))`,
+for example).
+
+In most peak regions, TFs occupy sequences around the middle of the peak. 
+To decrease runtimes and increase signal/noise, it is useful to take the 
 middle 250 bp for each peak region:
-  
   
 ```{r take_middle}
 peaknames <- rownames(pooled_sce)
@@ -236,18 +243,24 @@ Now all that is left is to write three tables:
 dataset <- data.frame(region=rownames(data),
                       sequence=seqs,
                       ind=ind)
+
+# File 1
 write.table(dataset, gzfile("SNARE_seq_Adult_pool100.tsv.gz"), 
             sep="\t", row.names = F, col.names = T, quote = F)
+
+# File 2
 write.table(colData(pooled_sce), "SNARE_seq_Adult_pool100_colData.tsv", 
             sep="\t", row.names = T, col.names = T, quote = F)
+
+# File 3
 write.table(pooled_sce_cells_in_pools, "SNARE_seq_Adult_pool100_cells_in_pools.tsv", 
             sep="\t", row.names = T, col.names = T, quote = F)
 ```
 
-The first file becomes the input file for the `scanem` argument `--data`, and the 
-second file becomes the input file for the `scanem` argument `--celldata`. 
+`File 1` becomes the input file for the `scover` argument `--data`, and 
+`File 2` becomes the input file for the `scover` argument `--celldata`. 
 
-The third file ensures that it is possible to reproduce the pooling. 
+The third file ensures that it is possible to reproduce the pooling.
 
 ## Used packages
 
