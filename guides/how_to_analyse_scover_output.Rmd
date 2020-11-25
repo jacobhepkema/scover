@@ -4,7 +4,6 @@
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-setwd("~/scanem_pytorch/data_gen/FigureGithub/DownstreamAnalysis/")
 ```
 
 ## Introduction
@@ -30,6 +29,10 @@ and the q-values for the alignments. This result can be represented as a biparti
 graph where the model motifs and the database motifs represent the two categories of nodes. 
 Using this graph we can select reproducible motifs. For a visual overview, see the figure below. 
 
+<center>
+![scover_output_workflow](scover_motif_analysis_1.png)
+</center>
+
 One of the outputs from the model is a HDF5 file containing motif influence scores 
 for each model. The scores represent the mean change in prediction for a particular pool when a convolutional filter is left out and they are calculated for each convolutional filter in each pool.
 
@@ -37,7 +40,7 @@ Below is a schematic overview of **scover**'s workflow for motif analysis. The d
 where we have obtained influence scores from the models and the motif alignments from Tomtom. 
 
 <center>
-![scover_output_workflow](scover_motif_analysis_workflow.png)
+![scover_output_workflow](scover_motif_analysis_2.png)
 </center>
 
 ## Load packages
@@ -65,7 +68,7 @@ suppressMessages(library(tidytext))
 options(stringsAsFactors = F)
 ```
 
-I have added some custom functions to the following file (find it in the 
+I've added some custom functions to the following file (find it in the 
 `resources` folder of this repository):
 
 ```{r set_paths}
@@ -77,7 +80,9 @@ source("scover_helper_functions.R")
 For the rest of the analysis, I am using paths to the network output (`exp_folder`),
 the input dataset (`data_path`), and the cell type annotation (`colData_path`). 
 I also need to input the motif database that was used for motif alignment (`motif_db_path`).
-I will also create an output directory for the analysis. In this vignette we will consider the human fetal and adult kidney dataset from Stewart et al that was analyzed in our manuscript.
+I will also create an output directory for the analysis. 
+In this vignette we will consider the human fetal and adult kidney dataset from 
+Stewart et al that was analyzed in our manuscript.
 
 ```{r setup_paths}
 # Network output dir
@@ -99,7 +104,7 @@ dir.create(outdir)
 
 First, I will use the custom functions to read the input data, the Tomtom output, and the 
 network influence scores. Then I will filter the Tomtom output to only include TFs that 
-were expressed 
+were expressed.
 
 ```{r read_stuff, echo=TRUE, results='hide', fig.keep='all', message = FALSE}
 sce <- scover_dataset_to_sce(data_path = data_path, 
@@ -129,7 +134,13 @@ alignment_graph_cluster_groups <- igraph::groups(alignment_graph_clusters)
 plot_alignment_graph(outdir, alignment_graph, alignment_graph_clusters)
 ```
 
-To get the motif clusters into a dataframe, I use a custom function:
+This is an example output from the last function:
+
+<center>
+![scover_alignment_plot](Motif_alignment_plot_with_clusters.png)
+</center>
+
+To get the motif clusters into a dataframe, I use a custom function (from `scover_helper_functions.R`):
   
 ```{r get_cluster_df}
 cluster_df <- construct_cluster_df(exp_folder = exp_folder, 
@@ -145,8 +156,12 @@ average_influence_matrix <- construct_average_influence_matrix(influence_scores)
 ```
 
 I use this function to get information about the motifs in this matrix. This 
-will also plot the motif annotation as "good" or "bad":
-  
+will also plot the motif annotation as "good" or "bad": 
+
+(If there are two groups of motifs, one with very very low impact scores and
+one with higher impact scores, then the group with very very low impact scores
+will be marked as "bad")
+
 ```{r get_motif_stats, warning = FALSE}
 motif_stats <- get_motif_stats(cluster_df = cluster_df,
                                average_influence_matrix = average_influence_matrix, 
@@ -154,7 +169,8 @@ motif_stats <- get_motif_stats(cluster_df = cluster_df,
 ```
 
 The next step will select 'good motifs' based on impact, motif cluster 
-reproducibility, and motif cluster annotation (only the clusters that aligned to known motifs will be included in this analysis):
+reproducibility, and motif cluster annotation (only the clusters that aligned to 
+known motifs will be included in this analysis):
   
 ```{r keep_good_motifs}
 # Get names of good motifs: the ones that have high impact, are from 
@@ -240,8 +256,9 @@ pheatmap(average_influence_matrix_z_scores[order(motif_stats$cluster_annot),],
 
 ## Better cell type annotation
 
-Many datasets will have a large number of cell types, and it is often beneficial to group the cell types into a smaller number of "cell categories". For this, I have created (for this specific example) a named vector with the different cell types as 
-names that contains the corresponding cell type category:
+Many datasets will have a large number of cell types, and it is often beneficial to group the cell types into a 
+smaller number of "cell categories". For this, I have created (for this specific example) a named 
+vector with the different cell types as names that contains the corresponding cell type category:
   
 ```{r annotate_celltypes}
 Category_table <- readRDS("data/Category_table.RDS")
@@ -312,7 +329,7 @@ I do this using the following code (I look at
 `View(cluster_df[cluster_df$cluster_reproducibility >= 0.5,])` to see which 
 number corresponds to which cluster):
 
-```{r update_cluster_annotations, fig.height = 12, fig.width = 12}
+```{r update_cluster_annotations}
 cluster_df$cluster_annot[rownames(cluster_df) == "7"] <- "ETS motif family"
 cluster_df$cluster_annot[rownames(cluster_df) == "11"] <- "ZBTB33/BRCA1"
 cluster_df$cluster_annot[rownames(cluster_df) == "2"] <- "EGR/KLF motif families"
@@ -320,11 +337,13 @@ cluster_df$cluster_annot[rownames(cluster_df) == "9"] <- "YY1"
 cluster_df$cluster_annot[rownames(cluster_df) == "3"] <- "bZIP motif family"
 cluster_df$cluster_annot[rownames(cluster_df) == "1"] <- "ZFX"
 
-# Update the annotation
+# Update the annotation using the updated "cluster_df"
 motif_stats <- get_motif_stats(cluster_df = cluster_df,
                                average_influence_matrix = average_influence_matrix, 
                                pseudocount = 1e-11)
+```
 
+```{r plot_z_scores_new_annotation, fig.height = 12, fig.width = 12}
 annotation_colors <- get_annotation_colors(motif_stats)
 pheatmap(average_influence_matrix_z_scores[order(motif_stats$cluster_annot),], 
          annotation_row=motif_stats[,c("cluster_annot", 
@@ -339,7 +358,10 @@ pheatmap(average_influence_matrix_z_scores[order(motif_stats$cluster_annot),],
 
 ## Plotting all motif family correlations
 
-It is helpful to be able to view the correlations for all TFs related to the motif families reported by the network. Using the following function, you can plot the correlations and expression values for the different motif families, while annotating the top top_n hits for each motif family:
+It is helpful to be able to view the correlations for all TFs related to the motif 
+families reported by the network. Using the following function, you can plot the 
+correlations and expression values for the different motif families, 
+while annotating the top top_n hits for each motif family:
 
 ```{r plot_motif_families, fig.height = 10, fig.width = 10}
 # First I update the motif family names:
@@ -404,7 +426,8 @@ ggplot(aggregate_motif_influences_melt, aes(x=category, y=aggregate_influence,
 
 ## PCA plots based on motif influence scores or expression values
 
-To visualize the expression landscape or the regulatory landscape, it is useful to use dimensionality reduction. Here, I will use PCA to plot
+To visualize the expression landscape or the regulatory landscape, it is useful to 
+use dimensionality reduction. Here, I will use PCA to plot
 
 1. Motif influence scores across pools
 2. Expression values across pools
