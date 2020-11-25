@@ -20,7 +20,7 @@ In this workflow, I am starting from a `SingleCellExperiment` object containing 
                                                                                                  [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
 useful information on how to convert this to a `SingleCellExperiment` object. 
 
-For creating a dataset using scRNA-seq data, see the other workflow in this repo. 
+There is another [workflow for using scRNA-seq data](https://scover.readthedocs.io/en/latest/how_to_prepare_scover_input_using_scRNA_seq.html). 
 
 ## Loading the required packages and helper functions
 
@@ -52,7 +52,7 @@ All of the required R scripts and fasta files are included in the `resources` fo
 
 ## Creating a dataset from a scATAC-seq dataset
 
-Load your `SingleCellExperiment` object. In this case I am using a SNARE-seq dataset with cells from the adult mouse visual cortex:
+Load your `SingleCellExperiment` object. In this case I am using a SNARE-seq dataset with cells from the adult mouse cerebral cortex:
   
 ```{r load_sce, eval=T, echo=T}
 sce <- readRDS(paste0(snare_dir, "GSE126074_AdBrainCortex_SNAREseq_sce.rds"))
@@ -71,7 +71,7 @@ Also make sure that the cell type information does not contain any `NA`s.
 sce <- sce[,!is.na(sce$cell_type1)]
 ```
 
-In addition, it's good practice to exclude cells that have an "unknown" cell type. 
+In addition, it is good practice to exclude cells that have an "unknown" cell type. 
 
 In this case, I know that the dataset contains both genes and peak regions. This is something I do not want in this case, 
 so I will identify where the genes end to select the peaks only. 
@@ -90,8 +90,8 @@ print(head(rownames(sce)))
 
 ## Determining optimal pool size
 
-Pooling cells together for **scover** is a trade off between getting rid of undesired zeroes in your count
-matrix and retaining variability between cells and cell types. For the datasets that I have worked with so far, a pool size of 100 cells per pool is good, as it reduces the sparsity below 70%. However, I recommend that you try a couple of different settings since the number of remaining pools and the sparsity is dependent on your dataset. Sometimes it is impossible to reduce the sparsity below 70% - in that case, I recommend that you try a couple of different pool sizes to see what works best. 
+Pooling cells together for **scover** is a trade off between removing undesired zeroes in your count
+matrix and retaining variability between cells and cell types. For the datasets that I have worked with so far, a pool size of 100 cells per pool works well, as it reduces the sparsity below 70%. However, I recommend that you try a couple of different settings since the number of remaining pools and the sparsity depends on your dataset. Sometimes it is impossible to reduce the sparsity below 70% - in that case, I recommend that you try a couple of different pool sizes to see what works best. 
 
 One way to check how sparsity goes down for different pool sizes is to try it:
   (the `pool_cells()` and `get_sce_sparsity()` functions are from `scover_helper_functions.R`)
@@ -106,7 +106,7 @@ plot(x=c(12,30,50,100,200), y=sparsities,
      xlab="Pool size", ylab="Sparsity")
 ```
 
-Note that for pool sizes beyond a particular size, you lose cell types as they have fewer than `pool_size` cells. 
+Note that for large pool sizes, you will lose cell types that have fewer than `pool_size` cells. 
 In this case, I will use `pool_size = 100`. I use the `pool_cells_follow_cells()` function to keep track of 
 which cells end up in which pools. 
 
@@ -118,17 +118,10 @@ pooled_sce_cells_in_pools <- pool_output[[2]]
 
 ## Adjust region sizes
 
-This part of the workflow will only work if your rownames of the `SingleCellExperiment` object
-contain the peak regions in this format: `chromosome_peakstart_peakend`, so, for example,
-`chr1_283990_284520`. If the peak regions are instead using different symbols to
-separate the different parts (for instance, `chromosome:peakstart-peakend`) then
-it becomes necessary to update the regular expressions found in the code block. 
-(For the example `chromosome:peakstart-peakend`, the updated first line then becomes
-`peak_start <- as.numeric(str_remove(str_remove(peaknames, "^chr[a-zA-Z0-9]+:"), "-[0-9]+$"))`,
-for example).
-
-In most peak regions, TFs occupy sequences around the middle of the peak. 
-To decrease runtimes and increase signal/noise, it is useful to take the 
+This part of the workflow will only work if the rownames of the `SingleCellExperiment` object
+represent the peak regions in the format: `chromosome_peakstart_peakend`, e.g.
+`chr1_283990_284520`. In most peak regions, TFs occupy sequences around the middle of the peak. 
+To decrease runtimes and increase signal/noise, I recommend taking the 
 middle 250 bp for each peak region:
   
 ```{r take_middle}
@@ -145,6 +138,11 @@ peak_ranges_df <- data.frame(seqnames=peak_chrom,
                              end=peak_end)
 peak_ranges <- makeGRangesFromDataFrame(peak_ranges_df)
 ```
+
+If the peak regions are represented using a different syntax (e.g. `chromosome:peakstart-peakend`) then
+it is necessary to update the regular expressions found in the code block above
+(For the example, with the `chromosome:peakstart-peakend` format, the updated first line then becomes
+`peak_start <- as.numeric(str_remove(str_remove(peaknames, "^chr[a-zA-Z0-9]+:"), "-[0-9]+$"))`).
 
 ## Removing peaks that overlap promoter regions
 
