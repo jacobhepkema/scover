@@ -1,6 +1,4 @@
 ---
-title: "How to prepare scanem input using a scRNA-seq dataset"
-author: "Jacob Hepkema"
 output: html_document
 ---
   
@@ -10,13 +8,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-All **scanem** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
+All **scover** needs as input are a set of sequences and a set of numeric values associated with each sequence (typically represented as a matrix). The sequences can be any type of nucleotides, e.g.
 
 * Promoter sequences
 * Peak sequences
 * UTRs
 
-The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scanem** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
+The values represent transcriptional activity, accessibility, or some other property associated with each sequence. It is assumed that each cell has a value and that values can be averaged across a randomly selected pool of cells from the same cell type. **scover** utilizes the cell type annotation to pool cells from the same group by sampling without replacement. 
 
 In this workflow, I am starting from a `SingleCellExperiment` object containing scRNA-seq data (see 
                                                                                                 [this page](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) for useful information on what this is) - if you start from a counts matrix, follow the [instructions](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) to construct a `SingleCellExperiment` object. If you are starting from a `Seurat` object, [their website](https://satijalab.org/seurat/v3.0/conversion_vignette.html) contains 
@@ -26,7 +24,7 @@ This workflow is the more detailed data generation file - if you are just
 interested in creating a dataset quickly, there is a script for this too. 
 You can then start from a `SingleCellExperiment`
 object with the cell type annotation stored in `colData(sce)$cell_type1` (where
-                                                                          `sce` is the `SingleCellExperiment` object) . See [this page](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scanem/blob/master/guides/how_to_prepare_scanem_dataset_using_create_dataset.html) for more information 
+                                                                          `sce` is the `SingleCellExperiment` object) . See [this page](https://htmlpreview.github.io/?https://github.com/jacobhepkema/scover/blob/master/guides/how_to_prepare_scover_dataset_using_create_dataset.html) for more information 
 on the 'quick version'. However, it is always a good idea to use your judgement to decide if the steps
 make sense - having a 'human in the loop' for dataset generation and model output 
 analysis will often help. 
@@ -55,7 +53,7 @@ See the end of this page for the full `sessionInfo()`.
 In addition, I get my helper functions (e.g. `pool_cells()`) from this file:
   
 ```{r sourcefile}
-source("scanem_helper_functions.R")
+source("scover_helper_functions.R")
 ```
 
 **Important**: 
@@ -67,7 +65,7 @@ source("scanem_helper_functions.R")
 Load your `SingleCellExperiment` object. In this case I am using the bone marrow dataset from Tabula Muris:
   
 ```{r load_sce, eval=T, echo=T}
-sce <- readRDS("TMFACS_Marrow.rds")
+sce <- readRDS(paste0(tm_dir, "TMFACS_Marrow.rds"))
 ```
 
 Make sure that the cell type information is stored in the `$cell_type1` column of `colData(sce)`. 
@@ -87,7 +85,7 @@ In addition, you could choose not to include cells that have an "unknown" cell t
 
 ## Determining optimal pool size
 
-Pooling cells together for **scanem** is a trade off between getting rid of undesirable zeroes in your count
+Pooling cells together for **scover** is a trade off between getting rid of undesirable zeroes in your count
 matrix and retaining variability between cells and cell types. Generally, the method works reasonably well when the sparsity is between 20% and 50% - aiming for a sparsity below 50% is usually a good idea. However, 
 I recommend that you try a couple of different settings since the performance can depend on your dataset.
 
@@ -95,7 +93,7 @@ Also, it is sometimes impossible to reduce the sparsity to the desired level - i
 I recommend that you try a couple of different pool sizes to see what works best. 
 
 One way to check how sparsity goes down for different pool sizes is through:
-  (the `pool_cells()` and `get_sce_sparsity()` functions are from `scanem_helper_functions.R`)
+  (the `pool_cells()` and `get_sce_sparsity()` functions are from `scover_helper_functions.R`)
 
 ```{r determine_sparsity}
 sparsities <- c()
@@ -125,7 +123,7 @@ For this particular dataset, I know that `mm10` was used, so I will obtain the r
 genome with 500 bp upstream and 500 bp downstream of the TSS for each gene. This file is included in the `data_generation` folder of this repository.
 
 ```{r get_seqs}
-seqs <- Biostrings::readDNAStringSet("./mm10_500up500down_promoters.fa.gz")
+seqs <- Biostrings::readDNAStringSet("mm10_500up500down_promoters.fa.gz")
 
 # Get genes and to-be-predicted data (log-normalized counts of sce)
 genelist <- rownames(pooled_sce)
@@ -181,16 +179,21 @@ dataset <- data.frame(gene=genelist,
                       sequence=seqs,
                       ind=ind)
 
+# File 1
 write.table(dataset, gzfile("TMFACS_Marrow_pool50.tsv.gz"), 
             sep="\t", row.names = F, col.names = T, quote = F)
+
+# File 2
 write.table(colData(pooled_sce), "TMFACS_Marrow_pool50_colData.tsv", 
             sep="\t", row.names = T, col.names = T, quote = F)
+
+# File 3
 write.table(pooled_sce_cells_in_pools, "TMFACS_Marrow_pool50_cells_in_pools.tsv", 
             sep="\t", row.names = T, col.names = T, quote = F)
 ```
 
-You want to pass file 1) to the `--data` argument of scanem, and argument 2) to
-`--celldata` of scanem. The third file ensures that it is possible to reproduce the pooling. For more information on how to run **scanem**, see the main readme file 
+You want to pass file 1) to the `--data` argument of scover, and argument 2) to
+`--celldata` of scover. The third file ensures that it is possible to reproduce the pooling. For more information on how to run **scover**, see the main readme file 
 in the root of this repository. 
 
 
@@ -199,5 +202,3 @@ in the root of this repository.
 ```{r sessioninfo}
 utils::sessionInfo()
 ```
-
-
