@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Jacob Hepkema" />
 
 
-<title>How to prepare scover input using create_dataset.R</title>
+<title>how_to_prepare_scover_input_create_dataset.utf8</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -369,6 +368,16 @@ summary {
 <div class="container-fluid main-container">
 
 
+
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
 <p>This package contains a function to create a dataset quickly from a SingleCellExperiment (<code>sce</code>) object. Make sure to store the cell type annotation in <code>colData(sce)$cell_type1</code>. This guide is to create a dataset using scRNA-seq data, and it will use sequences of 500 bp upstream and 500bp downstream of the TSS for each gene. For a more detailed guide including other options, see the other guide files in this repository. I would recommend the other option, as you can get a better understanding of what pool size will be the best for your dataset.</p>
 <p>To run the script, you need to give the following command-line arguments:</p>
 <pre><code>-p POOL_SIZE (number of cells in each pool)
@@ -384,7 +393,7 @@ summary {
 <li><code>TEST_DATASET_pool100_colData.tsv</code></li>
 <li><code>TEST_DATASET_pool100_cells_in_pools.tsv</code></li>
 </ol>
-<p>You want to pass file 1) to the <code>--data</code> argument of scover, and file 2) to the <code>--celldata</code> of scanem. For more information on how to run scanem, see the main readme file in the root of this repository.</p>
+<p>You want to pass file 1) to the <code>--data</code> argument of scover, and file 2) to the <code>--celldata</code> of scover. For more information on how to run scover, see the main readme file in the root of this repository.</p>
 
 
 

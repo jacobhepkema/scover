@@ -2,4 +2,4 @@ How to prepare scover input using scATAC-seq data
 =================================================
 
 .. raw:: html
-   :file: _static/how_to_prepare_scover_input_scATAC.html
+   :file: _static/how_to_prepare_scover_input_using_scATAC_seq.html
