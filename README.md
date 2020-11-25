@@ -20,23 +20,12 @@ __Q__: How to install/run __scover__?
 
 __A__: To install __scover__, simply clone the repository to the directory where you want to run it. Before running, there is some data-preprocessing required (see [workflow](#workflow)). To run __scover__, you will also need to have [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html#installation) and [Singularity](https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps) installed. The guide on how to run __scover__ can be found [further down this page](#training-scover). I advise to run __scover__ using GPUs, as the run times can increase significantly (~5x in some of our benchmarks) when using CPUs.
 
-__Q__: How can I run __scover__ using GPUs?
-
-__A__: Currently, the Singularity image for training the network only detects CPUs, so to use GPUs, you will need to create an anaconda environment with [pytorch](https://pytorch.org/) and other required packages. This is done very easily; if you have [installed anaconda or miniconda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) you can `cd` into the `scover` folder, which contains a `scover_env.yml` file that specifies which files should be in the environment. To create the conda environment, simply type 
-
-```{bash}
-conda env create -f scover_env.yml
-```
-
-which will create the `scover` environment with all the required packages. Before running __scover__, simply activate the environment with `conda activate scover` so that when you [start training scover](#training-scover) with Nextflow, it will have the right packages. Then, run __scover__ with `profile -local_gpu` if you want to run locally, or with `profile -lsf_gpu` if you want to use the Platform LSF scheduler. We have not yet tried to run __scover__ using other schedulers.
-(For running on CPU, the conda step is not needed, as it will use a Singularity image that has the right packages)
-
 __Q__: Can I try running __scover__ with an example dataset?
 
 __A__: Yes - for this I've added a small mock dataset in the `data` directory. If you have __scover__ set up, you can run 
 
 ```{bash}
-nextflow run -profile local_cpu scover.nf \
+nextflow run -profile local_gpu scover.nf \
     --data data/small_dataset.tsv \
     --celldata data/small_dataset_colData.tsv \
     --name example_run \
@@ -47,7 +36,7 @@ This will generate output in the `output/example_run` directory. Note that this 
 
 __Q__: How can I set up __scover__ to run on my system?
 
-__A__: You will first need to set up the [dependencies (see below)](#installdependencies). If you want to run __scover__ on GPUs (which I would highly recommend), then see above for creating a conda environment with the required packages installed. Next, you can specify a particular Nextflow profile that you want to use. Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. There are some example profiles provided in the `conf` folder in this directory, for example `-profile lsf_gpu` to run on a GPU queue on LSF. There is a `local_gpu` profile to run locally on GPUs. However, this might require some additional customization (e.g. the queue to use if you are using a scheduler). For more information on how to specify a Nextflow executor, see [this page](https://www.nextflow.io/docs/latest/executor.html), and for more information on Nextflow configurations, see [this page](https://www.nextflow.io/docs/latest/config.html). If you've followed all these steps, and you are in an environment with enough memory to run Nextflow and with the conda environment active, you can run the above option to try it out.
+__A__: You will first need to set up the [dependencies (see below)](#installdependencies). Next, you can specify a particular Nextflow profile that you want to use. Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. There are some example profiles provided in the `conf` folder in this directory, for example `-profile lsf_gpu` to run on a GPU queue on LSF. There is a `local_gpu` profile to run locally on GPUs. However, this might require some additional customization (e.g. the name of the queue to use if you are using a scheduler). For more information on how to specify a Nextflow executor, see [this page](https://www.nextflow.io/docs/latest/executor.html), and for more information on Nextflow configurations, see [this page](https://www.nextflow.io/docs/latest/config.html). If you've followed all these steps, and you are in an environment with enough memory to run Nextflow, you can run the above option to try it out.
 
 In the case that you do want to add a custom profile, for instance in the file `conf/custom_profile.conf`, you need to specify it in the `nextflow.config` file as such:
 
