@@ -69,34 +69,35 @@ def align_conv_filters(model, input_seqs, input_data, m, train_ind):
     import torch
     from tqdm import trange
 
-    act_seq = input_seqs[train_ind]
+    activation_seqs = input_seqs[train_ind]
     
     with torch.no_grad():
         model.eval()
-        activations = model.conv_1(act_seq).cpu().detach().numpy().squeeze()
+        activations = model.conv_1(activation_seqs).cpu().detach().numpy().squeeze()
     
-    n_seq = act_seq.shape[0]    
-    act_seq = act_seq.squeeze()
-    seq_len = act_seq.shape[1]
+    n_seq = activation_seqs.shape[0]    
+    activation_seqs = activation_seqs.squeeze()
+    seq_len = activation_seqs.shape[1]
     d = activations.shape[1]
     
     motifs_pfm_dict = dict() # store pfms in this dict
     motifs_ppm_dict = dict() # store pwms in this dict
     
+    # cycle through convolutional filters
     for filter_num in trange(d):
         
         # select activations for filter. new array = nseq x length seq
-        curr_act = activations[:,filter_num,:] 
+        curr_activation = activations[:,filter_num,:] 
         
         # get those sequences that have positive values
-        seq_has_pos_vals = np.argwhere(np.amax(curr_act, axis=1) > 0)[:,0]
+        seq_has_pos_vals = np.argwhere(np.amax(curr_activation, axis=1) > 0)[:,0]
         
         # in the case that there is a minmum of 10 sequences that activate the filter
         if seq_has_pos_vals.shape[0] > 10: 
             
             # per sequence, get position of maximum activation
-            per_seq_where_max_pos = np.argmax(curr_act[seq_has_pos_vals], axis=1)
-            curr_act_seq = act_seq[seq_has_pos_vals]
+            per_seq_where_max_pos = np.argmax(curr_activation[seq_has_pos_vals], axis=1)
+            curr_activation_seqs = activation_seqs[seq_has_pos_vals]
             curr_str_list = []
             # go through sequences and save to curr_str_list
             for i in range(seq_has_pos_vals.shape[0]): 
@@ -104,19 +105,20 @@ def align_conv_filters(model, input_seqs, input_data, m, train_ind):
                 # maximum activation
                 curr_max = per_seq_where_max_pos[i] 
                 # get subsequence that activated filter (max 1 per seq)
-                curr_str_list.append(curr_act_seq[i][curr_max:(curr_max+m)]) 
+                curr_str_list.append(curr_activation_seqs[i][curr_max:(curr_max+m)]) 
     
-            # stack em together in a numpy array
-            seq_stack = np.stack(curr_str_list)
+            # put them together in a numpy array
+            sequence_array = np.stack(curr_str_list)
             # get sum per position
-            seq_stack_summed = np.sum(seq_stack,axis=0) 
+            sequence_array_summed = np.sum(sequence_array,axis=0) 
             # save pfm
-            motifs_pfm_dict[str(filter_num)] = seq_stack_summed 
+            motifs_pfm_dict[str(filter_num)] = sequence_array_summed 
             
             # get counts per row
-            row_sums = np.sum(seq_stack_summed, axis=1)
-            seq_stack_summed = np.nan_to_num(seq_stack_summed / row_sums[:, np.newaxis])
-            motifs_ppm_dict[str(filter_num)] = seq_stack_summed
+            row_sums = np.sum(sequence_array_summed, axis=1)
+            # convert pfm to ppm
+            sequence_array_summed = np.nan_to_num(sequence_array_summed / row_sums[:, np.newaxis])
+            motifs_ppm_dict[str(filter_num)] = sequence_array_summed
     
     return motifs_pfm_dict, motifs_ppm_dict
 
