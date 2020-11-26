@@ -1,4 +1,4 @@
-name: scanem
+name: scover
 channels:
   - dglteam
   - pytorch
