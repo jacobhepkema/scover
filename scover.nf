@@ -52,7 +52,7 @@ println """\
 =========================================================================
 =========================================================================
 
-  scanem  v0.2 (Jun 9 2020) 
+  scover  v0.2 (Jun 9 2020) 
 
 =========================================================================
 
@@ -75,7 +75,7 @@ println """\
          """
          .stripIndent()
 
-process scanem {
+process scover {
     publishDir "$save_dir", pattern: "*.pt", mode: "link"  
     publishDir "$save_dir", pattern: "AllMotifs/*.png", mode: "link"
     publishDir "$save_dir", pattern: "Motifs/*", mode: "link"  
@@ -101,7 +101,7 @@ process scanem {
 
     script:
     """
-    scanem.py \
+    scover.py \
     $data \
     $celldata \
     -name $params.name \
