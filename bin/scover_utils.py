@@ -83,7 +83,7 @@ def align_conv_filters(model, input_seqs, input_data, m, train_ind):
     motifs_pfm_dict = dict() # store pfms in this dict
     motifs_ppm_dict = dict() # store pwms in this dict
     
-    for filter_num in trange(d): # todo change back to d
+    for filter_num in trange(d):
         
         # select activations for filter. new array = nseq x length seq
         curr_act = activations[:,filter_num,:] 
