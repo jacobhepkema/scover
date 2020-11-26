@@ -32,11 +32,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Custom functions
-import scanem_utils as su
-import scanem_model as sm
+import scover_utils as su
+import scover_model as sm
 
 # argparse
-parser = argparse.ArgumentParser(description='scanem pytorch version v0.2', 
+parser = argparse.ArgumentParser(description='scover version v0.2', 
 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('data', metavar='data', type=str,
                     help='path to tab-separated data file containing named columns "sequence" (containing DNA sequences) \
@@ -132,7 +132,7 @@ np.random.seed(seed)
 # Printing setup
 print(file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
-print("                     scanem pytorch version v0.2                     ", file=sys.stderr)
+print("                         scover version v0.2.                        ", file=sys.stderr)
 print("---------------------------------------------------------------------", file=sys.stderr)
 print(file=sys.stderr)
 print("Name \t\t\t=", name, file=sys.stderr)
