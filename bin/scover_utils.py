@@ -1,4 +1,7 @@
 def onehot_encode_seq(sequence, m=0, padding=False):
+    """Converts a given IUPAC DNA sequence to a one-hot 
+    encoded DNA sequence. 
+    """
     import numpy as np
     import torch
     
@@ -37,6 +40,9 @@ def onehot_encode_seq(sequence, m=0, padding=False):
     return onehot
 
 def save_meme(motifs_ppm_dict, output_file="found_motifs.meme"):
+    """Saves the found PPMs (given as dictionary) to a file that's
+    compatible with MEME suite applications.
+    """
     import pandas as pd
 
     meme_string = ["MEME version 4", "", "ALPHABET= ACGT", "", "strands: + -", ""]
@@ -55,6 +61,9 @@ def save_meme(motifs_ppm_dict, output_file="found_motifs.meme"):
     print("wrote meme list")
 
 def align_conv_filters(model, input_seqs, input_data, m, train_ind):
+    """Aligns the convolutional filters of a given scover model back
+    to the given input sequences at the given indices. 
+    """
     # Motif analysis
     import numpy as np
     import torch
@@ -112,6 +121,8 @@ def align_conv_filters(model, input_seqs, input_data, m, train_ind):
     return motifs_pfm_dict, motifs_ppm_dict
 
 def randomize_sequences(sequences):
+    """Randomly permutes a set of DNA sequences.
+    """
     import random
     shuffled_seqs = []
     for seq in sequences:
