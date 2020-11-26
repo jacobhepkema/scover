@@ -32,7 +32,7 @@ the motif :code:`.meme` database file to align found motifs to. I have included 
 from CIS-BP[1] in the :code:`resources` directory. 
 
 Before running **scover** you will probably want to identify the best :code:`-profile` to run with. This will define the executor
-used by **scover**. `See this page <https://scover.readthedocs.io/en/latest/profiles.html>`_ for options and customisation. 
+used by **scover**. `This page <profiles.html>`_ has more information on the profiles specified for **scover**. `See this page <https://scover.readthedocs.io/en/latest/profiles.html>`_ for options and customisation. 
 
 Minimal command:
 
@@ -61,6 +61,25 @@ can :code:`cd` into the directory starting with the code shown in front of the s
 task (in this case, :code:`62/3eb656`, so the directory will be something like :code:`scover/work/62/3eb656aae5e84c420b7aa267dfeb57`). 
 Then, by running :code:`tail .command.log` you can get an idea of how far along the training is. 
 
+
+Run an example dataset
+######################
+
+Try to run **scover** with an example dataset by `choosing your profile to run with <profiles.html>`_, making sure
+you are in an environment that can run both Nextflow and Singularity, and then run the following from the :code:`scover` directory:
+
+.. code-block:: bash
+
+   nextflow run -profile local_gpu scover.nf \
+    --data data/small_dataset.tsv \
+    --celldata data/small_dataset_colData.tsv \
+    --name example_run \
+    --epochs 8 \
+    --num_candidates 8 \
+    --num_calibrations 4 \
+    --tomtom resources/Mus_musculus.meme
+
+This should create a folder in the :code:`scanem/output` directory named :code:`example_run` with all the output files. Note that most of the results will not make sense here, this is a dataset that contains the right data structure but not enough data for the network to converge properly. 
 
 
 **References**

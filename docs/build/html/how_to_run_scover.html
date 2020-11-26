@@ -15,7 +15,7 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Profiles" href="profiles.html" />
+    <link rel="next" title="Choosing the right profile" href="profiles.html" />
     <link rel="prev" title="How to install scover prerequisites" href="how_to_install_scover_prerequisites.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -59,7 +59,7 @@ Another important argument is <code class="code docutils literal notranslate"><s
 the motif <code class="code docutils literal notranslate"><span class="pre">.meme</span></code> database file to align found motifs to. I have included <code class="code docutils literal notranslate"><span class="pre">Mus_musculus.meme</span></code> and <code class="code docutils literal notranslate"><span class="pre">Homo_sapiens.meme</span></code>
 from CIS-BP[1] in the <code class="code docutils literal notranslate"><span class="pre">resources</span></code> directory.</p>
 <p>Before running <strong>scover</strong> you will probably want to identify the best <code class="code docutils literal notranslate"><span class="pre">-profile</span></code> to run with. This will define the executor
-used by <strong>scover</strong>. <a class="reference external" href="https://scover.readthedocs.io/en/latest/profiles.html">See this page</a> for options and customisation.</p>
+used by <strong>scover</strong>. <a class="reference external" href="profiles.html">This page</a> has more information on the profiles specified for <strong>scover</strong>. <a class="reference external" href="https://scover.readthedocs.io/en/latest/profiles.html">See this page</a> for options and customisation.</p>
 <p>Minimal command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run scover.nf <span class="se">\</span>
  --name test_run <span class="se">\</span>
@@ -80,8 +80,24 @@ Open a second terminal window and <code class="code docutils literal notranslate
 can <code class="code docutils literal notranslate"><span class="pre">cd</span></code> into the directory starting with the code shown in front of the specific
 task (in this case, <code class="code docutils literal notranslate"><span class="pre">62/3eb656</span></code>, so the directory will be something like <code class="code docutils literal notranslate"><span class="pre">scover/work/62/3eb656aae5e84c420b7aa267dfeb57</span></code>).
 Then, by running <code class="code docutils literal notranslate"><span class="pre">tail</span> <span class="pre">.command.log</span></code> you can get an idea of how far along the training is.</p>
+<div class="section" id="run-an-example-dataset">
+<h2>Run an example dataset<a class="headerlink" href="#run-an-example-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Try to run <strong>scover</strong> with an example dataset by <a class="reference external" href="profiles.html">choosing your profile to run with</a>, making sure
+you are in an environment that can run both Nextflow and Singularity, and then run the following from the <code class="code docutils literal notranslate"><span class="pre">scover</span></code> directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run -profile local_gpu scover.nf <span class="se">\</span>
+ --data data/small_dataset.tsv <span class="se">\</span>
+ --celldata data/small_dataset_colData.tsv <span class="se">\</span>
+ --name example_run <span class="se">\</span>
+ --epochs <span class="m">8</span> <span class="se">\</span>
+ --num_candidates <span class="m">8</span> <span class="se">\</span>
+ --num_calibrations <span class="m">4</span> <span class="se">\</span>
+ --tomtom resources/Mus_musculus.meme
+</pre></div>
+</div>
+<p>This should create a folder in the <code class="code docutils literal notranslate"><span class="pre">scanem/output</span></code> directory named <code class="code docutils literal notranslate"><span class="pre">example_run</span></code> with all the output files. Note that most of the results will not make sense here, this is a dataset that contains the right data structure but not enough data for the network to converge properly.</p>
 <p><strong>References</strong></p>
 <p>[1] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., … &amp; Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.</p>
+</div>
 </div>
 
 
@@ -116,7 +132,10 @@ Then, by running <code class="code docutils literal notranslate"><span class="pr
 <p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="how_to_install_scover_prerequisites.html">How to install scover prerequisites</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">How to run scover</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to run scover</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#run-an-example-dataset">Run an example dataset</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="profiles.html">Profiles</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Analysing scover output:</span></p>
@@ -129,7 +148,7 @@ Then, by running <code class="code docutils literal notranslate"><span class="pr
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="how_to_install_scover_prerequisites.html" title="previous chapter">How to install scover prerequisites</a></li>
-      <li>Next: <a href="profiles.html" title="next chapter">Profiles</a></li>
+      <li>Next: <a href="profiles.html" title="next chapter">Choosing the right profile</a></li>
   </ul></li>
 </ul>
 </div>
