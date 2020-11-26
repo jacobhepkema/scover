@@ -11,6 +11,7 @@ Furthermore, motifs are aligned with Tomtom from the MEME suite[1].
 scover requires that cells are annotated for cell type (or other category). 
 For scRNA-seq data TSS annotation is required, as the promoter sequences are obtained directly from genomic sequence relative to the TSS.
 
+
 .. toctree::
    :maxdepth: 2
    :caption: Dataset creation:
@@ -24,6 +25,7 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
    :maxdepth: 2
    :caption: Running scover:
    
+   How to install scover prerequisites <how_to_install_scover_prerequisites.rst>
    How to run scover <how_to_run_scover.rst>  
    Profiles <profiles.rst>
  

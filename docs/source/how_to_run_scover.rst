@@ -44,6 +44,25 @@ Minimal command:
   --celldata data/mock_data_colData.tsv \
   --tomtom resources/Mus_musculus.meme
 
+
+
+Important:
+It might seem like it is stuck during training as the line with 
+
+.. code-block:: bash
+
+   [62/3eb656] process > scover             [  0%] 0 of 1
+
+keeps saying :code:`[  0%]`. This happens because the training stage only contains one
+neural network step, and it will switch to :code:`[100%]` once the training is complete. 
+There is a way to find out how far into training the network is, but it is not entirely straightforward:
+Open a second terminal window and :code:`cd` into the :code:`scover/work` directory. From there, you 
+can :code:`cd` into the directory starting with the code shown in front of the specific 
+task (in this case, :code:`62/3eb656`, so the directory will be something like :code:`scover/work/62/3eb656aae5e84c420b7aa267dfeb57`). 
+Then, by running :code:`tail .command.log` you can get an idea of how far along the training is. 
+
+
+
 **References**
 
 [1] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., ... & Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.

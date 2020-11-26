@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Profiles" href="profiles.html" />
-    <link rel="prev" title="How to extract promoter sequences" href="how_to_extract_promoter_sequences.html" />
+    <link rel="prev" title="How to install scover prerequisites" href="how_to_install_scover_prerequisites.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -68,6 +68,18 @@ used by <strong>scover</strong>. <a class="reference external" href="https://sco
  --tomtom resources/Mus_musculus.meme
 </pre></div>
 </div>
+<p>Important:
+It might seem like it is stuck during training as the line with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="m">62</span>/3eb656<span class="o">]</span> process &gt; scover             <span class="o">[</span>  <span class="m">0</span>%<span class="o">]</span> <span class="m">0</span> of <span class="m">1</span>
+</pre></div>
+</div>
+<p>keeps saying <code class="code docutils literal notranslate"><span class="pre">[</span>&#160; <span class="pre">0%]</span></code>. This happens because the training stage only contains one
+neural network step, and it will switch to <code class="code docutils literal notranslate"><span class="pre">[100%]</span></code> once the training is complete.
+There is a way to find out how far into training the network is, but it is not entirely straightforward:
+Open a second terminal window and <code class="code docutils literal notranslate"><span class="pre">cd</span></code> into the <code class="code docutils literal notranslate"><span class="pre">scover/work</span></code> directory. From there, you
+can <code class="code docutils literal notranslate"><span class="pre">cd</span></code> into the directory starting with the code shown in front of the specific
+task (in this case, <code class="code docutils literal notranslate"><span class="pre">62/3eb656</span></code>, so the directory will be something like <code class="code docutils literal notranslate"><span class="pre">scover/work/62/3eb656aae5e84c420b7aa267dfeb57</span></code>).
+Then, by running <code class="code docutils literal notranslate"><span class="pre">tail</span> <span class="pre">.command.log</span></code> you can get an idea of how far along the training is.</p>
 <p><strong>References</strong></p>
 <p>[1] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., … &amp; Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.</p>
 </div>
@@ -103,6 +115,7 @@ used by <strong>scover</strong>. <a class="reference external" href="https://sco
 </ul>
 <p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_install_scover_prerequisites.html">How to install scover prerequisites</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">How to run scover</a></li>
 <li class="toctree-l1"><a class="reference internal" href="profiles.html">Profiles</a></li>
 </ul>
@@ -115,7 +128,7 @@ used by <strong>scover</strong>. <a class="reference external" href="https://sco
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="how_to_extract_promoter_sequences.html" title="previous chapter">How to extract promoter sequences</a></li>
+      <li>Previous: <a href="how_to_install_scover_prerequisites.html" title="previous chapter">How to install scover prerequisites</a></li>
       <li>Next: <a href="profiles.html" title="next chapter">Profiles</a></li>
   </ul></li>
 </ul>

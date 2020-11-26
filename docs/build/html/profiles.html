@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profiles &#8212; scover  documentation</title>
+    <title>Choosing the right profile &#8212; scover  documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -33,20 +33,38 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="profiles">
-<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="choosing-the-right-profile">
+<h1>Choosing the right profile<a class="headerlink" href="#choosing-the-right-profile" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run -profile PROFILE_NAME scover.nf <span class="o">[</span>args<span class="o">]</span>
 </pre></div>
 </div>
-<p>Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. Currently, this repo includes configurations for running locally with GPU (<cite>local_gpu</cite>), on LSF with GPU (<cite>lsf_gpu</cite>), and some other options, including ones that run on CPU. However, given that scover already takes some time to run on GPU, I would advice against running it on CPU.</p>
+<p>Nextflow configuration profiles are files that specify the executor (e.g. LSF/SLURM/local/AWS), requirements, and other things for the different parts of the Nextflow workflow. Currently, this repo includes configurations for running locally with GPU (<code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code>), on LSF with GPU (<code class="code docutils literal notranslate"><span class="pre">lsf_gpu</span></code>), and some other options, including ones that run on CPU. However, given that scover already takes some time to run on GPU, I would advice against running it on CPU.</p>
 <p>Using <code class="code docutils literal notranslate"><span class="pre">-profile</span></code>, you can choose a specified profile configuration from the <code class="code docutils literal notranslate"><span class="pre">/conf</span></code> directory. These profiles are included in the <code class="code docutils literal notranslate"><span class="pre">nextflow.config</span></code> file; if you are adding an option do not forget to add it to <code class="code docutils literal notranslate"><span class="pre">nextflow.config</span></code>. Options currently include:</p>
 <ul class="simple">
-<li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code> will run locally, and will use a GPU if available. Note that you need to have the right packages installed (see “How can I run scover using GPUs?” at the start of this README).</p></li>
-<li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_cpu</span></code> will run locally, and it will also use Singularity for the first step in the workflow. This will only support CPUs.</p></li>
+<li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code> will run locally, and will use a GPU if available.</p></li>
+<li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_cpu</span></code> will run locally, and it will only support CPUs.</p></li>
 <li><p>profile <code class="code docutils literal notranslate"><span class="pre">local_nosingularity</span></code> will run locally and will not use Singularity images.</p></li>
-<li><p>profile <code class="code docutils literal notranslate"><span class="pre">lsf_gpu</span></code> will run using the Platform LSF scheduler using GPUs. This might require some editing of the <code class="code docutils literal notranslate"><span class="pre">conf/lsf_gpu.conf</span></code> file to be compatible with GPU queues on your LSF setup. See <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html">this page</a> for more information on how to specify executors.</p></li>
+<li><p>profile <code class="code docutils literal notranslate"><span class="pre">lsf_gpu</span></code> will run using the Platform LSF scheduler using GPUs. This might require some editing of the <code class="code docutils literal notranslate"><span class="pre">conf/lsf_gpu.conf</span></code> file to be compatible with GPU queues on your LSF setup. See <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html">this page</a> for more information on how to specify executors. The most important thing to change is the <code class="code docutils literal notranslate"><span class="pre">queue</span></code> option.</p></li>
 <li><p>profile <code class="code docutils literal notranslate"><span class="pre">lsf_cpu</span></code> will run using the Platform LSF scheduler using CPUs. This might require some editing of the <code class="code docutils literal notranslate"><span class="pre">conf/lsf_cpu.conf</span></code> file to be compatible with your LSF setup. See <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html">this page</a> for more information on how to specify executors.</p></li>
 </ul>
+<div class="section" id="custom-profiles">
+<h2>Custom profiles<a class="headerlink" href="#custom-profiles" title="Permalink to this headline">¶</a></h2>
+<p>Depending on your setup, it might be necessary to specify a custom profile (for e.g. SLURM).
+For this, you can add a profile in the <code class="code docutils literal notranslate"><span class="pre">scanem/conf</span></code> directory (where the current <code class="code docutils literal notranslate"><span class="pre">.conf</span></code> files are located).
+In this file, you can specify the executor and other requirements for the different parts of the workflow.
+For information on how to specify these, see the <a class="reference external" href="https://www.nextflow.io/docs/latest/config.html">Nextflow documentation on configuration files</a> and the <a class="reference external" href="https://www.nextflow.io/docs/latest/executor.html">Nextflow documentation on executors</a>.
+Afterwards, you will also need to specify the profile in the <code class="code docutils literal notranslate"><span class="pre">scanem/nextflow.profile</span></code> file.</p>
+<p>For example, if your profile is specified in the file <code class="code docutils literal notranslate"><span class="pre">scanem/conf/custom_profile.conf</span></code>, then you will need to add this to your <code class="code docutils literal notranslate"><span class="pre">scanem/nextflow.profile</span></code> file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>custom_profile <span class="o">{</span>
+  includeConfig <span class="s1">&#39;conf/custom_profile.conf&#39;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Then, you can <a class="reference external" href="how_to_run_scover.html">run scover</a> using <code class="code docutils literal notranslate"><span class="pre">-profile</span> <span class="pre">custom_profile</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nextflow run -profile custom_profile scover.nf <span class="o">[</span>args<span class="o">]</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -80,8 +98,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Running scover:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_install_scover_prerequisites.html">How to install scover prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="how_to_run_scover.html">How to run scover</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Profiles</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Profiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-profiles">Custom profiles</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Analysing scover output:</span></p>
 <ul>
