@@ -20,7 +20,7 @@ Alternatively, manually add :code:`export PATH="path/to/nextflow:$PATH"` to your
 Singularity
 ###########
 
-Singularity is an alternative to Docker; Singularity images are environments that contain the right software packages to run your software reproducibly. The different steps of :code:`scover` 
+Singularity is an alternative to Docker; Singularity images are environments that contain the right software packages to run the different steps of :code:`scover` reproducibly.
 
 If you don't have it yet, install `Singularity <https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps>`_ by following `the instructions on their website <https://sylabs.io/guides/3.6/user-guide/quick_start.html#quick-installation-steps>`_. Try it out by typing:
 
