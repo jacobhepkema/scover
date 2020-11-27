@@ -40,3 +40,19 @@ Then, you can `run scover <how_to_run_scover.html>`_ using :code:`-profile custo
  nextflow run -profile custom_profile scover.nf [args]
 
 
+Tip for storing Singularity images
+##################################
+
+Since the Singularity environments can be quite large, it might be helpful to store them in a specific location. In the :code:`.conf` file of your choice, I advice adding a line that includes the :code:`cacheDir` such that the images are stored in that directory:
+
+.. code-block:: bash
+
+ singularity {
+   runOptions = '--nv --no-home --cleanenv'
+   enabled = true
+   autoMounts = true
+ 
+   cacheDir = "ADD/PATH/TO/CACHE/DIR"      <---  Add this
+ }
+
+

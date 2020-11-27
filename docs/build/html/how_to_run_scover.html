@@ -56,7 +56,7 @@
 <p><strong>scover</strong> requires a run name (<code class="code docutils literal notranslate"><span class="pre">--name</span></code>), a pooled dataset (<code class="code docutils literal notranslate"><span class="pre">--data</span></code>), and pool cell type annotations (<code class="code docutils literal notranslate"><span class="pre">--celldata</span></code>).
 For creating a pooled dataset, find the right guide in the <a class="reference external" href="https://scover.readthedocs.io/en/latest/index.html">documentation</a>.
 Another important argument is <code class="code docutils literal notranslate"><span class="pre">--tomtom</span></code>, for specifying
-the motif <code class="code docutils literal notranslate"><span class="pre">.meme</span></code> database file to align found motifs to. I have included <code class="code docutils literal notranslate"><span class="pre">Mus_musculus.meme</span></code> and <code class="code docutils literal notranslate"><span class="pre">Homo_sapiens.meme</span></code>
+the motif <code class="code docutils literal notranslate"><span class="pre">.meme</span></code> database file to align the found motifs to. I have included <code class="code docutils literal notranslate"><span class="pre">Mus_musculus.meme</span></code> and <code class="code docutils literal notranslate"><span class="pre">Homo_sapiens.meme</span></code>
 from CIS-BP[1] in the <code class="code docutils literal notranslate"><span class="pre">resources</span></code> directory.</p>
 <p>Before running <strong>scover</strong> you will probably want to identify the best <code class="code docutils literal notranslate"><span class="pre">-profile</span></code> to run with. This will define the executor
 used by <strong>scover</strong>. <a class="reference external" href="profiles.html">This page</a> has more information on the profiles specified for <strong>scover</strong>. <a class="reference external" href="https://scover.readthedocs.io/en/latest/profiles.html">See this page</a> for options and customisation.</p>
@@ -94,7 +94,72 @@ you are in an environment that can run both Nextflow and Singularity, and then r
  --tomtom resources/Mus_musculus.meme
 </pre></div>
 </div>
-<p>This should create a folder in the <code class="code docutils literal notranslate"><span class="pre">scanem/output</span></code> directory named <code class="code docutils literal notranslate"><span class="pre">example_run</span></code> with all the output files. Note that most of the results will not make sense here, this is a dataset that contains the right data structure but not enough data for the network to converge properly.</p>
+<p>Note that you should change <code class="code docutils literal notranslate"><span class="pre">local_gpu</span></code> to whatever profile you will use. This should create a folder in the <code class="code docutils literal notranslate"><span class="pre">scanem/output</span></code> directory named <code class="code docutils literal notranslate"><span class="pre">example_run</span></code> with all the output files. Note that most of the results will not make sense here, this is a dataset that contains the right data structure but not enough data for the network to converge properly.</p>
+</div>
+<div class="section" id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h2>
+<p><code class="code docutils literal notranslate"><span class="pre">--name</span></code>
+The name of the current experiment.
+Default value: <code class="code docutils literal notranslate"><span class="pre">experiment</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--data</span></code>
+The path to the dataset (relative to <code class="code docutils literal notranslate"><span class="pre">scover.nf</span></code>) to train the network. Add your data in the example tab-separated format into the <cite>/data</cite> folder.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--celldata</span></code>
+The path to the dataset annotation (relative to <code class="code docutils literal notranslate"><span class="pre">scover.nf</span></code>) to annotate the cells.
+Add your data in the example format (see default file) into the <code class="code docutils literal notranslate"><span class="pre">/data</span></code> folder.
+For more information, see the data generation guides in the documentation.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--tomtom</span></code>
+The path to the <code class="code docutils literal notranslate"><span class="pre">.meme</span></code> format motif database to align found motifs to.
+Default value: <code class="code docutils literal notranslate"><span class="pre">resources/Mus_musculus.meme</span></code>.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--num_calibrations</span></code>
+The number of randomly intialized calibrations for hyperparameter optimization.
+Default value: <code class="code docutils literal notranslate"><span class="pre">30</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--num_candidates</span></code>
+The number of candidate models with optimal initial parameters that should be run.
+Default value: <code class="code docutils literal notranslate"><span class="pre">10</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--val_factor</span></code>
+Sets K for the K-fold cross-validation.
+Default value: <code class="code docutils literal notranslate"><span class="pre">10</span></code>.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">--epochs</span></code>
+Sets the number of epochs (1 epoch = 1 forward and backward cycle through the entire training set) the network goes through.
+Default value: <code class="code docutils literal notranslate"><span class="pre">100</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--batch_size</span></code>
+The size of one training batch (amount of sequences and the corresponding outputs). After one batch, the network will update its parameters through back-propagation.
+Default value: <code class="code docutils literal notranslate"><span class="pre">32</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--motif_length</span></code>
+The length of each individual regulatory motif.
+Default value: <code class="code docutils literal notranslate"><span class="pre">12</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--motif_amount</span></code>
+The amount of regulatory motifs to look for.
+Default value: <code class="code docutils literal notranslate"><span class="pre">300</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--sigma_motifs_min</span></code>
+sigma_motifs will be drawn from loguniform(sigma_motifs_min, sigma_motifs_max).
+Subsequently, sigma_motifs acts as the standard deviation of the normal
+distribution from which convolutional kernel coefficients are drawn.
+Default value: <code class="code docutils literal notranslate"><span class="pre">1e-7</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--sigma_motifs_max</span></code>
+sigma_motifs will be drawn from loguniform(sigma_motifs_min, sigma_motifs_max).
+Subsequently, sigma_motifs acts as the standard deviation of the normal
+distribution from which convolutional kernel coefficients are drawn.
+Default value: <code class="code docutils literal notranslate"><span class="pre">1e-3</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--sigma_net_min</span></code>
+sigma_net will be drawn from loguniform(sigma_net_min, sigma_net_max).
+Subsequently, sigma_net acts as the standard deviation of the normal
+distribution from which neural network layer coefficients are drawn.
+Default value: <code class="code docutils literal notranslate"><span class="pre">1e-5</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--sigma_net_max</span></code>
+sigma_net will be drawn from loguniform(sigma_net_min, sigma_net_max).
+Subsequently, sigma_net acts as the standard deviation of the normal
+distribution from which neural network layer coefficients are drawn.
+Default value: <code class="code docutils literal notranslate"><span class="pre">1e-2</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--epsilon_min</span></code>
+The learning rate will be drawn from loguniform(epsilon_min, epsilon_max).
+Default value: <code class="code docutils literal notranslate"><span class="pre">5e-4</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--epsilon_max</span></code>
+The learning rate will be drawn from loguniform(epsilon_min, epsilon_max).
+Default value: <code class="code docutils literal notranslate"><span class="pre">5e-2</span></code></p>
+<p><code class="code docutils literal notranslate"><span class="pre">--opt</span></code>
+The pytorch optimizer to use. Options include <code class="code docutils literal notranslate"><span class="pre">SGD</span></code> and <code class="code docutils literal notranslate"><span class="pre">Adam</span></code>.
+Default value: <code class="code docutils literal notranslate"><span class="pre">SGD</span></code></p>
 <p><strong>References</strong></p>
 <p>[1] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., … &amp; Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.</p>
 </div>
@@ -134,6 +199,7 @@ you are in an environment that can run both Nextflow and Singularity, and then r
 <li class="toctree-l1"><a class="reference internal" href="how_to_install_scover_prerequisites.html">How to install scover prerequisites</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">How to run scover</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#run-an-example-dataset">Run an example dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arguments">Arguments</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="profiles.html">Profiles</a></li>

@@ -65,6 +65,19 @@ Afterwards, you will also need to specify the profile in the <code class="code d
 </pre></div>
 </div>
 </div>
+<div class="section" id="tip-for-storing-singularity-images">
+<h2>Tip for storing Singularity images<a class="headerlink" href="#tip-for-storing-singularity-images" title="Permalink to this headline">¶</a></h2>
+<p>Since the Singularity environments can be quite large, it might be helpful to store them in a specific location. In the <code class="code docutils literal notranslate"><span class="pre">.conf</span></code> file of your choice, I advice adding a line that includes the <code class="code docutils literal notranslate"><span class="pre">cacheDir</span></code> such that the images are stored in that directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>singularity <span class="o">{</span>
+  <span class="nv">runOptions</span> <span class="o">=</span> <span class="s1">&#39;--nv --no-home --cleanenv&#39;</span>
+  <span class="nv">enabled</span> <span class="o">=</span> <span class="nb">true</span>
+  <span class="nv">autoMounts</span> <span class="o">=</span> <span class="nb">true</span>
+
+  <span class="nv">cacheDir</span> <span class="o">=</span> <span class="s2">&quot;ADD/PATH/TO/CACHE/DIR&quot;</span>      &lt;---  Add this
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -102,6 +115,7 @@ Afterwards, you will also need to specify the profile in the <code class="code d
 <li class="toctree-l1"><a class="reference internal" href="how_to_run_scover.html">How to run scover</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Profiles</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#custom-profiles">Custom profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tip-for-storing-singularity-images">Tip for storing Singularity images</a></li>
 </ul>
 </li>
 </ul>
