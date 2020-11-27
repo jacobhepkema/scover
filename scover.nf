@@ -86,6 +86,7 @@ process scover {
     publishDir "$save_dir", pattern: "*.tsv.gz", mode: "link"
     publishDir "$save_dir", pattern: "*for_best_candidate.txt", mode: "link"
     publishDir "$save_dir", pattern: "All_model_HDF5_*", mode: "link"
+    publishDir "$save_dir", pattern: "All_model_LOO_influence_HDF5_*", mode: "link"
 
     output:
     file "*.tsv.gz" 
@@ -98,6 +99,7 @@ process scover {
     file "All_MEME_*" into all_motifs_tmp_ch 
     file "*metrics_for_best_candidate.txt"
     file "All_model_HDF5_*"
+    file "All_model_LOO_influence_HDF5_*"
 
     script:
     """
