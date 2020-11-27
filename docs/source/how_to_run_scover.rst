@@ -45,7 +45,6 @@ Minimal command:
   --tomtom resources/Mus_musculus.meme
 
 
-
 Important:
 It might seem like it is stuck during training as the line with 
 
