@@ -743,21 +743,43 @@ all_candidates = [str(x+1) for x in np.asarray(range(all_val_losses.shape[0]))]
 all_candidates_with_best = [x for x in all_candidates]
 all_candidates_with_best[best_candidate] = "best"
 
+
+influence_scores_HDF5_path = model_output_dir + "/All_model_LOO_influence_HDF5_" + name + ".h5"
+fid = h5py.File(influence_scores_HDF5_path, 'w')
+for idx, can in enumerate(tqdm(all_candidates)):
+    curr_val_ind = val_inds2[int(can)-1]
+    
+    # Load current candidate model
+    candidate_state_dict = model_output_dir + "/" + name + "_candidate_" + can + "_state_dict.pt"
+    candidate_model.load_state_dict(torch.load(candidate_state_dict, map_location=torch.device('cpu')))
+    candidate_model = candidate_model.eval()
+    candidate_model = candidate_model.double()
+    
+    # Get activations
+    model_activations = candidate_model.pool_1(F.relu(candidate_model.conv_1(input_seqs[curr_val_ind].double()))).detach()
+    
+    # Get normal prediction
+    normal_prediction = candidate_model(input_seqs[curr_val_ind].double()).detach().numpy()
+    
+    # Using the model activations, predict the output when iteratively setting a motif to zeroes only. 
+    zeroes_fill = torch.zeros((model_activations.shape[0], 1, 1))
+    left_out_curr_model = np.zeros((d,cells))
+    for i in range(d):
+        curr_set_0 = torch.clone(model_activations)
+        curr_set_0[:,i,:,:] = torch.clone(zeroes_fill)
+        curr_set_0 = curr_set_0.view(-1, d)
+        left_out_curr_model[i,:] = np.mean(normal_prediction - model.fc(curr_set_0).detach().numpy(), axis=0)
+    fid["LOO_" + all_candidates_with_best[idx]] = left_out_curr_model
+fid.close()
+
+
+
 # Save w (final layer weights) and M (convolutional kernels) to hdf5 file for
 # each candidate. 
 all_model_HDF5_path = model_output_dir + "/All_model_HDF5_" + name + "_M_w.h5"
 fid = h5py.File(all_model_HDF5_path, 'w')
 for idx, can in enumerate(all_candidates):
     candidate_state_dict = model_output_dir + "/" + name + "_candidate_" + can + "_state_dict.pt"
-    candidate_model = sm.BestInitialConvNet(optimizer, 
-                    "MSE", 
-                    learning_rate, 
-                    sigma_motifs, 
-                    sigma_net, 
-                    d, 
-                    m, 
-                    n, 
-                    cells).double()
     candidate_model.load_state_dict(torch.load(candidate_state_dict, map_location=torch.device('cpu')))
     candidate_model = candidate_model.eval()
     candidate_model = candidate_model.double()
