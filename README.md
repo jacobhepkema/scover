@@ -37,7 +37,6 @@ __Q__: Can I run this on Windows?
 
 __A__: I have not tried yet, but because __scover__ uses Nextflow which is made for UNIX environments, it might get somewhat tricky. My advice is to first install a virtual machine if you are using a Windows computer. 
 
----------------------------------------------------------------------------------------------------
 ## Workflow
 
 After you have installed all the prerequisites (see above), there are three main steps in using __scover__:
@@ -48,14 +47,10 @@ After you have installed all the prerequisites (see above), there are three main
 ## Questions and errors
 If you have any questions, or want to report an error, please use our [github issues page](https://github.com/jacobhepkema/scover/issues)
 
----------------------------------------------------------------------------------------------------
-
 ## References
 [1] Gupta, S., Stamatoyannopoulos, J. A., Bailey, T. L., & Noble, W. S. (2007). Quantifying similarity between motifs. Genome biology, 8(2), R24.
 
 [2] Weirauch, M. T., Yang, A., Albu, M., Cote, A. G., Montenegro-Montero, A., Drewe, P., ... & Zheng, H. (2014). Determination and inference of eukaryotic transcription factor sequence specificity. Cell, 158(6), 1431-1443.
-
----------------------------------------------------------------------------------------------------
 
 ## License
 MIT
