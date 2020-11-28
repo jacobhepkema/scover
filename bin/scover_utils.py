@@ -60,7 +60,7 @@ def save_meme(motifs_ppm_dict, output_file="found_motifs.meme"):
         
     print("wrote meme list")
 
-def align_conv_filters(model, input_seqs, input_data, m, train_ind):
+def align_conv_filters(model, input_seqs, m, train_ind):
     """Aligns the convolutional filters of a given scover model back
     to the given input sequences at the given indices. 
     """
