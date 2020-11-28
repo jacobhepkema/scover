@@ -1,7 +1,7 @@
 scover
 ======
 
-Welcome to the **scover** documentation. This page contains guides on data generation for **scover** and analysis of **scover** output. For information on how to run **scover**, `click here to go to the main repository <https://github.com/jacobhepkema/scover>`_. 
+Welcome to the **scover** documentation. This page contains guides on data generation for **scover**, running **scover**, and analysis of **scover** output. 
 
 **scover** is a convolutional neural network (CNN) for *de novo* inference of cis-regulatory motifs from single-cell data. 
 It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. 
@@ -34,9 +34,6 @@ For scRNA-seq data TSS annotation is required, as the promoter sequences are obt
    :caption: Analysing scover output:
 
    How to analyse scover output <how_to_analyse_scover_output.rst>  
-
-
-
 
 
 
