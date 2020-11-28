@@ -485,7 +485,7 @@ input_seqs = input_seqs.to(device)
 
 # Aligning convolutional filters to train indices sequences, creating pwms
 # based on which subsequences activate the different convolutional filters
-best_motifs_pfm_dict, best_motifs_ppm_dict = su.align_conv_filters(bestmodel, input_seqs, input_data, m, best_train_ind)
+best_motifs_pfm_dict, best_motifs_ppm_dict = su.align_conv_filters(bestmodel, input_seqs, m, best_train_ind)
 meme_output_path = model_output_dir + "/Motifs_" + name + "_Candidate_best_MEME.txt"
 
 su.save_meme(best_motifs_ppm_dict, meme_output_path)
@@ -735,7 +735,7 @@ for can_nr in other_candidate_numbers:
 
     # Aligning convolutional filters to train indices sequences, creating pwms
     # based on which subsequences activate the different convolutional filters
-    can_motifs_pfm_dict, can_motifs_ppm_dict = su.align_conv_filters(candidate_model, input_seqs, input_data, m, train_inds2[can_nr])
+    can_motifs_pfm_dict, can_motifs_ppm_dict = su.align_conv_filters(candidate_model, input_seqs, m, train_inds2[can_nr])
     can_motifs_ppm_dicts.append(can_motifs_ppm_dict)
     can_motifs_pfm_dicts.append(can_motifs_pfm_dict)
     
