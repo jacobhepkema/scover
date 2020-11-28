@@ -768,7 +768,7 @@ for idx, can in enumerate(tqdm(all_candidates)):
         curr_set_0 = torch.clone(model_activations)
         curr_set_0[:,i,:,:] = torch.clone(zeroes_fill)
         curr_set_0 = curr_set_0.view(-1, d)
-        left_out_curr_model[i,:] = np.mean(normal_prediction - model.fc(curr_set_0).detach().numpy(), axis=0)
+        left_out_curr_model[i,:] = np.mean(normal_prediction - candidate_model.fc(curr_set_0.cpu()).detach().numpy(), axis=0)
     fid["LOO_" + all_candidates_with_best[idx]] = left_out_curr_model
 fid.close()
 
