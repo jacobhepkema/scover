@@ -7,7 +7,7 @@ get_sce_sparsity <- function(sce){
 }
 
 get_dataset_sparsity <- function(tsv_file){
-  # Computes sparsity of the to-be-predicted values of a given scanem dataset
+  # Computes sparsity of the to-be-predicted values of a given dataset
   require(stringr)
   
   # read dataset and initialize array
@@ -398,7 +398,7 @@ read_tomtom_output <- function(motif_db_path, exp_folder,
   return(all_tom_table)
 }
 
-scanem_dataset_to_sce <- function(data_path, colData_path){
+scover_dataset_to_sce <- function(data_path, colData_path){
   require(SingleCellExperiment)
   
   # Read data
@@ -1036,4 +1036,36 @@ plot_motif_family_weights_across_celltypes <- function(weights_matrix,
          title=motif_family)
   
   return(q) 
+}
+
+
+
+theme_Nice <- function(base_size=14, base_family="Helvetica", angled=TRUE, axis_text_size=14) {
+  library(grid)
+  library(ggthemes)
+  if(angled){
+    return(theme_bw(base_size=base_size, base_family=base_family)
+           + theme(axis.text.x = element_text(angle=45, hjust=1, colour="black", size=axis_text_size),
+                   axis.text.y = element_text(colour="black", size=axis_text_size),
+                   axis.line = element_line(colour = "black"),
+                   panel.grid.major = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.border = element_blank(),
+                   panel.background = element_blank(),
+                   legend.position = "none",
+                   strip.background = element_blank(),
+                   strip.text = element_text(colour="black", size=14)))
+  } else {
+    return(theme_bw(base_size=base_size, base_family=base_family)
+           + theme(axis.text.x = element_text(colour="black", size=axis_text_size),
+                   axis.text.y = element_text(colour="black", size=axis_text_size),
+                   axis.line = element_line(colour = "black"),
+                   panel.grid.major = element_blank(),
+                   panel.grid.minor = element_blank(),
+                   panel.border = element_blank(),
+                   panel.background = element_blank(),
+                   legend.position = "none",
+                   strip.background = element_blank(),
+                   strip.text = element_text(colour="black", size=14)))
+  }
 }
