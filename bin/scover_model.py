@@ -6,6 +6,9 @@ import numpy as np
 
 ## FUNCTIONS ================================================
 def loguniform(a=0, b=1, size=None):
+    """Initialization function for neural network weights
+    and convolutional filters
+    """
     X = 10 ** ((np.log10(b) - np.log10(a)) * 
                np.random.random_sample(size) + 
                np.log10(a))
@@ -24,6 +27,10 @@ def get_errtest_len(num_learningsteps, num_errtest):
 
 ## NEURAL NETWORK CLASS DEFINITION ==========================
 class ConvNet(nn.Module):
+    """Convolutional neural net for hyperparameter search 
+    stage of training
+    """
+    
     # Initialization method
     def __init__(self,  
                  optimizer_name,
@@ -40,7 +47,7 @@ class ConvNet(nn.Module):
                  cells):    
         super(ConvNet, self).__init__()
         
-        # Weight initialization method
+        # Weight initialization method. See functions above
         def weights_init(m):
             classname = m.__class__.__name__
             if classname.find('Conv2d') != -1:
@@ -105,6 +112,10 @@ class ConvNet(nn.Module):
     
 ## NEURAL NETWORK CLASS DEFINITION ==========================
 class BestInitialConvNet(nn.Module):
+    """Convolutional neural net to use with optimal 
+    hyperparameters
+    """
+    
     # Initialization method
     def __init__(self,  
                  optimizer_name,
