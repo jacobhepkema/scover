@@ -10,7 +10,7 @@ scover is Jacob Hepkema who is currently a PhD student at the [Wellcome Sanger I
 __Q__: What is this? 
 
 __A__: __scover__ is a convolutional neural network (CNN) for *de novo* inference of *cis*-regulatory motifs from single-cell data. 
-It finds weights for these motifs across pseudo-bulks and also reports the 'impact' of each motif. The network is written in 
+It finds weights for these motifs across pseudo-bulks and also reports the 'influence' of each motif. The network is written in 
 [pytorch](https://pytorch.org/), with the downstream analyses written in R (using [ggplot2](https://ggplot2.tidyverse.org/) for plotting). 
 Running the network and running the downstream analysis is implemented in a Nextflow pipeline. Furthermore, motifs are aligned with 
 [Tomtom](http://meme-suite.org/tools/tomtom) from the MEME suite[1]. __scover__ requires that cells are annotated for cell type 
@@ -24,6 +24,8 @@ __scover__ will work as a 'hypothesis generator' to help you identify the most i
 In general, it is hard to pinpoint exactly which transcription factors are the importance since many will bind to the same motif family. 
 However, __scover__ will help you by providing a list of transcription factors that it deems to be the most interesting to follow up on. 
 Furthermore, __scover__ gives information about the relative impact of motifs in the different cell types in your dataset.
+For scRNA-seq, __scover__ will find motifs using the proximal promoter sequences, and for scATAC-seq, __scover__ will find motifs using
+the peak regions. In both cases, __scover__ will also find motif influence scores across the cell types in your dataset. 
 
 __Q__: How to install/run __scover__?
 
