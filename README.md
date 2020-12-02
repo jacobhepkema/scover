@@ -17,6 +17,8 @@ Running the network and running the downstream analysis is implemented in a Next
 (or other category). For scRNA-seq data TSS annotation is required, as the promoter sequences are obtained directly from 
 genomic sequence relative to the TSS. 
 
+The Biorxiv pre-print is now available at [this page](https://www.biorxiv.org/content/10.1101/2020.11.26.400218v1).
+
 __Q__: All right, so when would I use this?
 
 __A__: If you have a clustered scRNA-seq or scATAC-seq dataset, and you want to extract regulatory information, you have come to the right place. 
