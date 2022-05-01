@@ -12,7 +12,7 @@ It finds weights for these motifs across pseudo-bulks and also reports the 'infl
 
 ## Workflow
 
-I have attached a few example jupyter notebooks for in the `example_notebooks` directory: 1) [data generation using scRNA-seq data](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/01_pool_dataset.ipynb), 2) [extracting promoter sequences](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/02_get_sequences.ipynb), 3) [running scover](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/03_run_scover.ipynb).
+I have attached a few example jupyter notebooks for in the `example_notebooks` directory: 1) [data generation using scRNA-seq data](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/01_pool_dataset.ipynb), 2) [extracting promoter sequences](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/02_get_sequences.ipynb), 3) [running scover](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/03_run_scover.ipynb). Note that for the first notebook, the dataset is gzipped (otherwise it would exceed github file size limits), running `gunzip Marrow.h5ad.gz` will give the file necessary for that notebook.
 
 ## Plotting
 
