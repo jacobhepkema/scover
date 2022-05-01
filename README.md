@@ -1,7 +1,5 @@
 # scover 
 
-[![Documentation Status](https://readthedocs.org/projects/scover/badge/?version=latest)](https://scover.readthedocs.io/en/latest/?badge=latest)
-
 This GitHub repository contains the neural network tool **scover** associated with a Biorxiv pre-print: https://www.biorxiv.org/content/10.1101/2020.11.26.400218v2.
 
 <img src="https://github.com/jacobhepkema/scover/raw/master/scover_logo.png" width=300 align=right>
