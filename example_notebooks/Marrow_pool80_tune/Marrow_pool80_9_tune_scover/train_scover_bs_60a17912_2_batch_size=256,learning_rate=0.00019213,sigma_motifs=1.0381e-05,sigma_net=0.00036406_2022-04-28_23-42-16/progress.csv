@@ -1,0 +1,2 @@
+loss,time_this_iter_s,done,timesteps_total,episodes_total,training_iteration,trial_id,experiment_id,date,timestamp,time_total_s,pid,hostname,node_ip,time_since_restore,timesteps_since_restore,iterations_since_restore,warmup_time
+4.469869136810303,8.198066711425781,True,,,1,60a17912,97b701e20a0a418a81c9d7b84e749333,2022-04-28_23-42-30,1651185750,8.198066711425781,49372,farm5-gpu0102,10.160.0.18,8.198066711425781,0,1,0.003944873809814453
