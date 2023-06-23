@@ -14,7 +14,7 @@ It finds weights for these motifs across pseudo-bulks and also reports the 'infl
 
 I have attached a few example jupyter notebooks for in the `example_notebooks` directory: 1) [data generation using scRNA-seq data](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/01_pool_dataset.ipynb), 2) [extracting promoter sequences](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/02_get_sequences.ipynb), 3) [running scover](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/03_run_scover.ipynb). Note that for the first notebook, the dataset is gzipped (otherwise it would exceed github file size limits), running `gunzip Marrow.h5ad.gz` will give the file necessary for that notebook.
 
-For the pooling step, we have added an additional notebook with the option to run SEACells instead of our algorithm, but we have not tried to train the model using data generated with SEACells yet.
+For the pooling step, we have [added an additional notebook with the option to run SEACells instead of our pooling algorithm](https://github.com/jacobhepkema/scover/blob/master/example_notebooks/01b_pool_dataset_SEACells.ipynb), but we have _not_ tried to train the model using data generated with SEACells yet.
 
 ## Plotting
 
