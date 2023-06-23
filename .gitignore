@@ -1,4 +1,4 @@
-.DS_Store
-.ipynb_checkpoints
-lightning_logs
 __pycache__
+lightning_logs
+.ipynb_checkpoints
+*_tune/

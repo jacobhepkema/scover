@@ -1,0 +1,801 @@
+,subfamily,sum,celltype
+pseudobulk_0,ZFX:C2H2,0.25741910517081124,late pro-B cell
+pseudobulk_1,ZFX:C2H2,0.22035231124755228,naive B cell
+pseudobulk_2,ZFX:C2H2,0.27071096107647463,late pro-B cell
+pseudobulk_3,ZFX:C2H2,0.2638830943835728,macrophage
+pseudobulk_4,ZFX:C2H2,0.27312696871740627,late pro-B cell
+pseudobulk_5,ZFX:C2H2,0.24899258462392027,precursor B cell
+pseudobulk_6,ZFX:C2H2,0.2294835266438895,naive B cell
+pseudobulk_7,ZFX:C2H2,0.2076657209545374,naive B cell
+pseudobulk_8,ZFX:C2H2,0.24945114557340275,granulocyte
+pseudobulk_9,ZFX:C2H2,0.2517277983988606,granulocyte
+pseudobulk_10,ZFX:C2H2,0.1867760434979573,granulocyte
+pseudobulk_11,ZFX:C2H2,0.29169850492326077,granulocyte monocyte progenitor cell
+pseudobulk_12,ZFX:C2H2,0.18359026592224836,granulocyte
+pseudobulk_13,ZFX:C2H2,0.2528759838314727,naive B cell
+pseudobulk_14,ZFX:C2H2,0.22466317980433814,naive B cell
+pseudobulk_15,ZFX:C2H2,0.24359575286507607,naive B cell
+pseudobulk_16,ZFX:C2H2,0.26385799027775647,mature natural killer cell
+pseudobulk_17,ZFX:C2H2,0.25676716676389333,precursor B cell
+pseudobulk_18,ZFX:C2H2,0.2626187954301713,naive B cell
+pseudobulk_19,ZFX:C2H2,0.3030269000098542,late pro-B cell
+pseudobulk_20,ZFX:C2H2,0.23692929098615423,naive B cell
+pseudobulk_21,ZFX:C2H2,0.22672979287062844,precursor B cell
+pseudobulk_22,ZFX:C2H2,0.2853966988419643,late pro-B cell
+pseudobulk_23,ZFX:C2H2,0.22737330442396342,granulocyte
+pseudobulk_24,ZFX:C2H2,0.24630295017414028,granulocyte
+pseudobulk_25,ZFX:C2H2,0.24293902781209908,granulocyte
+pseudobulk_26,ZFX:C2H2,0.2316127461817814,precursor B cell
+pseudobulk_27,ZFX:C2H2,0.29629964163177647,hematopoietic precursor cell
+pseudobulk_28,ZFX:C2H2,0.2861605673970189,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,ZFX:C2H2,0.2864551184538868,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,ZFX:C2H2,0.31228510641813045,common lymphoid progenitor
+pseudobulk_31,ZFX:C2H2,0.2881149965469376,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,ZFX:C2H2,0.2770375760010211,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,ZFX:C2H2,0.289439039726858,common lymphoid progenitor
+pseudobulk_34,ZFX:C2H2,0.27627088562439894,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,ZFX:C2H2,0.29223761367757106,precursor B cell
+pseudobulk_36,ZFX:C2H2,0.2616668444388779,hematopoietic precursor cell
+pseudobulk_37,ZFX:C2H2,0.1837467904551886,granulocyte
+pseudobulk_38,ZFX:C2H2,0.1952905558355269,granulocyte
+pseudobulk_39,ZFX:C2H2,0.22301354332012124,granulocyte
+pseudobulk_40,ZFX:C2H2,0.24285048823367106,monocyte
+pseudobulk_41,ZFX:C2H2,0.22358068605444714,granulocyte
+pseudobulk_42,ZFX:C2H2,0.2657676471717423,monocyte
+pseudobulk_43,ZFX:C2H2,0.23558103096002014,granulocyte
+pseudobulk_44,ZFX:C2H2,0.19610294274207263,granulocyte
+pseudobulk_45,ZFX:C2H2,0.2651601198595017,monocyte
+pseudobulk_46,ZFX:C2H2,0.2521916968471487,granulocytopoietic cell
+pseudobulk_47,ZFX:C2H2,0.24326085953770615,granulocyte
+pseudobulk_48,ZFX:C2H2,0.2059121373695234,granulocyte
+pseudobulk_49,ZFX:C2H2,0.1900218682058039,naive B cell
+pseudobulk_50,ZFX:C2H2,0.28041033814406546,late pro-B cell
+pseudobulk_51,ZFX:C2H2,0.24432256425643573,mature natural killer cell
+pseudobulk_52,ZFX:C2H2,0.2830500212876359,precursor B cell
+pseudobulk_53,ZFX:C2H2,0.30523695290321484,late pro-B cell
+pseudobulk_54,ZFX:C2H2,0.2612423968894291,immature T cell
+pseudobulk_55,ZFX:C2H2,0.2288300290274492,naive B cell
+pseudobulk_56,ZFX:C2H2,0.2389104371686699,immature B cell
+pseudobulk_57,ZFX:C2H2,0.26468229421880096,naive B cell
+pseudobulk_58,ZFX:C2H2,0.279735133779468,mature natural killer cell
+pseudobulk_59,ZFX:C2H2,0.30017465528362663,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,ZFX:C2H2,0.2990323960548267,granulocyte monocyte progenitor cell
+pseudobulk_61,ZFX:C2H2,0.2896569293225184,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,ZFX:C2H2,0.3003951833670726,common lymphoid progenitor
+pseudobulk_63,ZFX:C2H2,0.2999855792077142,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,ZFX:C2H2,0.2529443709863699,monocyte
+pseudobulk_65,ZFX:C2H2,0.2823994128484628,monocyte
+pseudobulk_66,ZFX:C2H2,0.18785107887379127,granulocyte
+pseudobulk_67,ZFX:C2H2,0.17273634515004233,granulocyte
+pseudobulk_68,ZFX:C2H2,0.2733124115766259,monocyte
+pseudobulk_69,ZFX:C2H2,0.2662236919568386,macrophage
+pseudobulk_70,ZFX:C2H2,0.26142731962863763,granulocyte
+pseudobulk_71,ZFX:C2H2,0.19893095130100846,granulocyte
+pseudobulk_72,ZFX:C2H2,0.1762278798260013,granulocyte
+pseudobulk_73,ZFX:C2H2,0.25338905479293317,granulocyte
+pseudobulk_74,ZFX:C2H2,0.27867272330331616,monocyte
+pseudobulk_75,ZFX:C2H2,0.20281675941077992,granulocyte
+pseudobulk_76,ZFX:C2H2,0.24408544894049555,naive B cell
+pseudobulk_77,ZFX:C2H2,0.3041294726099295,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,ZFX:C2H2,0.2971327461418696,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,ZFX:C2H2,0.31672865303698927,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,ZFX:C2H2,0.3211985457019182,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,ZFX:C2H2,0.29705900250701234,granulocyte monocyte progenitor cell
+pseudobulk_82,ZFX:C2H2,0.27146268114302075,granulocyte monocyte progenitor cell
+pseudobulk_83,ZFX:C2H2,0.30046190405846573,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,ZFX:C2H2,0.19164833868853748,naive B cell
+pseudobulk_85,ZFX:C2H2,0.21533865663576535,precursor B cell
+pseudobulk_86,ZFX:C2H2,0.206193004421948,precursor B cell
+pseudobulk_87,ZFX:C2H2,0.2680032722346368,immature B cell
+pseudobulk_88,ZFX:C2H2,0.2991956618207041,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,ZFX:C2H2,0.24261166647193022,naive B cell
+pseudobulk_90,ZFX:C2H2,0.2526355489026173,naive B cell
+pseudobulk_91,ZFX:C2H2,0.27550669631455094,macrophage
+pseudobulk_92,ZFX:C2H2,0.26414657416171394,macrophage
+pseudobulk_93,ZFX:C2H2,0.2599480647149903,immature B cell
+pseudobulk_94,ZFX:C2H2,0.24672766972071258,naive B cell
+pseudobulk_95,ZFX:C2H2,0.2924126136713312,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,ZFX:C2H2,0.2114184557358385,naive B cell
+pseudobulk_97,ZFX:C2H2,0.30171078223065706,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,ZFX:C2H2,0.21344521483842982,immature T cell
+pseudobulk_99,ZFX:C2H2,0.22185274621733697,immature NK T cell
+pseudobulk_0,KLF/SP/2:C2H2,1.4589076315692182,late pro-B cell
+pseudobulk_1,KLF/SP/2:C2H2,1.1708756477946736,naive B cell
+pseudobulk_2,KLF/SP/2:C2H2,1.5259574781521223,late pro-B cell
+pseudobulk_3,KLF/SP/2:C2H2,1.3502157495822757,macrophage
+pseudobulk_4,KLF/SP/2:C2H2,1.4899060782845481,late pro-B cell
+pseudobulk_5,KLF/SP/2:C2H2,1.3176170897713746,precursor B cell
+pseudobulk_6,KLF/SP/2:C2H2,1.1248921445630913,naive B cell
+pseudobulk_7,KLF/SP/2:C2H2,1.094491059309803,naive B cell
+pseudobulk_8,KLF/SP/2:C2H2,1.2691434409280191,granulocyte
+pseudobulk_9,KLF/SP/2:C2H2,1.2898331079559284,granulocyte
+pseudobulk_10,KLF/SP/2:C2H2,1.0640123382981983,granulocyte
+pseudobulk_11,KLF/SP/2:C2H2,1.5319168333808193,granulocyte monocyte progenitor cell
+pseudobulk_12,KLF/SP/2:C2H2,1.1477595571413985,granulocyte
+pseudobulk_13,KLF/SP/2:C2H2,1.3474338231426373,naive B cell
+pseudobulk_14,KLF/SP/2:C2H2,1.2344424227717354,naive B cell
+pseudobulk_15,KLF/SP/2:C2H2,1.3498599503654987,naive B cell
+pseudobulk_16,KLF/SP/2:C2H2,1.4921766956067586,mature natural killer cell
+pseudobulk_17,KLF/SP/2:C2H2,1.405026752370759,precursor B cell
+pseudobulk_18,KLF/SP/2:C2H2,1.3577265864878427,naive B cell
+pseudobulk_19,KLF/SP/2:C2H2,1.5951486459525768,late pro-B cell
+pseudobulk_20,KLF/SP/2:C2H2,1.2999335024651373,naive B cell
+pseudobulk_21,KLF/SP/2:C2H2,1.2462592921656324,precursor B cell
+pseudobulk_22,KLF/SP/2:C2H2,1.501904291806568,late pro-B cell
+pseudobulk_23,KLF/SP/2:C2H2,1.22133034698345,granulocyte
+pseudobulk_24,KLF/SP/2:C2H2,1.3174873679881784,granulocyte
+pseudobulk_25,KLF/SP/2:C2H2,1.2733180573493428,granulocyte
+pseudobulk_26,KLF/SP/2:C2H2,1.2123540126046919,precursor B cell
+pseudobulk_27,KLF/SP/2:C2H2,1.5379077198331288,hematopoietic precursor cell
+pseudobulk_28,KLF/SP/2:C2H2,1.5071813864560681,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,KLF/SP/2:C2H2,1.4842260577424895,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,KLF/SP/2:C2H2,1.6369834088509378,common lymphoid progenitor
+pseudobulk_31,KLF/SP/2:C2H2,1.4816940728917416,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,KLF/SP/2:C2H2,1.435542281884409,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,KLF/SP/2:C2H2,1.4803369312212453,common lymphoid progenitor
+pseudobulk_34,KLF/SP/2:C2H2,1.5023973692495929,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,KLF/SP/2:C2H2,1.6042539560767182,precursor B cell
+pseudobulk_36,KLF/SP/2:C2H2,1.2895198955220621,hematopoietic precursor cell
+pseudobulk_37,KLF/SP/2:C2H2,1.045997379678738,granulocyte
+pseudobulk_38,KLF/SP/2:C2H2,1.0494055716330877,granulocyte
+pseudobulk_39,KLF/SP/2:C2H2,1.1583398829752696,granulocyte
+pseudobulk_40,KLF/SP/2:C2H2,1.245014023164913,monocyte
+pseudobulk_41,KLF/SP/2:C2H2,1.1733883341239562,granulocyte
+pseudobulk_42,KLF/SP/2:C2H2,1.4021479831881152,monocyte
+pseudobulk_43,KLF/SP/2:C2H2,1.2572229208576573,granulocyte
+pseudobulk_44,KLF/SP/2:C2H2,0.9656939460837748,granulocyte
+pseudobulk_45,KLF/SP/2:C2H2,1.385247535785311,monocyte
+pseudobulk_46,KLF/SP/2:C2H2,1.3037276698742062,granulocytopoietic cell
+pseudobulk_47,KLF/SP/2:C2H2,1.3328428971576614,granulocyte
+pseudobulk_48,KLF/SP/2:C2H2,1.1369816826505712,granulocyte
+pseudobulk_49,KLF/SP/2:C2H2,1.0610844034090405,naive B cell
+pseudobulk_50,KLF/SP/2:C2H2,1.503687783057103,late pro-B cell
+pseudobulk_51,KLF/SP/2:C2H2,1.343197772424901,mature natural killer cell
+pseudobulk_52,KLF/SP/2:C2H2,1.4833166237949627,precursor B cell
+pseudobulk_53,KLF/SP/2:C2H2,1.6363350709943916,late pro-B cell
+pseudobulk_54,KLF/SP/2:C2H2,1.4120420366762119,immature T cell
+pseudobulk_55,KLF/SP/2:C2H2,1.2345879808797235,naive B cell
+pseudobulk_56,KLF/SP/2:C2H2,1.3404507209070289,immature B cell
+pseudobulk_57,KLF/SP/2:C2H2,1.4227827043378056,naive B cell
+pseudobulk_58,KLF/SP/2:C2H2,1.4765843195423258,mature natural killer cell
+pseudobulk_59,KLF/SP/2:C2H2,1.5627345706234337,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,KLF/SP/2:C2H2,1.5578393267096544,granulocyte monocyte progenitor cell
+pseudobulk_61,KLF/SP/2:C2H2,1.5752799342590151,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,KLF/SP/2:C2H2,1.5773705192186753,common lymphoid progenitor
+pseudobulk_63,KLF/SP/2:C2H2,1.5774939250368334,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,KLF/SP/2:C2H2,1.250751652552026,monocyte
+pseudobulk_65,KLF/SP/2:C2H2,1.503339146066537,monocyte
+pseudobulk_66,KLF/SP/2:C2H2,1.1347367105154262,granulocyte
+pseudobulk_67,KLF/SP/2:C2H2,1.0066572913767686,granulocyte
+pseudobulk_68,KLF/SP/2:C2H2,1.4901049355485156,monocyte
+pseudobulk_69,KLF/SP/2:C2H2,1.4074726517683303,macrophage
+pseudobulk_70,KLF/SP/2:C2H2,1.3820657947539985,granulocyte
+pseudobulk_71,KLF/SP/2:C2H2,1.0931947722629047,granulocyte
+pseudobulk_72,KLF/SP/2:C2H2,1.022728512136382,granulocyte
+pseudobulk_73,KLF/SP/2:C2H2,1.369754761310105,granulocyte
+pseudobulk_74,KLF/SP/2:C2H2,1.4956403582218627,monocyte
+pseudobulk_75,KLF/SP/2:C2H2,1.1019472337029583,granulocyte
+pseudobulk_76,KLF/SP/2:C2H2,1.3307943326053646,naive B cell
+pseudobulk_77,KLF/SP/2:C2H2,1.6124694445115892,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,KLF/SP/2:C2H2,1.5712414157569583,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,KLF/SP/2:C2H2,1.6048046626456198,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,KLF/SP/2:C2H2,1.591884369350737,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,KLF/SP/2:C2H2,1.5457637516556133,granulocyte monocyte progenitor cell
+pseudobulk_82,KLF/SP/2:C2H2,1.4492655403864774,granulocyte monocyte progenitor cell
+pseudobulk_83,KLF/SP/2:C2H2,1.5645396167092258,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,KLF/SP/2:C2H2,1.022320190902974,naive B cell
+pseudobulk_85,KLF/SP/2:C2H2,1.1177776321351303,precursor B cell
+pseudobulk_86,KLF/SP/2:C2H2,1.1130285235667543,precursor B cell
+pseudobulk_87,KLF/SP/2:C2H2,1.441423282085907,immature B cell
+pseudobulk_88,KLF/SP/2:C2H2,1.5564480491766517,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,KLF/SP/2:C2H2,1.3017787957960536,naive B cell
+pseudobulk_90,KLF/SP/2:C2H2,1.3764926779876987,naive B cell
+pseudobulk_91,KLF/SP/2:C2H2,1.4828445681330393,macrophage
+pseudobulk_92,KLF/SP/2:C2H2,1.4304361769245588,macrophage
+pseudobulk_93,KLF/SP/2:C2H2,1.368380541978695,immature B cell
+pseudobulk_94,KLF/SP/2:C2H2,1.323282973015921,naive B cell
+pseudobulk_95,KLF/SP/2:C2H2,1.521020140753535,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,KLF/SP/2:C2H2,1.152446325890196,naive B cell
+pseudobulk_97,KLF/SP/2:C2H2,1.5653380355179252,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,KLF/SP/2:C2H2,1.1196782646693464,immature T cell
+pseudobulk_99,KLF/SP/2:C2H2,1.1982964067447028,immature NK T cell
+pseudobulk_0,YY1:C2H2,1.0268993373501871,late pro-B cell
+pseudobulk_1,YY1:C2H2,0.9690217943061725,naive B cell
+pseudobulk_2,YY1:C2H2,1.0724657906757784,late pro-B cell
+pseudobulk_3,YY1:C2H2,0.983518232458664,macrophage
+pseudobulk_4,YY1:C2H2,1.1193086177954683,late pro-B cell
+pseudobulk_5,YY1:C2H2,0.9290944765816675,precursor B cell
+pseudobulk_6,YY1:C2H2,0.8005484177192557,naive B cell
+pseudobulk_7,YY1:C2H2,0.931949056997837,naive B cell
+pseudobulk_8,YY1:C2H2,0.9251757868914865,granulocyte
+pseudobulk_9,YY1:C2H2,0.984911233841558,granulocyte
+pseudobulk_10,YY1:C2H2,0.7565135429540533,granulocyte
+pseudobulk_11,YY1:C2H2,1.0237311819983006,granulocyte monocyte progenitor cell
+pseudobulk_12,YY1:C2H2,0.7081280243201036,granulocyte
+pseudobulk_13,YY1:C2H2,1.0446347921424604,naive B cell
+pseudobulk_14,YY1:C2H2,1.0656835858826526,naive B cell
+pseudobulk_15,YY1:C2H2,1.0383388471236685,naive B cell
+pseudobulk_16,YY1:C2H2,0.9627340438601095,mature natural killer cell
+pseudobulk_17,YY1:C2H2,1.0549977101036347,precursor B cell
+pseudobulk_18,YY1:C2H2,1.1164732985926094,naive B cell
+pseudobulk_19,YY1:C2H2,1.0159687552950345,late pro-B cell
+pseudobulk_20,YY1:C2H2,0.9658682011358906,naive B cell
+pseudobulk_21,YY1:C2H2,1.0011483929010865,precursor B cell
+pseudobulk_22,YY1:C2H2,1.047788001720619,late pro-B cell
+pseudobulk_23,YY1:C2H2,0.928876199239312,granulocyte
+pseudobulk_24,YY1:C2H2,0.9272763320477679,granulocyte
+pseudobulk_25,YY1:C2H2,0.8487428625012399,granulocyte
+pseudobulk_26,YY1:C2H2,0.915070794573694,precursor B cell
+pseudobulk_27,YY1:C2H2,0.9346431073063286,hematopoietic precursor cell
+pseudobulk_28,YY1:C2H2,0.9452797466074117,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,YY1:C2H2,0.9416887278130162,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,YY1:C2H2,1.0065623128102743,common lymphoid progenitor
+pseudobulk_31,YY1:C2H2,0.9610931358693051,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,YY1:C2H2,0.9623299833765486,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,YY1:C2H2,0.8982059269201272,common lymphoid progenitor
+pseudobulk_34,YY1:C2H2,0.9572588423652633,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,YY1:C2H2,0.9754549072749796,precursor B cell
+pseudobulk_36,YY1:C2H2,0.8375557587805815,hematopoietic precursor cell
+pseudobulk_37,YY1:C2H2,0.6592330375133315,granulocyte
+pseudobulk_38,YY1:C2H2,0.7462723149074009,granulocyte
+pseudobulk_39,YY1:C2H2,0.8909525413546362,granulocyte
+pseudobulk_40,YY1:C2H2,0.8262163925483037,monocyte
+pseudobulk_41,YY1:C2H2,0.8777158645534655,granulocyte
+pseudobulk_42,YY1:C2H2,0.9593225600820006,monocyte
+pseudobulk_43,YY1:C2H2,0.9537416093226057,granulocyte
+pseudobulk_44,YY1:C2H2,0.6620489609740616,granulocyte
+pseudobulk_45,YY1:C2H2,0.9507737145158899,monocyte
+pseudobulk_46,YY1:C2H2,0.9938303740345873,granulocytopoietic cell
+pseudobulk_47,YY1:C2H2,0.9777726004867873,granulocyte
+pseudobulk_48,YY1:C2H2,0.8130314199588611,granulocyte
+pseudobulk_49,YY1:C2H2,0.8992062418692512,naive B cell
+pseudobulk_50,YY1:C2H2,0.9843363660302202,late pro-B cell
+pseudobulk_51,YY1:C2H2,0.9803797848217073,mature natural killer cell
+pseudobulk_52,YY1:C2H2,0.9653910519155033,precursor B cell
+pseudobulk_53,YY1:C2H2,0.9655827092643108,late pro-B cell
+pseudobulk_54,YY1:C2H2,0.987934206292266,immature T cell
+pseudobulk_55,YY1:C2H2,1.0521660905251338,naive B cell
+pseudobulk_56,YY1:C2H2,1.0686018557244097,immature B cell
+pseudobulk_57,YY1:C2H2,1.0069392522491398,naive B cell
+pseudobulk_58,YY1:C2H2,0.956395684806921,mature natural killer cell
+pseudobulk_59,YY1:C2H2,0.998977840097723,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,YY1:C2H2,1.0129852222635236,granulocyte monocyte progenitor cell
+pseudobulk_61,YY1:C2H2,0.9334901063630241,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,YY1:C2H2,0.9876406326220604,common lymphoid progenitor
+pseudobulk_63,YY1:C2H2,0.9709603100718596,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,YY1:C2H2,0.8159224094961246,monocyte
+pseudobulk_65,YY1:C2H2,0.9975652891389473,monocyte
+pseudobulk_66,YY1:C2H2,0.6932980162576996,granulocyte
+pseudobulk_67,YY1:C2H2,0.649129342091328,granulocyte
+pseudobulk_68,YY1:C2H2,0.9822506787841121,monocyte
+pseudobulk_69,YY1:C2H2,1.00963358293302,macrophage
+pseudobulk_70,YY1:C2H2,0.9981623001222033,granulocyte
+pseudobulk_71,YY1:C2H2,0.6461885933103986,granulocyte
+pseudobulk_72,YY1:C2H2,0.6080120300175622,granulocyte
+pseudobulk_73,YY1:C2H2,0.9555318861166597,granulocyte
+pseudobulk_74,YY1:C2H2,0.9892067364307877,monocyte
+pseudobulk_75,YY1:C2H2,0.6758397545781918,granulocyte
+pseudobulk_76,YY1:C2H2,0.9417241297851433,naive B cell
+pseudobulk_77,YY1:C2H2,0.958151662707678,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,YY1:C2H2,0.9534726008860162,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,YY1:C2H2,0.9937437697772111,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,YY1:C2H2,0.9905836261168588,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,YY1:C2H2,1.032320359365258,granulocyte monocyte progenitor cell
+pseudobulk_82,YY1:C2H2,1.0757305221341085,granulocyte monocyte progenitor cell
+pseudobulk_83,YY1:C2H2,0.9615495321995695,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,YY1:C2H2,0.8770257148862584,naive B cell
+pseudobulk_85,YY1:C2H2,0.8933507055880909,precursor B cell
+pseudobulk_86,YY1:C2H2,0.8922217425824783,precursor B cell
+pseudobulk_87,YY1:C2H2,0.9443560600093885,immature B cell
+pseudobulk_88,YY1:C2H2,0.9985286704250029,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,YY1:C2H2,1.1034914420597488,naive B cell
+pseudobulk_90,YY1:C2H2,1.0992532453965396,naive B cell
+pseudobulk_91,YY1:C2H2,1.0002828703854902,macrophage
+pseudobulk_92,YY1:C2H2,1.008712087670574,macrophage
+pseudobulk_93,YY1:C2H2,1.0877318360289792,immature B cell
+pseudobulk_94,YY1:C2H2,1.063849152662442,naive B cell
+pseudobulk_95,YY1:C2H2,0.9418026581552112,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,YY1:C2H2,0.9152597743814113,naive B cell
+pseudobulk_97,YY1:C2H2,0.9637651388984523,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,YY1:C2H2,0.8324226111726603,immature T cell
+pseudobulk_99,YY1:C2H2,0.9180299868967268,immature NK T cell
+pseudobulk_0,Ebox/CACGTG/1:bHLH,0.21110599070152603,late pro-B cell
+pseudobulk_1,Ebox/CACGTG/1:bHLH,0.18693754205742152,naive B cell
+pseudobulk_2,Ebox/CACGTG/1:bHLH,0.22669804425095208,late pro-B cell
+pseudobulk_3,Ebox/CACGTG/1:bHLH,0.19597733005866758,macrophage
+pseudobulk_4,Ebox/CACGTG/1:bHLH,0.22847614836064167,late pro-B cell
+pseudobulk_5,Ebox/CACGTG/1:bHLH,0.18240823147425544,precursor B cell
+pseudobulk_6,Ebox/CACGTG/1:bHLH,0.16477962170938554,naive B cell
+pseudobulk_7,Ebox/CACGTG/1:bHLH,0.1789974845814868,naive B cell
+pseudobulk_8,Ebox/CACGTG/1:bHLH,0.1855214557799627,granulocyte
+pseudobulk_9,Ebox/CACGTG/1:bHLH,0.1974634158978006,granulocyte
+pseudobulk_10,Ebox/CACGTG/1:bHLH,0.15062103490708978,granulocyte
+pseudobulk_11,Ebox/CACGTG/1:bHLH,0.20341812474362087,granulocyte monocyte progenitor cell
+pseudobulk_12,Ebox/CACGTG/1:bHLH,0.1632756237704598,granulocyte
+pseudobulk_13,Ebox/CACGTG/1:bHLH,0.22144578234292567,naive B cell
+pseudobulk_14,Ebox/CACGTG/1:bHLH,0.2106589156028349,naive B cell
+pseudobulk_15,Ebox/CACGTG/1:bHLH,0.2150562017941411,naive B cell
+pseudobulk_16,Ebox/CACGTG/1:bHLH,0.2041817017016001,mature natural killer cell
+pseudobulk_17,Ebox/CACGTG/1:bHLH,0.20834175912023056,precursor B cell
+pseudobulk_18,Ebox/CACGTG/1:bHLH,0.21697701278753811,naive B cell
+pseudobulk_19,Ebox/CACGTG/1:bHLH,0.227991897638276,late pro-B cell
+pseudobulk_20,Ebox/CACGTG/1:bHLH,0.20221880688040983,naive B cell
+pseudobulk_21,Ebox/CACGTG/1:bHLH,0.18743605076633685,precursor B cell
+pseudobulk_22,Ebox/CACGTG/1:bHLH,0.21772105357604232,late pro-B cell
+pseudobulk_23,Ebox/CACGTG/1:bHLH,0.17473515834217324,granulocyte
+pseudobulk_24,Ebox/CACGTG/1:bHLH,0.18188444930274272,granulocyte
+pseudobulk_25,Ebox/CACGTG/1:bHLH,0.18422519504019874,granulocyte
+pseudobulk_26,Ebox/CACGTG/1:bHLH,0.18592609909592284,precursor B cell
+pseudobulk_27,Ebox/CACGTG/1:bHLH,0.1897533603168995,hematopoietic precursor cell
+pseudobulk_28,Ebox/CACGTG/1:bHLH,0.18968066629895475,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,Ebox/CACGTG/1:bHLH,0.19374890663675615,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,Ebox/CACGTG/1:bHLH,0.20781591996114912,common lymphoid progenitor
+pseudobulk_31,Ebox/CACGTG/1:bHLH,0.1949453297056607,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,Ebox/CACGTG/1:bHLH,0.19008719567864318,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,Ebox/CACGTG/1:bHLH,0.19594556448282674,common lymphoid progenitor
+pseudobulk_34,Ebox/CACGTG/1:bHLH,0.1982824129427172,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,Ebox/CACGTG/1:bHLH,0.20011264770801063,precursor B cell
+pseudobulk_36,Ebox/CACGTG/1:bHLH,0.18112085963366553,hematopoietic precursor cell
+pseudobulk_37,Ebox/CACGTG/1:bHLH,0.1432975192037702,granulocyte
+pseudobulk_38,Ebox/CACGTG/1:bHLH,0.15368703655985883,granulocyte
+pseudobulk_39,Ebox/CACGTG/1:bHLH,0.16699350054841489,granulocyte
+pseudobulk_40,Ebox/CACGTG/1:bHLH,0.1799774983592215,monocyte
+pseudobulk_41,Ebox/CACGTG/1:bHLH,0.17249500069829082,granulocyte
+pseudobulk_42,Ebox/CACGTG/1:bHLH,0.19518764037638903,monocyte
+pseudobulk_43,Ebox/CACGTG/1:bHLH,0.18062656561960466,granulocyte
+pseudobulk_44,Ebox/CACGTG/1:bHLH,0.14975368415616686,granulocyte
+pseudobulk_45,Ebox/CACGTG/1:bHLH,0.19817709437120357,monocyte
+pseudobulk_46,Ebox/CACGTG/1:bHLH,0.1915098923145706,granulocytopoietic cell
+pseudobulk_47,Ebox/CACGTG/1:bHLH,0.19438316437521053,granulocyte
+pseudobulk_48,Ebox/CACGTG/1:bHLH,0.16204370587365702,granulocyte
+pseudobulk_49,Ebox/CACGTG/1:bHLH,0.1777785589438281,naive B cell
+pseudobulk_50,Ebox/CACGTG/1:bHLH,0.21250266369315796,late pro-B cell
+pseudobulk_51,Ebox/CACGTG/1:bHLH,0.189840765480767,mature natural killer cell
+pseudobulk_52,Ebox/CACGTG/1:bHLH,0.20693900561673217,precursor B cell
+pseudobulk_53,Ebox/CACGTG/1:bHLH,0.21378240984267904,late pro-B cell
+pseudobulk_54,Ebox/CACGTG/1:bHLH,0.20151314466056647,immature T cell
+pseudobulk_55,Ebox/CACGTG/1:bHLH,0.20549622925682343,naive B cell
+pseudobulk_56,Ebox/CACGTG/1:bHLH,0.21904643325251527,immature B cell
+pseudobulk_57,Ebox/CACGTG/1:bHLH,0.20886659587631584,naive B cell
+pseudobulk_58,Ebox/CACGTG/1:bHLH,0.2054941978185525,mature natural killer cell
+pseudobulk_59,Ebox/CACGTG/1:bHLH,0.20885182803613134,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,Ebox/CACGTG/1:bHLH,0.20401414883963298,granulocyte monocyte progenitor cell
+pseudobulk_61,Ebox/CACGTG/1:bHLH,0.19242371814425496,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,Ebox/CACGTG/1:bHLH,0.2042152482763413,common lymphoid progenitor
+pseudobulk_63,Ebox/CACGTG/1:bHLH,0.20675078404747183,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,Ebox/CACGTG/1:bHLH,0.18175864741715486,monocyte
+pseudobulk_65,Ebox/CACGTG/1:bHLH,0.20309870917117223,monocyte
+pseudobulk_66,Ebox/CACGTG/1:bHLH,0.15454831204988295,granulocyte
+pseudobulk_67,Ebox/CACGTG/1:bHLH,0.13918493265737197,granulocyte
+pseudobulk_68,Ebox/CACGTG/1:bHLH,0.21386601581980358,monocyte
+pseudobulk_69,Ebox/CACGTG/1:bHLH,0.19500638205499854,macrophage
+pseudobulk_70,Ebox/CACGTG/1:bHLH,0.19321165059227496,granulocyte
+pseudobulk_71,Ebox/CACGTG/1:bHLH,0.14994164709787583,granulocyte
+pseudobulk_72,Ebox/CACGTG/1:bHLH,0.14036248840966437,granulocyte
+pseudobulk_73,Ebox/CACGTG/1:bHLH,0.20214045646571321,granulocyte
+pseudobulk_74,Ebox/CACGTG/1:bHLH,0.2170320039112994,monocyte
+pseudobulk_75,Ebox/CACGTG/1:bHLH,0.14514772991151403,granulocyte
+pseudobulk_76,Ebox/CACGTG/1:bHLH,0.1946759472048143,naive B cell
+pseudobulk_77,Ebox/CACGTG/1:bHLH,0.20173010749931564,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,Ebox/CACGTG/1:bHLH,0.20187957568123238,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,Ebox/CACGTG/1:bHLH,0.19933249594032532,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,Ebox/CACGTG/1:bHLH,0.20001345461059827,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,Ebox/CACGTG/1:bHLH,0.20472503740893444,granulocyte monocyte progenitor cell
+pseudobulk_82,Ebox/CACGTG/1:bHLH,0.21467671964728652,granulocyte monocyte progenitor cell
+pseudobulk_83,Ebox/CACGTG/1:bHLH,0.20419689602931612,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,Ebox/CACGTG/1:bHLH,0.17468672061659163,naive B cell
+pseudobulk_85,Ebox/CACGTG/1:bHLH,0.17987177950999467,precursor B cell
+pseudobulk_86,Ebox/CACGTG/1:bHLH,0.1733372962771682,precursor B cell
+pseudobulk_87,Ebox/CACGTG/1:bHLH,0.2048298877198249,immature B cell
+pseudobulk_88,Ebox/CACGTG/1:bHLH,0.2044812787498813,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,Ebox/CACGTG/1:bHLH,0.20888643997022882,naive B cell
+pseudobulk_90,Ebox/CACGTG/1:bHLH,0.2157162240546313,naive B cell
+pseudobulk_91,Ebox/CACGTG/1:bHLH,0.2118107525675441,macrophage
+pseudobulk_92,Ebox/CACGTG/1:bHLH,0.20247244201163994,macrophage
+pseudobulk_93,Ebox/CACGTG/1:bHLH,0.2145548075204715,immature B cell
+pseudobulk_94,Ebox/CACGTG/1:bHLH,0.19843455217051087,naive B cell
+pseudobulk_95,Ebox/CACGTG/1:bHLH,0.19658211308342288,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,Ebox/CACGTG/1:bHLH,0.18038393717142753,naive B cell
+pseudobulk_97,Ebox/CACGTG/1:bHLH,0.20421352655102964,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,Ebox/CACGTG/1:bHLH,0.159826835498734,immature T cell
+pseudobulk_99,Ebox/CACGTG/1:bHLH,0.16433031051201397,immature NK T cell
+pseudobulk_0,ETS/1:ETS,3.4942183666253186,late pro-B cell
+pseudobulk_1,ETS/1:ETS,3.173628721389832,naive B cell
+pseudobulk_2,ETS/1:ETS,3.6604884733606013,late pro-B cell
+pseudobulk_3,ETS/1:ETS,3.17428378477598,macrophage
+pseudobulk_4,ETS/1:ETS,3.636471091401745,late pro-B cell
+pseudobulk_5,ETS/1:ETS,3.01679109120505,precursor B cell
+pseudobulk_6,ETS/1:ETS,2.76309411420425,naive B cell
+pseudobulk_7,ETS/1:ETS,2.9765261327956978,naive B cell
+pseudobulk_8,ETS/1:ETS,3.244700430841476,granulocyte
+pseudobulk_9,ETS/1:ETS,3.3523575363487907,granulocyte
+pseudobulk_10,ETS/1:ETS,2.642436100912164,granulocyte
+pseudobulk_11,ETS/1:ETS,3.5954416726763156,granulocyte monocyte progenitor cell
+pseudobulk_12,ETS/1:ETS,2.6676429820913654,granulocyte
+pseudobulk_13,ETS/1:ETS,3.3770286929975555,naive B cell
+pseudobulk_14,ETS/1:ETS,3.3380661550072546,naive B cell
+pseudobulk_15,ETS/1:ETS,3.436592814654432,naive B cell
+pseudobulk_16,ETS/1:ETS,3.604481498930909,mature natural killer cell
+pseudobulk_17,ETS/1:ETS,3.4542406384280184,precursor B cell
+pseudobulk_18,ETS/1:ETS,3.602587348967063,naive B cell
+pseudobulk_19,ETS/1:ETS,3.6003566680956283,late pro-B cell
+pseudobulk_20,ETS/1:ETS,3.211577213667624,naive B cell
+pseudobulk_21,ETS/1:ETS,3.3197891629206424,precursor B cell
+pseudobulk_22,ETS/1:ETS,3.469352725582212,late pro-B cell
+pseudobulk_23,ETS/1:ETS,3.080242790997545,granulocyte
+pseudobulk_24,ETS/1:ETS,3.2695286132902766,granulocyte
+pseudobulk_25,ETS/1:ETS,3.176672100434189,granulocyte
+pseudobulk_26,ETS/1:ETS,2.936955610563018,precursor B cell
+pseudobulk_27,ETS/1:ETS,3.236206773277445,hematopoietic precursor cell
+pseudobulk_28,ETS/1:ETS,3.1585283262193116,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,ETS/1:ETS,3.2024401497546933,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,ETS/1:ETS,3.4764161211746796,common lymphoid progenitor
+pseudobulk_31,ETS/1:ETS,3.239548478331926,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,ETS/1:ETS,3.2374463435025973,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,ETS/1:ETS,3.2058495065909938,common lymphoid progenitor
+pseudobulk_34,ETS/1:ETS,3.2996589882277476,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,ETS/1:ETS,3.449689003864478,precursor B cell
+pseudobulk_36,ETS/1:ETS,2.9870923419939572,hematopoietic precursor cell
+pseudobulk_37,ETS/1:ETS,2.5223487363118693,granulocyte
+pseudobulk_38,ETS/1:ETS,2.698621986712169,granulocyte
+pseudobulk_39,ETS/1:ETS,2.908124972760561,granulocyte
+pseudobulk_40,ETS/1:ETS,2.8536628101173847,monocyte
+pseudobulk_41,ETS/1:ETS,2.945988796786196,granulocyte
+pseudobulk_42,ETS/1:ETS,3.36703161288915,monocyte
+pseudobulk_43,ETS/1:ETS,3.199724070152115,granulocyte
+pseudobulk_44,ETS/1:ETS,2.333403437593688,granulocyte
+pseudobulk_45,ETS/1:ETS,3.338442175197997,monocyte
+pseudobulk_46,ETS/1:ETS,3.27262361850444,granulocytopoietic cell
+pseudobulk_47,ETS/1:ETS,3.3315827931455715,granulocyte
+pseudobulk_48,ETS/1:ETS,2.85234998620291,granulocyte
+pseudobulk_49,ETS/1:ETS,2.9385197746523772,naive B cell
+pseudobulk_50,ETS/1:ETS,3.3489177947631106,late pro-B cell
+pseudobulk_51,ETS/1:ETS,3.4027762963442,mature natural killer cell
+pseudobulk_52,ETS/1:ETS,3.3602788609059644,precursor B cell
+pseudobulk_53,ETS/1:ETS,3.5598265703229117,late pro-B cell
+pseudobulk_54,ETS/1:ETS,3.671833406009682,immature T cell
+pseudobulk_55,ETS/1:ETS,3.2625429457693826,naive B cell
+pseudobulk_56,ETS/1:ETS,3.5066188923228765,immature B cell
+pseudobulk_57,ETS/1:ETS,3.3968956847857044,naive B cell
+pseudobulk_58,ETS/1:ETS,3.6157615462834656,mature natural killer cell
+pseudobulk_59,ETS/1:ETS,3.5295337273182668,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,ETS/1:ETS,3.6008706935699593,granulocyte monocyte progenitor cell
+pseudobulk_61,ETS/1:ETS,3.345817440394967,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,ETS/1:ETS,3.34637502924852,common lymphoid progenitor
+pseudobulk_63,ETS/1:ETS,3.3785139905394317,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,ETS/1:ETS,2.9005133317314176,monocyte
+pseudobulk_65,ETS/1:ETS,3.501741118523114,monocyte
+pseudobulk_66,ETS/1:ETS,2.577002955626085,granulocyte
+pseudobulk_67,ETS/1:ETS,2.394869252661465,granulocyte
+pseudobulk_68,ETS/1:ETS,3.5830868993962213,monocyte
+pseudobulk_69,ETS/1:ETS,3.4319117123094145,macrophage
+pseudobulk_70,ETS/1:ETS,3.4026908534101494,granulocyte
+pseudobulk_71,ETS/1:ETS,2.4938330584750474,granulocyte
+pseudobulk_72,ETS/1:ETS,2.3761734545805666,granulocyte
+pseudobulk_73,ETS/1:ETS,3.330556754040572,granulocyte
+pseudobulk_74,ETS/1:ETS,3.5892303431755863,monocyte
+pseudobulk_75,ETS/1:ETS,2.370348129156582,granulocyte
+pseudobulk_76,ETS/1:ETS,3.2074924848893716,naive B cell
+pseudobulk_77,ETS/1:ETS,3.403581397908056,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,ETS/1:ETS,3.496709241091594,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,ETS/1:ETS,3.389218180651369,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,ETS/1:ETS,3.3916528980644216,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,ETS/1:ETS,3.6104943722111784,granulocyte monocyte progenitor cell
+pseudobulk_82,ETS/1:ETS,3.4525052655553736,granulocyte monocyte progenitor cell
+pseudobulk_83,ETS/1:ETS,3.4212631933587545,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,ETS/1:ETS,2.8348138902401843,naive B cell
+pseudobulk_85,ETS/1:ETS,3.0482501007190876,precursor B cell
+pseudobulk_86,ETS/1:ETS,2.969382954604953,precursor B cell
+pseudobulk_87,ETS/1:ETS,3.31484375700893,immature B cell
+pseudobulk_88,ETS/1:ETS,3.5043894670488953,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,ETS/1:ETS,3.4768764594082313,naive B cell
+pseudobulk_90,ETS/1:ETS,3.468238517876671,naive B cell
+pseudobulk_91,ETS/1:ETS,3.4220041455264436,macrophage
+pseudobulk_92,ETS/1:ETS,3.3990515500918264,macrophage
+pseudobulk_93,ETS/1:ETS,3.584101809115964,immature B cell
+pseudobulk_94,ETS/1:ETS,3.403668967097474,naive B cell
+pseudobulk_95,ETS/1:ETS,3.275302012430984,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,ETS/1:ETS,3.015629752570476,naive B cell
+pseudobulk_97,ETS/1:ETS,3.304931217620833,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,ETS/1:ETS,2.965205161470294,immature T cell
+pseudobulk_99,ETS/1:ETS,3.1427711756987264,immature NK T cell
+pseudobulk_0,ETS/2:ETS,2.226201869894794,late pro-B cell
+pseudobulk_1,ETS/2:ETS,2.076592518016014,naive B cell
+pseudobulk_2,ETS/2:ETS,2.3522077896886913,late pro-B cell
+pseudobulk_3,ETS/2:ETS,2.1869429311718704,macrophage
+pseudobulk_4,ETS/2:ETS,2.3353781618570792,late pro-B cell
+pseudobulk_5,ETS/2:ETS,2.075302602017473,precursor B cell
+pseudobulk_6,ETS/2:ETS,1.955202022882986,naive B cell
+pseudobulk_7,ETS/2:ETS,2.0250097914176877,naive B cell
+pseudobulk_8,ETS/2:ETS,2.293084148877824,granulocyte
+pseudobulk_9,ETS/2:ETS,2.389981814779617,granulocyte
+pseudobulk_10,ETS/2:ETS,1.9704971343962825,granulocyte
+pseudobulk_11,ETS/2:ETS,2.494126485547895,granulocyte monocyte progenitor cell
+pseudobulk_12,ETS/2:ETS,2.0880165735301546,granulocyte
+pseudobulk_13,ETS/2:ETS,2.337165072945936,naive B cell
+pseudobulk_14,ETS/2:ETS,2.2636113873104478,naive B cell
+pseudobulk_15,ETS/2:ETS,2.393976692106662,naive B cell
+pseudobulk_16,ETS/2:ETS,2.624688843206968,mature natural killer cell
+pseudobulk_17,ETS/2:ETS,2.3737401905837032,precursor B cell
+pseudobulk_18,ETS/2:ETS,2.5176515627281333,naive B cell
+pseudobulk_19,ETS/2:ETS,2.408418948902181,late pro-B cell
+pseudobulk_20,ETS/2:ETS,2.2410991526157886,naive B cell
+pseudobulk_21,ETS/2:ETS,2.253047592158964,precursor B cell
+pseudobulk_22,ETS/2:ETS,2.24967345515779,late pro-B cell
+pseudobulk_23,ETS/2:ETS,2.2397308662300475,granulocyte
+pseudobulk_24,ETS/2:ETS,2.3683792228671336,granulocyte
+pseudobulk_25,ETS/2:ETS,2.2983487639739906,granulocyte
+pseudobulk_26,ETS/2:ETS,2.162602716332003,precursor B cell
+pseudobulk_27,ETS/2:ETS,2.1732305289542637,hematopoietic precursor cell
+pseudobulk_28,ETS/2:ETS,2.092914187333122,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,ETS/2:ETS,2.1884825425568124,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,ETS/2:ETS,2.3760251889343635,common lymphoid progenitor
+pseudobulk_31,ETS/2:ETS,2.152077418171757,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,ETS/2:ETS,2.2597944507219694,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,ETS/2:ETS,2.1572618041855094,common lymphoid progenitor
+pseudobulk_34,ETS/2:ETS,2.27946267556581,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,ETS/2:ETS,2.4342995664048317,precursor B cell
+pseudobulk_36,ETS/2:ETS,2.017009292694638,hematopoietic precursor cell
+pseudobulk_37,ETS/2:ETS,1.9419640558862739,granulocyte
+pseudobulk_38,ETS/2:ETS,1.9935905069069122,granulocyte
+pseudobulk_39,ETS/2:ETS,2.1335007902248435,granulocyte
+pseudobulk_40,ETS/2:ETS,2.0953357307698752,monocyte
+pseudobulk_41,ETS/2:ETS,2.1339882615484385,granulocyte
+pseudobulk_42,ETS/2:ETS,2.4509629584362074,monocyte
+pseudobulk_43,ETS/2:ETS,2.257657883966658,granulocyte
+pseudobulk_44,ETS/2:ETS,1.8002674457807188,granulocyte
+pseudobulk_45,ETS/2:ETS,2.4031107133960177,monocyte
+pseudobulk_46,ETS/2:ETS,2.3211187923578507,granulocytopoietic cell
+pseudobulk_47,ETS/2:ETS,2.314120212727744,granulocyte
+pseudobulk_48,ETS/2:ETS,2.1036196484019456,granulocyte
+pseudobulk_49,ETS/2:ETS,2.0292613489473297,naive B cell
+pseudobulk_50,ETS/2:ETS,2.1588606137156603,late pro-B cell
+pseudobulk_51,ETS/2:ETS,2.4683378904264828,mature natural killer cell
+pseudobulk_52,ETS/2:ETS,2.3166193902088708,precursor B cell
+pseudobulk_53,ETS/2:ETS,2.417878840884441,late pro-B cell
+pseudobulk_54,ETS/2:ETS,2.6305232359591173,immature T cell
+pseudobulk_55,ETS/2:ETS,2.235171849113158,naive B cell
+pseudobulk_56,ETS/2:ETS,2.384278076990995,immature B cell
+pseudobulk_57,ETS/2:ETS,2.3347479366038897,naive B cell
+pseudobulk_58,ETS/2:ETS,2.589140299351129,mature natural killer cell
+pseudobulk_59,ETS/2:ETS,2.3928157998234383,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,ETS/2:ETS,2.4924681042612065,granulocyte monocyte progenitor cell
+pseudobulk_61,ETS/2:ETS,2.337439346618339,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,ETS/2:ETS,2.2629049474944622,common lymphoid progenitor
+pseudobulk_63,ETS/2:ETS,2.2864470891236124,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,ETS/2:ETS,2.0889782378144446,monocyte
+pseudobulk_65,ETS/2:ETS,2.6390475405199822,monocyte
+pseudobulk_66,ETS/2:ETS,2.0149307067295013,granulocyte
+pseudobulk_67,ETS/2:ETS,1.986690804895261,granulocyte
+pseudobulk_68,ETS/2:ETS,2.6370588957797736,monocyte
+pseudobulk_69,ETS/2:ETS,2.538638778958557,macrophage
+pseudobulk_70,ETS/2:ETS,2.4127593548719233,granulocyte
+pseudobulk_71,ETS/2:ETS,1.9743198149907357,granulocyte
+pseudobulk_72,ETS/2:ETS,1.8675036142903991,granulocyte
+pseudobulk_73,ETS/2:ETS,2.448837602383719,granulocyte
+pseudobulk_74,ETS/2:ETS,2.6171832725995046,monocyte
+pseudobulk_75,ETS/2:ETS,1.882714172868873,granulocyte
+pseudobulk_76,ETS/2:ETS,2.172275909552809,naive B cell
+pseudobulk_77,ETS/2:ETS,2.338190360831504,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,ETS/2:ETS,2.382412487992042,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,ETS/2:ETS,2.292975406655387,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,ETS/2:ETS,2.3041053931810893,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,ETS/2:ETS,2.4978090310601715,granulocyte monocyte progenitor cell
+pseudobulk_82,ETS/2:ETS,2.4552794748879023,granulocyte monocyte progenitor cell
+pseudobulk_83,ETS/2:ETS,2.326389416699385,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,ETS/2:ETS,1.9764022955750988,naive B cell
+pseudobulk_85,ETS/2:ETS,1.9762375991358567,precursor B cell
+pseudobulk_86,ETS/2:ETS,1.9647502672523842,precursor B cell
+pseudobulk_87,ETS/2:ETS,2.3848841220360555,immature B cell
+pseudobulk_88,ETS/2:ETS,2.430190411312651,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,ETS/2:ETS,2.4540197474088927,naive B cell
+pseudobulk_90,ETS/2:ETS,2.471579757884683,naive B cell
+pseudobulk_91,ETS/2:ETS,2.4525476716030425,macrophage
+pseudobulk_92,ETS/2:ETS,2.424578104277316,macrophage
+pseudobulk_93,ETS/2:ETS,2.492871763643052,immature B cell
+pseudobulk_94,ETS/2:ETS,2.400000289366403,naive B cell
+pseudobulk_95,ETS/2:ETS,2.180624980522225,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,ETS/2:ETS,2.057841755015943,naive B cell
+pseudobulk_97,ETS/2:ETS,2.197911108687549,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,ETS/2:ETS,2.072984515862572,immature T cell
+pseudobulk_99,ETS/2:ETS,2.1977843326947095,immature NK T cell
+pseudobulk_0,GC-tract:C2H2,-0.4309957923833281,late pro-B cell
+pseudobulk_1,GC-tract:C2H2,-0.34455724665895104,naive B cell
+pseudobulk_2,GC-tract:C2H2,-0.449596289312467,late pro-B cell
+pseudobulk_3,GC-tract:C2H2,-0.3455043463036418,macrophage
+pseudobulk_4,GC-tract:C2H2,-0.47116846730932593,late pro-B cell
+pseudobulk_5,GC-tract:C2H2,-0.3375828005373478,precursor B cell
+pseudobulk_6,GC-tract:C2H2,-0.26358356955461204,naive B cell
+pseudobulk_7,GC-tract:C2H2,-0.3129767174832523,naive B cell
+pseudobulk_8,GC-tract:C2H2,-0.32957415631972253,granulocyte
+pseudobulk_9,GC-tract:C2H2,-0.3459770008921623,granulocyte
+pseudobulk_10,GC-tract:C2H2,-0.2190808695013402,granulocyte
+pseudobulk_11,GC-tract:C2H2,-0.4003345216624439,granulocyte monocyte progenitor cell
+pseudobulk_12,GC-tract:C2H2,-0.15652444976149127,granulocyte
+pseudobulk_13,GC-tract:C2H2,-0.3778366611804813,naive B cell
+pseudobulk_14,GC-tract:C2H2,-0.39236758812330663,naive B cell
+pseudobulk_15,GC-tract:C2H2,-0.3665176404174417,naive B cell
+pseudobulk_16,GC-tract:C2H2,-0.3720934628508985,mature natural killer cell
+pseudobulk_17,GC-tract:C2H2,-0.3818933581933379,precursor B cell
+pseudobulk_18,GC-tract:C2H2,-0.3720778520219028,naive B cell
+pseudobulk_19,GC-tract:C2H2,-0.42256010603159666,late pro-B cell
+pseudobulk_20,GC-tract:C2H2,-0.34780395473353565,naive B cell
+pseudobulk_21,GC-tract:C2H2,-0.3683228208683431,precursor B cell
+pseudobulk_22,GC-tract:C2H2,-0.4110105913132429,late pro-B cell
+pseudobulk_23,GC-tract:C2H2,-0.31677734293043613,granulocyte
+pseudobulk_24,GC-tract:C2H2,-0.3289284994825721,granulocyte
+pseudobulk_25,GC-tract:C2H2,-0.29743223218247294,granulocyte
+pseudobulk_26,GC-tract:C2H2,-0.307174518937245,precursor B cell
+pseudobulk_27,GC-tract:C2H2,-0.34483890887349844,hematopoietic precursor cell
+pseudobulk_28,GC-tract:C2H2,-0.34475688613019884,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,GC-tract:C2H2,-0.3480092550162226,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,GC-tract:C2H2,-0.3902781051583588,common lymphoid progenitor
+pseudobulk_31,GC-tract:C2H2,-0.36334994272328913,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,GC-tract:C2H2,-0.35399029357358813,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,GC-tract:C2H2,-0.37000667164102197,common lymphoid progenitor
+pseudobulk_34,GC-tract:C2H2,-0.3426538147032261,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,GC-tract:C2H2,-0.3645309442654252,precursor B cell
+pseudobulk_36,GC-tract:C2H2,-0.32187639526091516,hematopoietic precursor cell
+pseudobulk_37,GC-tract:C2H2,-0.1675627666991204,granulocyte
+pseudobulk_38,GC-tract:C2H2,-0.22240996966138482,granulocyte
+pseudobulk_39,GC-tract:C2H2,-0.2883317768573761,granulocyte
+pseudobulk_40,GC-tract:C2H2,-0.26883883867412806,monocyte
+pseudobulk_41,GC-tract:C2H2,-0.2857898829970509,granulocyte
+pseudobulk_42,GC-tract:C2H2,-0.3643484069034457,monocyte
+pseudobulk_43,GC-tract:C2H2,-0.33555402350611985,granulocyte
+pseudobulk_44,GC-tract:C2H2,-0.1902301881927997,granulocyte
+pseudobulk_45,GC-tract:C2H2,-0.36465451098047197,monocyte
+pseudobulk_46,GC-tract:C2H2,-0.3480830586049706,granulocytopoietic cell
+pseudobulk_47,GC-tract:C2H2,-0.35876436345279217,granulocyte
+pseudobulk_48,GC-tract:C2H2,-0.26562924799509346,granulocyte
+pseudobulk_49,GC-tract:C2H2,-0.2950951769016683,naive B cell
+pseudobulk_50,GC-tract:C2H2,-0.3818666662555188,late pro-B cell
+pseudobulk_51,GC-tract:C2H2,-0.34345297748222947,mature natural killer cell
+pseudobulk_52,GC-tract:C2H2,-0.3808999378234148,precursor B cell
+pseudobulk_53,GC-tract:C2H2,-0.3883369890972972,late pro-B cell
+pseudobulk_54,GC-tract:C2H2,-0.36856154003180563,immature T cell
+pseudobulk_55,GC-tract:C2H2,-0.36437793681398034,naive B cell
+pseudobulk_56,GC-tract:C2H2,-0.39960422250442207,immature B cell
+pseudobulk_57,GC-tract:C2H2,-0.36761453398503363,naive B cell
+pseudobulk_58,GC-tract:C2H2,-0.37038290733471513,mature natural killer cell
+pseudobulk_59,GC-tract:C2H2,-0.4112728978507221,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,GC-tract:C2H2,-0.4105142839252949,granulocyte monocyte progenitor cell
+pseudobulk_61,GC-tract:C2H2,-0.33411834482103586,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,GC-tract:C2H2,-0.3859772286377847,common lymphoid progenitor
+pseudobulk_63,GC-tract:C2H2,-0.3860570848919451,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,GC-tract:C2H2,-0.27195197786204517,monocyte
+pseudobulk_65,GC-tract:C2H2,-0.36689711548388004,monocyte
+pseudobulk_66,GC-tract:C2H2,-0.14012948120944202,granulocyte
+pseudobulk_67,GC-tract:C2H2,-0.15197906078537926,granulocyte
+pseudobulk_68,GC-tract:C2H2,-0.38930818415246904,monocyte
+pseudobulk_69,GC-tract:C2H2,-0.3324406580068171,macrophage
+pseudobulk_70,GC-tract:C2H2,-0.36406434909440577,granulocyte
+pseudobulk_71,GC-tract:C2H2,-0.14929497835692018,granulocyte
+pseudobulk_72,GC-tract:C2H2,-0.1745865058619529,granulocyte
+pseudobulk_73,GC-tract:C2H2,-0.3283261505421251,granulocyte
+pseudobulk_74,GC-tract:C2H2,-0.3931838390417397,monocyte
+pseudobulk_75,GC-tract:C2H2,-0.12090728390285221,granulocyte
+pseudobulk_76,GC-tract:C2H2,-0.3351813538465649,naive B cell
+pseudobulk_77,GC-tract:C2H2,-0.36849530413746834,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,GC-tract:C2H2,-0.3737625260837376,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,GC-tract:C2H2,-0.38283850299194455,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,GC-tract:C2H2,-0.38159182853996754,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,GC-tract:C2H2,-0.4041603687219322,granulocyte monocyte progenitor cell
+pseudobulk_82,GC-tract:C2H2,-0.3800664108712226,granulocyte monocyte progenitor cell
+pseudobulk_83,GC-tract:C2H2,-0.3794393325224519,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,GC-tract:C2H2,-0.302586582954973,naive B cell
+pseudobulk_85,GC-tract:C2H2,-0.34979695826768875,precursor B cell
+pseudobulk_86,GC-tract:C2H2,-0.31615988723933697,precursor B cell
+pseudobulk_87,GC-tract:C2H2,-0.34212451335042715,immature B cell
+pseudobulk_88,GC-tract:C2H2,-0.3969615208916366,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,GC-tract:C2H2,-0.3888127403333783,naive B cell
+pseudobulk_90,GC-tract:C2H2,-0.3755108704790473,naive B cell
+pseudobulk_91,GC-tract:C2H2,-0.3578544412739575,macrophage
+pseudobulk_92,GC-tract:C2H2,-0.3250348502770066,macrophage
+pseudobulk_93,GC-tract:C2H2,-0.4106616217177361,immature B cell
+pseudobulk_94,GC-tract:C2H2,-0.35709472047165036,naive B cell
+pseudobulk_95,GC-tract:C2H2,-0.37679230235517025,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,GC-tract:C2H2,-0.3043421481270343,naive B cell
+pseudobulk_97,GC-tract:C2H2,-0.380671878810972,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,GC-tract:C2H2,-0.2854697550646961,immature T cell
+pseudobulk_99,GC-tract:C2H2,-0.29626931715756655,immature NK T cell
+pseudobulk_0,E2F/2:E2F,0.4608116099261679,late pro-B cell
+pseudobulk_1,E2F/2:E2F,0.3344979560060892,naive B cell
+pseudobulk_2,E2F/2:E2F,0.4621543473112979,late pro-B cell
+pseudobulk_3,E2F/2:E2F,0.38600881104639484,macrophage
+pseudobulk_4,E2F/2:E2F,0.4563412347342819,late pro-B cell
+pseudobulk_5,E2F/2:E2F,0.37663847202384204,precursor B cell
+pseudobulk_6,E2F/2:E2F,0.33100004849984543,naive B cell
+pseudobulk_7,E2F/2:E2F,0.30985722737204924,naive B cell
+pseudobulk_8,E2F/2:E2F,0.3582917495514266,granulocyte
+pseudobulk_9,E2F/2:E2F,0.36965755753044505,granulocyte
+pseudobulk_10,E2F/2:E2F,0.2797656359325629,granulocyte
+pseudobulk_11,E2F/2:E2F,0.4669524233613629,granulocyte monocyte progenitor cell
+pseudobulk_12,E2F/2:E2F,0.2642250548087759,granulocyte
+pseudobulk_13,E2F/2:E2F,0.3856852396456816,naive B cell
+pseudobulk_14,E2F/2:E2F,0.35396103277162183,naive B cell
+pseudobulk_15,E2F/2:E2F,0.3936302433721721,naive B cell
+pseudobulk_16,E2F/2:E2F,0.4485298527179111,mature natural killer cell
+pseudobulk_17,E2F/2:E2F,0.39223269489593804,precursor B cell
+pseudobulk_18,E2F/2:E2F,0.3865467616269598,naive B cell
+pseudobulk_19,E2F/2:E2F,0.5116311883757589,late pro-B cell
+pseudobulk_20,E2F/2:E2F,0.3714339208381716,naive B cell
+pseudobulk_21,E2F/2:E2F,0.36303021272760816,precursor B cell
+pseudobulk_22,E2F/2:E2F,0.45486096329113934,late pro-B cell
+pseudobulk_23,E2F/2:E2F,0.33966706138744485,granulocyte
+pseudobulk_24,E2F/2:E2F,0.35624055279185995,granulocyte
+pseudobulk_25,E2F/2:E2F,0.33012213953770697,granulocyte
+pseudobulk_26,E2F/2:E2F,0.35140269735711627,precursor B cell
+pseudobulk_27,E2F/2:E2F,0.44503948304918595,hematopoietic precursor cell
+pseudobulk_28,E2F/2:E2F,0.4504736339804367,Slamf1-negative multipotent progenitor cell
+pseudobulk_29,E2F/2:E2F,0.43734877635142766,Slamf1-negative multipotent progenitor cell
+pseudobulk_30,E2F/2:E2F,0.5109512126073241,common lymphoid progenitor
+pseudobulk_31,E2F/2:E2F,0.44021835159219336,Slamf1-negative multipotent progenitor cell
+pseudobulk_32,E2F/2:E2F,0.42898801565752365,Slamf1-negative multipotent progenitor cell
+pseudobulk_33,E2F/2:E2F,0.44698891357984394,common lymphoid progenitor
+pseudobulk_34,E2F/2:E2F,0.4533191082737176,Slamf1-negative multipotent progenitor cell
+pseudobulk_35,E2F/2:E2F,0.48002435232001517,precursor B cell
+pseudobulk_36,E2F/2:E2F,0.3845172282179874,hematopoietic precursor cell
+pseudobulk_37,E2F/2:E2F,0.24869565885455813,granulocyte
+pseudobulk_38,E2F/2:E2F,0.27657242317218333,granulocyte
+pseudobulk_39,E2F/2:E2F,0.33153002715698676,granulocyte
+pseudobulk_40,E2F/2:E2F,0.35367862884595525,monocyte
+pseudobulk_41,E2F/2:E2F,0.3168595154565992,granulocyte
+pseudobulk_42,E2F/2:E2F,0.3993589500532835,monocyte
+pseudobulk_43,E2F/2:E2F,0.359919379371604,granulocyte
+pseudobulk_44,E2F/2:E2F,0.23610741563607007,granulocyte
+pseudobulk_45,E2F/2:E2F,0.39011230258620344,monocyte
+pseudobulk_46,E2F/2:E2F,0.3706613185495371,granulocytopoietic cell
+pseudobulk_47,E2F/2:E2F,0.38815038669417845,granulocyte
+pseudobulk_48,E2F/2:E2F,0.3135999764490407,granulocyte
+pseudobulk_49,E2F/2:E2F,0.2985034563062072,naive B cell
+pseudobulk_50,E2F/2:E2F,0.45709883769450244,late pro-B cell
+pseudobulk_51,E2F/2:E2F,0.39861795830802293,mature natural killer cell
+pseudobulk_52,E2F/2:E2F,0.4432093778041235,precursor B cell
+pseudobulk_53,E2F/2:E2F,0.5125366909778677,late pro-B cell
+pseudobulk_54,E2F/2:E2F,0.42559710470959544,immature T cell
+pseudobulk_55,E2F/2:E2F,0.3472890978155192,naive B cell
+pseudobulk_56,E2F/2:E2F,0.393307014452148,immature B cell
+pseudobulk_57,E2F/2:E2F,0.4115795739926398,naive B cell
+pseudobulk_58,E2F/2:E2F,0.45209847213118337,mature natural killer cell
+pseudobulk_59,E2F/2:E2F,0.48044331168057397,Slamf1-positive multipotent progenitor cell
+pseudobulk_60,E2F/2:E2F,0.4713876597525086,granulocyte monocyte progenitor cell
+pseudobulk_61,E2F/2:E2F,0.46959689442883246,Slamf1-negative multipotent progenitor cell
+pseudobulk_62,E2F/2:E2F,0.4788474108208902,common lymphoid progenitor
+pseudobulk_63,E2F/2:E2F,0.48885298433015123,Slamf1-positive multipotent progenitor cell
+pseudobulk_64,E2F/2:E2F,0.3549268073620624,monocyte
+pseudobulk_65,E2F/2:E2F,0.43639370203527506,monocyte
+pseudobulk_66,E2F/2:E2F,0.25090394167636987,granulocyte
+pseudobulk_67,E2F/2:E2F,0.22329597445059335,granulocyte
+pseudobulk_68,E2F/2:E2F,0.42175304309785133,monocyte
+pseudobulk_69,E2F/2:E2F,0.41819245773331204,macrophage
+pseudobulk_70,E2F/2:E2F,0.3868019453875604,granulocyte
+pseudobulk_71,E2F/2:E2F,0.23858463491342263,granulocyte
+pseudobulk_72,E2F/2:E2F,0.22773157959454693,granulocyte
+pseudobulk_73,E2F/2:E2F,0.4007203683941043,granulocyte
+pseudobulk_74,E2F/2:E2F,0.41679066052893177,monocyte
+pseudobulk_75,E2F/2:E2F,0.2318109050338535,granulocyte
+pseudobulk_76,E2F/2:E2F,0.39745866820885567,naive B cell
+pseudobulk_77,E2F/2:E2F,0.4801440655865008,Slamf1-negative multipotent progenitor cell
+pseudobulk_78,E2F/2:E2F,0.47048198358970694,Slamf1-negative multipotent progenitor cell
+pseudobulk_79,E2F/2:E2F,0.4826676319098624,Slamf1-negative multipotent progenitor cell
+pseudobulk_80,E2F/2:E2F,0.4781577142784954,Slamf1-negative multipotent progenitor cell
+pseudobulk_81,E2F/2:E2F,0.4671770944260061,granulocyte monocyte progenitor cell
+pseudobulk_82,E2F/2:E2F,0.41863422042661114,granulocyte monocyte progenitor cell
+pseudobulk_83,E2F/2:E2F,0.4661381074492965,Slamf1-negative multipotent progenitor cell
+pseudobulk_84,E2F/2:E2F,0.2919253280533667,naive B cell
+pseudobulk_85,E2F/2:E2F,0.33125026290872484,precursor B cell
+pseudobulk_86,E2F/2:E2F,0.3190001836774172,precursor B cell
+pseudobulk_87,E2F/2:E2F,0.4198889787803637,immature B cell
+pseudobulk_88,E2F/2:E2F,0.4753895679314155,Slamf1-negative multipotent progenitor cell
+pseudobulk_89,E2F/2:E2F,0.37694405474030646,naive B cell
+pseudobulk_90,E2F/2:E2F,0.39896180402865866,naive B cell
+pseudobulk_91,E2F/2:E2F,0.44021501978568267,macrophage
+pseudobulk_92,E2F/2:E2F,0.4157904862659052,macrophage
+pseudobulk_93,E2F/2:E2F,0.4082882301590871,immature B cell
+pseudobulk_94,E2F/2:E2F,0.3839258710941067,naive B cell
+pseudobulk_95,E2F/2:E2F,0.46309139888035133,Slamf1-negative multipotent progenitor cell
+pseudobulk_96,E2F/2:E2F,0.33361374749802053,naive B cell
+pseudobulk_97,E2F/2:E2F,0.48309173941379413,Slamf1-negative multipotent progenitor cell
+pseudobulk_98,E2F/2:E2F,0.34996369842701824,immature T cell
+pseudobulk_99,E2F/2:E2F,0.36315732142247725,immature NK T cell
