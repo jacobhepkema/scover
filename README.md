@@ -1,6 +1,6 @@
 # scover 
 
-This GitHub repository contains the neural network tool **scover** associated with a Biorxiv pre-print: https://www.biorxiv.org/content/10.1101/2020.11.26.400218v2.
+This GitHub repository contains the neural network tool **scover** associated with a publication: https://genomebiology.biomedcentral.com/articles/10.1186/s13059-023-03021-9.
 
 <img src="https://github.com/jacobhepkema/scover/raw/master/scover_logo.png" width=300 align=right>
 
